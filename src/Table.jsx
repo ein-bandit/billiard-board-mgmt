@@ -68,9 +68,20 @@ export default class Table extends React.Component {
         })
     }
 
+    GetTableClasses() {
+        var classes = this.state.active ? 'tb-status-play' : 'tb-status-stop';
+
+        if (this.props.highlighted) {
+            classes += ' highlighted';
+        }
+
+        return classes;
+    }
+
+
     render() {
         return (
-            <div className={"tb tb-status-stop col-3 " + (this.state.active === true ? 'highlighted' : '')}>
+            <div className={"tb tb-status-stop col-3 " + this.GetTableClasses()}>
                 <div className="tb-wrap">
                     <div className="tb-head shadow-sm">
                         <div className="row">
@@ -78,8 +89,8 @@ export default class Table extends React.Component {
                                 <h1>Tisch <span className="tb-nr shadow-sm">{this.state.id}</span></h1>
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
-                                <span className="tb-button bt-play"><h2><i
-                                    className="far fa-play-circle"></i></h2></span>
+                <span className="tb-button bt-play"><h2><i
+                    className="far fa-play-circle"></i></h2></span>
                                 <span className="tb-button bt-pause"><h2><i
                                     className="far fa-pause-circle"></i></h2></span>
                                 <span className="tb-button bt-stop"><h2><i className="far fa-circle"></i></h2></span>
@@ -91,13 +102,15 @@ export default class Table extends React.Component {
                         <li className="list-group-item border-0">
                             <div className="row">
                                 <div className="col-4"><h4><i className="fas fa-clock"></i></h4></div>
-                                <div className="col-8 text-right"><h2>{GetTimeStringFromSeconds(this.state.timeActive)}</h2></div>
+                                <div className="col-8 text-right">
+                                    <h2>{GetTimeStringFromSeconds(this.state.timeActive)}</h2></div>
                             </div>
                         </li>
                         <li className="list-group-item">
                             <div className="row">
                                 <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
-                                <div className="col-8 text-right"><h2>{(this.props.price * this.state.timeActive).toFixed(2)}</h2></div>
+                                <div className="col-8 text-right">
+                                    <h2>{(this.props.price * this.state.timeActive).toFixed(2)}</h2></div>
                             </div>
                         </li>
                     </ul>
