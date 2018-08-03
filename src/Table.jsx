@@ -43,19 +43,7 @@ export default class Table extends React.Component {
     isActive() {
         return this.state.active === true;
     }
-    render() {
-        return (
-            <div className={this.props.highlighted === true ? 'bordered' : ''}>
-                {'table' + this.state.id} : {GetTimeStringFromSeconds(this.state.timeActive)}
-                <button onClick={() => this.ToggleActive()}>
-                    <span
-                        style={{color: this.state.active === true ? 'red' : 'green'}}>{this.state.active === true ? 'deactivate' : 'activate'}</span>
-                </button>
-                <button onClick={() => this.StopTable()}>stop</button>
-                <span>Price {(this.props.price * this.state.timeActive).toFixed(2)} €</span>
-            </div>
-        );
-    }
+
 
     HandleEnter() {
         if (this.state.active) {
@@ -79,5 +67,44 @@ export default class Table extends React.Component {
             endDate: null
         })
     }
+
+    render() {
+        return (
+            <div className={"tb tb-status-stop col-3 " + (this.state.active === true ? 'highlighted' : '')}>
+                <div className="tb-wrap">
+                    <div className="tb-head shadow-sm">
+                        <div className="row">
+                            <div className="col-8">
+                                <h1>Tisch <span className="tb-nr shadow-sm">{this.state.id}</span></h1>
+                            </div>
+                            <div className="col-4 text-right pr-4 pt-1">
+                                <span className="tb-button bt-play"><h2><i
+                                    className="far fa-play-circle"></i></h2></span>
+                                <span className="tb-button bt-pause"><h2><i
+                                    className="far fa-pause-circle"></i></h2></span>
+                                <span className="tb-button bt-stop"><h2><i className="far fa-circle"></i></h2></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <ul className="tb-content list-group list-group-flush">
+                        <li className="list-group-item border-0">
+                            <div className="row">
+                                <div className="col-4"><h4><i className="fas fa-clock"></i></h4></div>
+                                <div className="col-8 text-right"><h2>{GetTimeStringFromSeconds(this.state.timeActive)}</h2></div>
+                            </div>
+                        </li>
+                        <li className="list-group-item">
+                            <div className="row">
+                                <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
+                                <div className="col-8 text-right"><h2>{(this.props.price * this.state.timeActive).toFixed(2)}</h2></div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        );
+    }
+
 
 }

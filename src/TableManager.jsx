@@ -93,7 +93,7 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateTable(table) {
-        if (tableObjects[table.id].ref.isActive()){
+        if (tableObjects[table.id].ref.isActive()) {
             return;
         }
 
@@ -112,9 +112,8 @@ export default class TableManager extends React.Component {
                 <Timer interval={this.props.interval} update={newTime => {
                     this.UpdateChildren(newTime);
                 }}/>
-                <p>Tables: {this.props.tables}</p>
-                <p>Highlighted:{this.state.highlightedTable >= 0 ? this.state.highlightedTable : ''}</p>
-                <div>{tableObjects.map((obj, idx) => {
+
+                <div className={'row tables'}>{tableObjects.map((obj, idx) => {
                     return <Table key={idx} id={obj.id}
                                   ref={instance => {
                                       obj.ref = instance;
@@ -123,18 +122,13 @@ export default class TableManager extends React.Component {
                                   price={this.props.price}
                                   stopCallback={table => this.StopTable(table)}/>
                 })}</div>
-                <div>
-                    <label>Last Transactions:</label>
-                    <button onClick={this.TakeScreenshot}>save</button>
-                    <div id={'ScreenshotArea'}>
-                        <div>{this.state.passedTransactions.map(trans => {
-                            return <TableHistoryItem key={trans.transId} table={trans}
-                                                     price={this.props.price}
-                                                     reactivateCallback={table => this.ReactivateTable(table)}/>
-                        })
-                        }</div>
-                    </div>
-                </div>
+                <ul className="logs list-group list-group-flush">
+                    {this.state.passedTransactions.map(trans => {
+                        return <TableHistoryItem key={trans.transId} table={trans}
+                                                 price={this.props.price}
+                                                 reactivateCallback={table => this.ReactivateTable(table)}/>
+                    })
+                    }</ul>
             </div>
         );
     }
