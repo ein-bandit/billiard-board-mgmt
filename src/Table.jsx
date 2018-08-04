@@ -66,6 +66,7 @@ export default class Table extends React.Component {
     StopTable() {
         if (this.state.timeActive === 0) return;
         //do some local stop stuff.
+        this.setState({endDate: new Date()})
         this.props.stopCallback(this.state);
 
         //
@@ -96,13 +97,15 @@ export default class Table extends React.Component {
                     <div className="tb-head shadow-sm">
                         <div className="row">
                             <div className="col-8">
-                                <h1>Tisch <span className="tb-nr shadow-sm">{this.state.id}</span></h1>
+                                <h1>Tisch <span className="tb-nr shadow-sm">{this.state.id + 1}</span></h1>
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
-                <span className="tb-button bt-play"><h2><i
-                    className="far fa-play-circle"></i></h2></span>
-                                <span className="tb-button bt-pause"><h2><i
-                                    className="far fa-pause-circle"></i></h2></span>
+                                <span className="tb-button bt-play">
+                                    <h2><i className="far fa-play-circle"></i></h2>
+                                </span>
+                                <span className="tb-button bt-pause">
+                                    <h2><i className="far fa-pause-circle"></i></h2>
+                                </span>
                                 <span className="tb-button bt-stop"><h2><i className="far fa-circle"></i></h2></span>
                             </div>
                         </div>

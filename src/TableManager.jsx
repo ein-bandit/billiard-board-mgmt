@@ -2,6 +2,7 @@ import React from 'react';
 import Table from './Table';
 import Timer from './Timer';
 import TableHistoryItem from './TableHistoryItem'
+import TableModalWrapper from './TableModalWrapper'
 import cloneDeep from 'lodash/cloneDeep';
 
 
@@ -22,8 +23,12 @@ export default class TableManager extends React.Component {
         super(props);
         this.state = {
             highlightedTable: null,
-            passedTransactions: []
+            passedTransactions: [],
+            modalIsOpen: false,
+            tableActive: []
         };
+
+        this.tableModalWrapper = null;
 
         for (var i = 0; i < this.props.tables; i++) {
             tableObjects.push({ref: null, id: i});
@@ -76,6 +81,7 @@ export default class TableManager extends React.Component {
                 tableNo = intKey - 48; //plus one for real table number (not index)
             }
 
+            this.SetActive(tableNo - 1, true);
             this.setState({
                 highlightedTable: tableNo - 1
             });
@@ -102,12 +108,22 @@ export default class TableManager extends React.Component {
 
 
     UpdateTable(table) {
+        this.SetActive(table.id, table.active);
         var clone = cloneDeep(table);
         clone.ref = null;
         CURRENT_TABLES.tables[table.id] = clone;
     }
 
+    SetActive(id, active) {
+        var tableActive = this.state.tableActive;
+        tableActive[id] = active;
+        this.setState({
+            tableActive: tableActive
+        })
+    }
+
     StopTable(table) {
+        this.SetActive(table.id, false);
         this.setState({
             highlightedTable: null
         });
@@ -116,11 +132,10 @@ export default class TableManager extends React.Component {
 
         // es-lint disabled
         var clone = cloneDeep(table);
-        clone.transId = 'trans_' + this.state.passedTransactions.length;
+        clone.transId = calculateTransId();
 
-
-        //only safe a view last transactions.
-        var passedTransactions = this.state.passedTransactions;
+        //only safe a view last transactions. reverse array, add item as natural ordered, reverse again.
+        var passedTransactions = this.state.passedTransactions.reverse();
         if (passedTransactions.length < SAVED_TRANSACTIONS) {
             passedTransactions.push(clone);
         } else {
@@ -131,10 +146,12 @@ export default class TableManager extends React.Component {
         }
 
         this.setState({
-            passedTransactions: passedTransactions
+            passedTransactions: passedTransactions.reverse()
         });
-    }
 
+        this.tableModalWrapper.StartModal(clone);
+
+    }
 
     UpdateChildren(timeElapsed) {
         tableObjects.map(obj => {
@@ -148,10 +165,17 @@ export default class TableManager extends React.Component {
         }
     }
 
+    ReactivateOpenModal(table) {
+        this.tableModalWrapper.StartModal(table);
+    }
+
     ReactivateTable(table) {
+        console.log("reactivate mgr");
         if (tableObjects[table.id].ref.isActive()) {
             return;
         }
+        console.log("reactivate it");
+        this.SetActive(table.id, true);
         CURRENT_TABLES.tables[table.id] = table;
         tableObjects[table.id].ref.Reactivate(table);
 
@@ -162,9 +186,16 @@ export default class TableManager extends React.Component {
         });
     }
 
+
     render() {
         return (
-            <div>
+            <div className={'table-manager'}>
+                <TableModalWrapper ref={(instance) => {
+                    this.tableModalWrapper = instance;
+                }} price={this.props.price} resumeCallback={(table) => {
+                    this.ReactivateTable(table)
+                }}/>
+
                 <Timer interval={this.props.interval} update={newTime => {
                     this.UpdateChildren(newTime);
                 }}/>
@@ -180,13 +211,20 @@ export default class TableManager extends React.Component {
                                   stopCallback={table => this.StopTable(table)}/>
                 })}</div>
                 <ul className="logs list-group list-group-flush">
-                    {this.state.passedTransactions.map(trans => {
+                    {this.state.passedTransactions.map((trans) => {
                         return <TableHistoryItem key={trans.transId} table={trans}
                                                  price={this.props.price}
-                                                 reactivateCallback={table => this.ReactivateTable(table)}/>
+                                                 recycleBlocked={(this.state.tableActive[trans.id])}
+                                                 reactivateCallback={table => this.ReactivateOpenModal(table)}/>
                     })
                     }</ul>
             </div>
         );
     }
+}
+
+function calculateTransId() {
+    var closeDate = new Date();
+    return 'trans_' + closeDate.toLocaleDateString().replace('.', '-')
+        + '_' + closeDate.getHours() + ':' + closeDate.getMinutes() + ':' + closeDate.getSeconds()
 }

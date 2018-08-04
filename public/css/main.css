@@ -1,4 +1,7 @@
 
+.ReactModal__Overlay {
+    z-index: 2;
+}
 body {
     background: #f4f4f4;
     color: #505050
@@ -12,7 +15,7 @@ body {
     padding: 20px
 }
 
-.tb .tb-button{
+.tb .tb-button {
     display: none;
 }
 
@@ -39,27 +42,27 @@ body {
     border-radius: 8px;
     margin: 10px 0;
     overflow: hidden;
-    background: linear-gradient(0deg, rgba(207,207,207,1) 0%, rgba(247,247,247,1) 63%);
+    background: linear-gradient(0deg, rgba(207, 207, 207, 1) 0%, rgba(247, 247, 247, 1) 63%);
     transition: border 0.5s;
 }
 
-.tb.tb-status-play .tb-wrap{
+.tb.tb-status-play .tb-wrap {
     border-color: #00cb54;
 }
 
-.tb.tb-status-pause .tb-wrap{
+.tb.tb-status-pause .tb-wrap {
     border-color: #ff840d;
 }
 
-.tb .tb-wrap{
+.tb .tb-wrap {
     opacity: 0.3;
 }
 
-.tb.tb-status-play .tb-wrap, .tb.tb-status-pause .tb-wrap{
+.tb.tb-status-play .tb-wrap, .tb.tb-status-pause .tb-wrap {
     opacity: 1.0;
 }
 
-.tb.tb-status-play .tb-content, .tb.tb-status-pause .tb-wrap .tb-content{
+.tb.tb-status-play .tb-content {
     opacity: 0.3;
 }
 
@@ -67,11 +70,39 @@ body {
     opacity: 1.0;
 }
 
-.tb.tb-status-pause .tb-head{
+.tb .tb-modal-buttons {
+    padding: 10px 15px 25px;
+    justify-content: space-between;
+    display: flex;
+}
+
+.tb .tb-modal-buttons .tb-modal-btn {
+    border: 2px solid;
+    font-weight: bold;
+}
+
+button.tb-modal-btn.tb-modal-btn-resume.btn.btn-default:hover {
+    color: black;
+    border-color: #c5ffbf;
+    background: #c5ffbf;
+}
+
+button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
+    color: black;
+    border-color: #ffe3bf;
+    background: #ffe3bf;
+}
+
+.tb.tb-single {
+    z-index: 2;
+    transform: translate(50%, 25%);
+}
+
+.tb.tb-status-pause .tb-head {
     background-color: #ffe3bf;
 }
 
-.tb.tb-status-play .tb-head{
+.tb.tb-status-play .tb-head {
     background-color: #c5ffbf;
 }
 
@@ -108,13 +139,25 @@ body {
 }
 
 .logs .log {
-    opacity: 0.3;
-}
-
-.logs .log:hover {
     opacity: 1.0;
 }
 
+.logs .log .log-recycle-btn {
+    display: none;
+}
+
+.logs .log.log-recycle .log-recycle-btn {
+    display: inline;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+
+.logs .log.log-recycle .log-recycle-btn:hover {
+    background: black;
+    color: white;
+}
 
 .logs .log .log-nr {
     background: #242424;

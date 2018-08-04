@@ -7,8 +7,10 @@ const styles = {
     textAlign: 'center'
 };
 
+
+
 const settings = {
-    numberOfTables: 4,
+    numberOfTables: 3,
     timeIntervalToUpdate: 1,
     pricePerSecond: 14 / 100 / 60
 };
