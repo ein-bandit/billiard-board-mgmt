@@ -64,9 +64,9 @@ export default class Table extends React.Component {
     }
 
     StopTable() {
-        if (this.state.timeActive === 0) return;
+        if (this.state.timeActive === 0 || this.state.active === false) return;
         //do some local stop stuff.
-        this.setState({endDate: new Date()})
+        this.setState({endDate: new Date()});
         this.props.stopCallback(this.state);
 
         //

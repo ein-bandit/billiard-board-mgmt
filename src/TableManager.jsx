@@ -46,6 +46,7 @@ export default class TableManager extends React.Component {
 
             for (var j = 0; j < tables.length; j++) {
                 tableObjects[tables[j].id].ref.CopyFromJson(tables[j]);
+                this.SetActive(tables[j].id, true);
             }
 
             var copiedTransactions = [];
@@ -123,6 +124,7 @@ export default class TableManager extends React.Component {
     }
 
     StopTable(table) {
+        console.log("setting off: ", table.id);
         this.SetActive(table.id, false);
         this.setState({
             highlightedTable: null
@@ -170,11 +172,9 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateTable(table) {
-        console.log("reactivate mgr");
         if (tableObjects[table.id].ref.isActive()) {
             return;
         }
-        console.log("reactivate it");
         this.SetActive(table.id, true);
         CURRENT_TABLES.tables[table.id] = table;
         tableObjects[table.id].ref.Reactivate(table);
@@ -222,8 +222,8 @@ export default class TableManager extends React.Component {
                     {this.state.passedTransactions.map((trans) => {
                         return <TableHistoryItem key={trans.transId} table={trans}
                                                  price={this.props.price}
-                                                 recycleBlocked={(this.state.tableActive[trans.id])}
-                                                 reactivateCallback={table => this.ReactivateOpenModal(table)}/>
+                                                 recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
+                                                 reactivateCallback={table => this.ReactivateOpenModal(table)} />
                     })
                     }</ul>
             </div>
