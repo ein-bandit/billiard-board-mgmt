@@ -1,6 +1,5 @@
 import React from 'react';
 import {GetTimeStringFromSeconds} from './Helpers';
-import './Table.css'
 
 export default class Table extends React.Component {
 
