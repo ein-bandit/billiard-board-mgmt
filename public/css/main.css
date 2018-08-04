@@ -19,8 +19,14 @@ body {
     display: none;
 }
 
-.tb.highlighted {
-    border: 5px solid greenyellow;
+.tb .tb-wrap {
+    opacity: 0.3;
+}
+
+.tb .tb-wrap.highlighted {
+    border-color: deepskyblue !important;
+    box-shadow: 0 0 10px 2px deepskyblue;
+    opacity: 1;
 }
 
 .tb.tb-status-play .bt-play {
@@ -48,26 +54,12 @@ body {
 
 .tb.tb-status-play .tb-wrap {
     border-color: #00cb54;
+    opacity: 1;
 }
 
 .tb.tb-status-pause .tb-wrap {
     border-color: #ff840d;
-}
-
-.tb .tb-wrap {
-    opacity: 0.3;
-}
-
-.tb.tb-status-play .tb-wrap, .tb.tb-status-pause .tb-wrap {
-    opacity: 1.0;
-}
-
-.tb.tb-status-play .tb-content {
-    opacity: 0.3;
-}
-
-.tb:hover .tb-wrap, .tb:hover .tb-wrap .tb-content {
-    opacity: 1.0;
+    opacity: 1;
 }
 
 .tb .tb-modal-buttons {
@@ -106,9 +98,12 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     background-color: #c5ffbf;
 }
 
+.tb {
+    cursor: pointer;
+}
+
 .tb .tb-head {
     padding: 5px;
-    cursor: pointer;
     background: #fff;
     border: 5px solid #fff;
     border-radius: 5px;

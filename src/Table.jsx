@@ -79,24 +79,17 @@ export default class Table extends React.Component {
         })
     }
 
-    GetTableClasses() {
-        var classes = this.state.active ? 'tb-status-play' : 'tb-status-stop';
-
-        if (this.props.highlighted) {
-            classes += ' highlighted';
-        }
-
-        return classes;
-    }
-
     UpdateHighlight() {
         this.props.highlightCallback(this.state.id);
     }
 
     render() {
         return (
-            <div className={"tb tb-status-stop col-3 " + this.GetTableClasses()} onClick={()=>{this.UpdateHighlight()}}>
-                <div className="tb-wrap">
+            <div className={"tb col-3 " + (this.state.active === true ? 'tb-status-play' : 'tb-status-stop')}
+                 onClick={() => {
+                     this.UpdateHighlight()
+                 }}>
+                <div className={'tb-wrap ' + (this.props.highlighted === true ? 'highlighted' : '')}>
                     <div className="tb-head shadow-sm">
                         <div className="row">
                             <div className="col-8">
@@ -104,12 +97,12 @@ export default class Table extends React.Component {
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play">
-                                    <h2><i className="far fa-play-circle"></i></h2>
+                                    <h2><i className="far fa-play-circle"/></h2>
                                 </span>
                                 <span className="tb-button bt-pause">
-                                    <h2><i className="far fa-pause-circle"></i></h2>
+                                    <h2><i className="far fa-pause-circle"/></h2>
                                 </span>
-                                <span className="tb-button bt-stop"><h2><i className="far fa-circle"></i></h2></span>
+                                <span className="tb-button bt-stop"><h2><i className="far fa-circle"/></h2></span>
                             </div>
                         </div>
                     </div>
