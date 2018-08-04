@@ -7,19 +7,19 @@ const styles = {
     textAlign: 'center'
 };
 
+const settings = require('./config.json');
 
-
-const settings = {
+    /*{
     numberOfTables: 6,
     timeIntervalToUpdate: 1,
-    pricePerSecond: 14 / 100 / 60,
+    pricePerSecond: 14,
     reactivateEnabled: true
-};
+};*/
 
 const App = () => {
     return (<div style={styles}>
         <TableManager tables={settings.numberOfTables} interval={settings.timeIntervalToUpdate}
-                      price={settings.pricePerSecond} reactivateEnabled={settings.reactivateEnabled}/>
+                      price={settings.pricePerSecond / 100 / 60} reactivateEnabled={settings.reactivateEnabled}/>
     </div>)
 }
 
