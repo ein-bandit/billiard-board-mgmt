@@ -33,7 +33,7 @@ export default class Table extends React.Component {
 
     Reactivate(table) {
         this.setState({
-            active: false,
+            active: true,
             timeActive: table.timeActive,
             startDate: table.startDate,
             endDate: table.endDate

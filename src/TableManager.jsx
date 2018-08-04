@@ -78,13 +78,6 @@ export default class TableManager extends React.Component {
         });
     }
 
-
-    TakeScreenshot() {
-        html2canvas(document.querySelector("#ScreenshotAre")).then(canvas => {
-            document.body.appendChild(canvas)
-        });
-    }
-
     UpdateChildren(newTime) {
         //TODO: find a way to update child.
         tableObjects.map(obj => {
@@ -93,16 +86,15 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateTable(table) {
-        if (tableObjects[table.id].ref.isActive()) {
+        /*if (tableObjects[table.id].ref.isActive()) {
             return;
-        }
+        }*/
 
         tableObjects[table.id].ref.Reactivate(table);
-        var transes = this.state.passedTransactions;
-        transes = transes.splice(table.id, 1);
+        this.state.passedTransactions.splice(table.id, 1);
         this.setState({
-            highlightedTable: table.id,
-            passedTransactions: transes
+            highlightedTable: null,
+            passedTransactions: this.state.passedTransactions
         });
     }
 

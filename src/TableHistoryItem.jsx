@@ -22,7 +22,7 @@ export default class TableHistoryItem extends React.Component {
                 <h2 className={'inline mx-3'}>Tisch <span className={'log-nr shadow'}>{this.state.table.id}</span></h2>
                 <h3 className={'inline mx-3'}><i className={'fas fa-clock'}/>{GetTimeStringFromSeconds(this.state.table.timeActive)}</h3>
                 <h3 className={'inline mx-3'}><i className={'fas fa-euro-sign'}/>{(this.props.price * this.state.table.timeActive).toFixed(2)}</h3>
-                <h3 className={'inline ml-3'}><i className={'fas fa-recycle'}/></h3>
+                <h3 className={'inline ml-3'} onClick={() => this.Reactivate()}><i className={'fas fa-recycle'}/></h3>
             </li>
         );
     }
