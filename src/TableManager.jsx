@@ -186,6 +186,11 @@ export default class TableManager extends React.Component {
         });
     }
 
+    UpdateHighlight(tableId) {
+        this.setState({
+            highlightedTable: tableId
+        })
+    }
 
     render() {
         return (
@@ -208,7 +213,10 @@ export default class TableManager extends React.Component {
                                   highlighted={obj.id === this.state.highlightedTable}
                                   price={this.props.price}
                                   startCallback={table => this.UpdateTable(table)}
-                                  stopCallback={table => this.StopTable(table)}/>
+                                  stopCallback={table => this.StopTable(table)}
+                                  highlightCallback={tableId => {
+                                      this.UpdateHighlight(tableId)
+                                  }}/>
                 })}</div>
                 <ul className="logs list-group list-group-flush">
                     {this.state.passedTransactions.map((trans) => {

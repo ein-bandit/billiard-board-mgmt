@@ -89,10 +89,13 @@ export default class Table extends React.Component {
         return classes;
     }
 
+    UpdateHighlight() {
+        this.props.highlightCallback(this.state.id);
+    }
 
     render() {
         return (
-            <div className={"tb tb-status-stop col-3 " + this.GetTableClasses()}>
+            <div className={"tb tb-status-stop col-3 " + this.GetTableClasses()} onClick={()=>{this.UpdateHighlight()}}>
                 <div className="tb-wrap">
                     <div className="tb-head shadow-sm">
                         <div className="row">
