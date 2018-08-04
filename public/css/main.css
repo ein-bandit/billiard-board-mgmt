@@ -155,7 +155,11 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .logs .log {
-    opacity: 1.0;
+    opacity: 0.5;
+}
+
+.logs .log:hover {
+    opacity: 1;
 }
 
 .logs .log .log-recycle-btn {
@@ -242,6 +246,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     font-size: 24px;
     line-height: 26px;
 }
+
 .additional-info .step-timer {
     display: flex;
     align-items: center;
