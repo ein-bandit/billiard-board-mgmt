@@ -1,6 +1,5 @@
 import React from 'react';
 import {GetTimeStringFromSeconds} from './Helpers';
-import cloneDeep from 'lodash/cloneDeep';
 import './Table.css'
 
 export default class Table extends React.Component {
@@ -16,11 +15,21 @@ export default class Table extends React.Component {
         };
     }
 
-    ToggleActive() {
+    CopyFromJson(table) {
         this.setState({
-            active: !this.state.active,
-            startDate: this.state.active ? new Date() : null
+            active: true,
+            timeActive: table.timeActive,
+            startDate: table.startDate
         });
+    }
+
+    ToggleActive() {
+        var active = !this.state.active;
+        this.setState({
+            active: active,
+            startDate: active === true ? new Date() : null
+        });
+        this.props.startCallback(this.state);
     }
 
     UpdateTime(interval) {
@@ -28,6 +37,7 @@ export default class Table extends React.Component {
             this.setState({
                 timeActive: this.state.timeActive + interval
             });
+            this.props.startCallback(this.state);
         }
     }
 
@@ -56,7 +66,7 @@ export default class Table extends React.Component {
     StopTable() {
         if (this.state.timeActive === 0) return;
         //do some local stop stuff.
-        this.props.stopCallback(cloneDeep(this.state));
+        this.props.stopCallback(this.state);
 
         //
         this.setState({
