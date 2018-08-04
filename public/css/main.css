@@ -2,9 +2,16 @@
 .ReactModal__Overlay {
     z-index: 2;
 }
+
 body {
     background: #f4f4f4;
     color: #505050
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 .inline {
@@ -12,7 +19,21 @@ body {
 }
 
 .tables {
-    padding: 20px
+    padding: 20px;
+    display: inline-block;
+}
+
+.tables:first-child {
+    padding-left: 0;
+}
+
+.tables:last-child {
+    padding-right: 0;
+}
+
+.tables.clock-and-transactions {
+    vertical-align: top;
+    margin-top: 5%;
 }
 
 .tb .tb-button {
@@ -162,4 +183,80 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     text-align: center;
     border-radius: 11px;
     font-size: 89%;
+}
+
+.flip-clock {
+    display: inline-flex;
+}
+
+.flip-clock .flip-clock-digit {
+    border: 1px solid #ffffff94;
+    border-radius: 4px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.app-name {
+    font-size: 42px;
+    margin-bottom: 40px;
+}
+
+.timer {
+    margin-left: 25px;
+    margin-right: 25px;
+    height: 220px;
+    background: black;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: white;
+    position: relative;
+}
+
+.timer .global-timer {
+    font-size: 64px;
+    line-height: 66px;
+    margin: 25px;
+}
+
+.timer .global-timer .flip-clock-digit {
+    width: 45px;
+}
+
+.timer .step-timer .flip-clock-digit {
+    width: 18px;
+    height: 28px;
+}
+
+.timer .branding {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 90%;
+    border-top: 1px solid white;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.additional-info {
+    display: inline-flex;
+    font-size: 24px;
+    line-height: 26px;
+}
+.additional-info .step-timer {
+    display: flex;
+    align-items: center;
+}
+
+.additional-info .nr-tables {
+    border: 1px solid #ffffff94;
+    border-radius: 4px;
+    margin-right: 25px;
+}
+
+.additional-info .nr-tables .nr-tables-inner {
+    padding: 10px;
+}
+
+.transactions {
+    margin-top: 25px;
 }

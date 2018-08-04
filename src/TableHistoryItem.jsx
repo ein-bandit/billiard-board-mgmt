@@ -24,8 +24,6 @@ export default class TableHistoryItem extends React.Component {
                     className={'fas fa-user-clock'}/>{GetTimeStringFromSeconds(this.state.table.timeActive)}</h3>
                 <h3 className={'inline mx-3'}><i
                     className={'fas fa-euro-sign'}/>{(this.props.price * this.state.table.timeActive).toFixed(2)}</h3>
-                <h3 className={'inline mx-3'}><i
-                    className={'fas fa-clock'}/>{GetTimeStringFromDate(this.state.table.endDate)}</h3>
                 <h3 className={'inline ml-3 log-recycle-btn'} onClick={() => this.Reactivate()}><i
                     className={'fas fa-recycle'}/></h3>
             </li>

@@ -8,13 +8,19 @@ export default class Timer extends React.Component {
         super(props);
         this.state = {
             startingTime: 0,
-            timeElapsed: 0
+            timeElapsed: 0,
+            currentTime: new Date(),
         };
         this.currentInterval = 0;
+        this.usedTables = this.props.usedTables;
     }
 
     componentDidMount() {
         this.startTiming();
+    }
+
+    UpdateUsedTables(tables) {
+        this.usedTables = tables;
     }
 
     startTiming() {
@@ -22,10 +28,13 @@ export default class Timer extends React.Component {
         this.intervalID = setInterval(() => this.timingFunction(), 1000);
     }
 
-    timingFunction() {
+    timingFunction(newTime) {
         if (this.currentInterval++ === this.props.interval - 1) {
             this.currentInterval = 0;
-            this.setState({timeElapsed: Math.floor((Date.now() - this.state.startingTime) / 1000)});
+            this.setState({
+                timeElapsed: Math.floor((Date.now() - this.state.startingTime) / 1000),
+                currentTime: new Date()
+            });
             this.props.update(this.state.timeElapsed);
         }
     }
@@ -33,10 +42,39 @@ export default class Timer extends React.Component {
     //remove intervalId on destroy.
 
     render() {
+        const runningTime = [];
+        let current = GetTimeStringFromSeconds(this.state.timeElapsed);
+        for (let i = 0; i < current.length; i++) {
+            if (current[i] !== ':') {
+                runningTime.push(<div key={i} className={'flip-clock-digit'}>{current[i]}</div>);
+            } else {
+                runningTime.push(<div key={i}>{current[i]}</div>);
+            }
+        }
+
+        const globalDigits = [];
+        let globalTime = GetTimeStringFromDate(this.state.currentTime);
+        for (let i = 0; i < globalTime.length; i++) {
+            if (globalTime[i] !== ':') {
+                globalDigits.push(<div key={i} className={'flip-clock-digit'}>{globalTime[i]}</div>);
+            } else {
+                globalDigits.push(<div key={i}>{globalTime[i]}</div>);
+            }
+        }
+
         return (
-            <div>
-                <div className="global-timer">{GetTimeStringFromSeconds(this.state.timeElapsed)}</div>
-                <div>{GetTimeStringFromDate(this.state.startingTime)}</div>
+            <div className={'timer'}>
+                <div className="global-timer flip-clock">
+                    {globalDigits}
+                </div>
+                <div className={"additional-info"}>
+                    <div className={"nr-tables"}><div className={'nr-tables-inner'}> {this.usedTables} / {this.props.tables}</div></div>
+                    <div className={"step-timer flip-clock"}>
+                        {runningTime}
+                    </div>
+                </div>
+
+                <div className={'branding'}>Kaufmann & Utsch Timing &copy;</div>
             </div>
         );
     }

@@ -10,7 +10,7 @@ const styles = {
 
 
 const settings = {
-    numberOfTables: 3,
+    numberOfTables: 6,
     timeIntervalToUpdate: 1,
     pricePerSecond: 14 / 100 / 60,
     reactivateEnabled: true
@@ -18,7 +18,6 @@ const settings = {
 
 const App = () => {
     return (<div style={styles}>
-        <h1>Your Billiard Board Manager!</h1>
         <TableManager tables={settings.numberOfTables} interval={settings.timeIntervalToUpdate}
                       price={settings.pricePerSecond} reactivateEnabled={settings.reactivateEnabled}/>
     </div>)
