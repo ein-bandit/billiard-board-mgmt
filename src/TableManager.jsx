@@ -174,7 +174,7 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateOpenModal(table) {
-        this.tableModalWrapper.StartModal(table);
+        this.tableModalWrapper.StartModal(table, true);
     }
 
     ReactivateTable(table) {

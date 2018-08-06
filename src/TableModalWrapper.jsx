@@ -12,16 +12,18 @@ export default class TableModalWrapper extends React.Component {
         super(props);
         this.state = {
             modalIsOpen: false,
-            table: {}
+            table: {},
+            isRecycle: false
         };
 
         this.closeModal = this.closeModal.bind(this);
     }
 
-    StartModal(table) {
+    StartModal(table, isRecycle) {
         this.setState({
             modalIsOpen: true,
-            table: table
+            table: table,
+            isRecycle: isRecycle
         });
     }
 
@@ -93,11 +95,11 @@ export default class TableModalWrapper extends React.Component {
                     <div className={'tb-modal-buttons'}>
                         <button className={'tb-modal-btn tb-modal-btn-resume btn btn-default'} onClick={() => {
                             this.closeModal(true)
-                        }}>Fortsetzen
+                        }}>{this.state.isRecycle === true ? 'Wiederherstellen' : 'Fortsetzen'}
                         </button>
                         <button className={'tb-modal-btn tb-modal-btn-close btn btn-default'} onClick={() => {
                             this.closeModal()
-                        }}>Abgerechnet
+                        }}>{this.state.isRecycle === true ? 'Abbrechen' : 'Beenden'}
                         </button>
                     </div>
                 </div>
