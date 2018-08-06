@@ -12,7 +12,8 @@ const settings = window.config;
 const App = () => {
     return (<div style={styles}>
         <TableManager tables={settings.numberOfTables} interval={settings.timeIntervalToUpdate}
-                      price={settings.pricePerSecond / 100 / 60} reactivateEnabled={settings.reactivateEnabled}/>
+                      price={settings.pricePerSecond / 100 / 60} reactivateEnabled={settings.reactivateEnabled}
+                      tableNumbers={settings.tableNumbers}/>
     </div>)
 }
 

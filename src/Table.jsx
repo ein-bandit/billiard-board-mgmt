@@ -71,6 +71,7 @@ export default class Table extends React.Component {
         //
         this.setState({
             id: this.props.id,
+            nr: this.props.nr,
             active: false,
             timeActive: 0,
             startDate: null,
@@ -92,7 +93,7 @@ export default class Table extends React.Component {
                     <div className="tb-head shadow-sm">
                         <div className="row">
                             <div className="col-8">
-                                <h1>Tisch <span className="tb-nr shadow-sm">{this.state.id + 1}</span></h1>
+                                <h1>Tisch <span className="tb-nr shadow-sm">{this.props.nr}</span></h1>
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play">

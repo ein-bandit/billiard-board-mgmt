@@ -32,7 +32,7 @@ export default class TableManager extends React.Component {
         this.tableModalWrapper = null;
 
         for (let i = 0; i < this.props.tables; i++) {
-            tableObjects.push({ref: null, id: i});
+            tableObjects.push({ref: null, id: i, nr: this.props.tableNumbers[i]});
         }
     }
 
@@ -200,7 +200,7 @@ export default class TableManager extends React.Component {
             let idx = i;
             let obj = tableObjects[i];
             templ1.push((
-                <Table key={idx} id={obj.id}
+                <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
                        ref={instance => {
                            obj.ref = instance;
                        }}
@@ -221,7 +221,7 @@ export default class TableManager extends React.Component {
             let idx = i;
             let obj = tableObjects[i];
             templ2.push((
-                <Table key={idx} id={obj.id}
+                <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
                        ref={instance => {
                            obj.ref = instance;
                        }}
@@ -260,7 +260,7 @@ export default class TableManager extends React.Component {
                     <div className={'transactions'}>
                         <ul className="logs list-group list-group-flush">
                             {this.state.passedTransactions.map((trans) => {
-                                return <TableHistoryItem key={trans.transId} table={trans}
+                                return <TableHistoryItem key={trans.transId} table={trans} nr={tableObjects[trans.id].nr}
                                                          price={this.props.price}
                                                          recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
                                                          reactivateCallback={table => this.ReactivateOpenModal(table)}/>
