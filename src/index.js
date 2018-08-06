@@ -7,14 +7,7 @@ const styles = {
     textAlign: 'center'
 };
 
-const settings = require('./config.json');
-
-    /*{
-    numberOfTables: 6,
-    timeIntervalToUpdate: 1,
-    pricePerSecond: 14,
-    reactivateEnabled: true
-};*/
+const settings = window.config;
 
 const App = () => {
     return (<div style={styles}>

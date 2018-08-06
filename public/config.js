@@ -1,6 +1,6 @@
-{
+window.config = {
   "numberOfTables": 6,
   "timeIntervalToUpdate": 1,
   "pricePerSecond": 14,
   "reactivateEnabled": true
-}
+};
