@@ -195,7 +195,7 @@ export default class TableManager extends React.Component {
 
     render() {
         const templ1 = [];
-        for (let i = 0; i < (tableObjects.length / 2); i++) {
+        for (let i = 0; i < 5; i++) {
 
             let idx = i;
             let obj = tableObjects[i];
@@ -216,7 +216,7 @@ export default class TableManager extends React.Component {
         }
 
         const templ2 = [];
-        for (let i = (tableObjects.length / 2); i < tableObjects.length; i++) {
+        for (let i = 5; i < tableObjects.length; i++) {
 
             let idx = i;
             let obj = tableObjects[i];
@@ -239,6 +239,7 @@ export default class TableManager extends React.Component {
 
         return (
             <div className={'table-manager'}>
+                <div className={'row'}>
                 <TableModalWrapper ref={(instance) => {
                     this.tableModalWrapper = instance;
                 }} price={this.props.price} resumeCallback={(table) => {
@@ -246,21 +247,25 @@ export default class TableManager extends React.Component {
                 }}/>
 
 
-                <div className={'tables col-3'}>
-                    {templ1}
-                </div>
+                {templ1}
 
-                <div className={'tables col-6 clock-and-transactions'}>
-                    <div className={'app-name'}>Billiard-Manager 3001</div>
+                <div className={'col-6 clock-and-transactions'}>
                     <Timer interval={this.props.interval} ref={(instance) => {
                         this.timer = instance
                     }} update={newTime => {
                         this.UpdateChildren(newTime);
                     }} tables={this.props.tables} usedTables={this.state.tableActive.length}/>
+
+                </div>
+
+                {templ2}
+                </div>
+                <div className={'row'}>
                     <div className={'transactions'}>
                         <ul className="logs list-group list-group-flush">
                             {this.state.passedTransactions.map((trans) => {
-                                return <TableHistoryItem key={trans.transId} table={trans} nr={tableObjects[trans.id].nr}
+                                return <TableHistoryItem key={trans.transId} table={trans}
+                                                         nr={tableObjects[trans.id].nr}
                                                          price={this.props.price}
                                                          recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
                                                          reactivateCallback={table => this.ReactivateOpenModal(table)}/>
@@ -268,11 +273,6 @@ export default class TableManager extends React.Component {
                             }</ul>
                     </div>
                 </div>
-
-                <div className={'tables col-3'}>
-                    {templ2}
-                </div>
-
 
             </div>
         );

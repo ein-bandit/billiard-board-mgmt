@@ -20,7 +20,6 @@ h1 {
 
 .tables {
     padding: 20px;
-    display: inline-block;
 }
 
 .tables:first-child {
@@ -32,8 +31,8 @@ h1 {
 }
 
 .tables.clock-and-transactions {
-    vertical-align: top;
-    margin-top: 5%;
+    display: flex;
+    align-items: center;
 }
 
 .tb .tb-button {

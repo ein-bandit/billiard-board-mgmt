@@ -85,7 +85,7 @@ export default class Table extends React.Component {
 
     render() {
         return (
-            <div className={"tb " + (this.state.active === true ? 'tb-status-play' : 'tb-status-stop')}
+            <div className={"tb col-3 " + (this.state.active === true ? 'tb-status-play' : 'tb-status-stop')}
                  onClick={() => {
                      this.UpdateHighlight()
                  }}>
