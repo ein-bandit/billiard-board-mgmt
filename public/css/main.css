@@ -341,3 +341,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .brand.nav-item a.nav-link {
     border: none;
 }
+
+a.nav-link.active:focus {
+   outline: 0;
+}
