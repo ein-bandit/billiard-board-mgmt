@@ -4,12 +4,13 @@ import Timer from './Timer';
 import TableHistoryItem from './TableHistoryItem'
 import TableModalWrapper from './TableModalWrapper'
 import cloneDeep from 'lodash/cloneDeep';
+import _ from 'lodash';
 
 
-var tableObjects = [];
+let tableObjects = [];
 
 const SYNC_TIME = 10;
-const SAVED_TRANSACTIONS = 5;
+const SAVED_TRANSACTIONS = 4;
 const CURRENT_TABLES = {
     tables: [],
     transactions: []
@@ -47,8 +48,10 @@ export default class TableManager extends React.Component {
 
 
             for (var j = 0; j < tables.length; j++) {
-                tableObjects[tables[j].id].ref.CopyFromJson(tables[j]);
-                this.SetActive(tables[j].id, true);
+                if (tables[j] !== null) {
+                    tableObjects[tables[j].id].ref.CopyFromJson(tables[j]);
+                    this.SetActive(tables[j].id, true);
+                }
             }
 
             var copiedTransactions = [];
@@ -100,9 +103,10 @@ export default class TableManager extends React.Component {
     }
 
     UpdateTables() {
+        console.log("saving",CURRENT_TABLES.tables);
         CURRENT_TABLES.transactions = this.state.passedTransactions;
 
-        var tempTables = JSON.stringify(CURRENT_TABLES);
+        let tempTables = JSON.stringify(CURRENT_TABLES);
         window.localStorage.setItem(
             LOCALSTORAGE_KEY,
             tempTables
@@ -131,8 +135,7 @@ export default class TableManager extends React.Component {
         this.setState({
             highlightedTable: null
         });
-
-        CURRENT_TABLES.tables.splice(table.id, 1);
+        _.remove(CURRENT_TABLES.tables, table);
 
         // es-lint disabled
         var clone = cloneDeep(table);
@@ -159,12 +162,13 @@ export default class TableManager extends React.Component {
 
     UpdateChildren(timeElapsed) {
         tableObjects.map(obj => {
-            return obj.ref.UpdateTime(this.props.interval);
+            if (obj !== null) {
+                return obj.ref.UpdateTime(this.props.interval);
+            }
+            return null;
         });
 
         if (timeElapsed % SYNC_TIME === 0) {
-            console.log("syncing all", CURRENT_TABLES);
-
             this.UpdateTables();
         }
     }
@@ -201,7 +205,6 @@ export default class TableManager extends React.Component {
     }
 
     AvoidClick(evt, name) {
-        console.log(evt);
         this.ChangeTab(name);
         evt.stopPropagation();
         evt.preventDefault();
@@ -268,12 +271,17 @@ export default class TableManager extends React.Component {
                             <div className={'clock-logs-switch'}>
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
-                                        <a className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
-                                           href="#" onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
+                                        <a href=""
+                                           className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
+                                           onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
-                                           href="#" onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
+                                        <a href=""
+                                           className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
+                                           onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
+                                    </li>
+                                    <li className="nav-item brand">
+                                        <a className={'nav-link'}>Billiard-Manager 3001</a>
                                     </li>
                                 </ul>
                             </div>

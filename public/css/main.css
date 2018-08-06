@@ -12,17 +12,17 @@ body {
 }
 
 h1 {
-    font-size: 165%;
+    font-size: 135%;
     margin-bottom: 0;
     margin-top: 5px;
 }
 
 h2 {
-    font-size: 140%;
+    font-size: 110%;
 }
 
 h4 {
-    font-size: 130%;
+    font-size: 110%;
 }
 
 .inline {
@@ -171,6 +171,15 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     opacity: 1;
 }
 
+.logs li.log.list-group-item {
+    border-bottom: 1px solid !important;
+    padding: 20px 0
+}
+
+.logs li.log.list-group-item:last-child {
+    border-bottom: none !important;
+}
+
 .logs .log .log-recycle-btn {
     opacity: 0;
 }
@@ -204,7 +213,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .flip-clock .flip-clock-digit {
-    border: 1px solid #ffffff94;
+    border: 1px solid #96969694;
     border-radius: 4px;
     margin-left: 1px;
     margin-right: 1px;
@@ -220,7 +229,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .clock-logs-switch ul.nav-tabs {
-
+    border-bottom: none;
 }
 .clock-logs-switch ul li a.nav-link {
     color: black;
@@ -228,9 +237,10 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     margin-right: 2px;
 }
 
-
 .clock-logs-switch ul li a.nav-link:hover {
     border-color: black;
+    background: rgb(244,244,244);
+    background: linear-gradient(180deg, rgba(244,244,244,1) 0%, rgba(222,222,222,1) 71%);
 }
 
 .clock-logs-switch ul li a.nav-link.active {
@@ -240,10 +250,12 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .timer-and-transaction-wrapper {
-    height: 220px;
-    background: #1f1f1f;
+    height: 155px;
+    overflow: hidden;
+    background: rgb(51,51,51);
+    background: linear-gradient(0deg, rgba(51,51,51,1) 0%, rgba(31,31,31,1) 71%);
     border: 1px solid transparent;
-    border-radius: 0 0 4px 4px;
+    border-radius: 0 0 7px 7px;
     width: 100%;
 }
 
@@ -253,28 +265,34 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .timer .global-timer {
-    font-size: 64px;
-    line-height: 66px;
-    margin: 25px;
+    font-size: 50px;
+    line-height: 50px;
+    margin: 10px;
 }
 
 .timer .global-timer .flip-clock-digit {
     width: 45px;
+    background: rgb(23,23,23);
+    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
 }
 
 .timer .step-timer .flip-clock-digit {
     width: 18px;
     height: 28px;
+    background: rgb(23,23,23);
+    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
 }
 
 .timer .branding {
-    position: absolute;
     bottom: 0;
     text-align: center;
     width: 90%;
     border-top: 1px solid white;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 10px;
+    border-color: #565656;
+    color: #565656
 }
 
 .additional-info {
@@ -289,9 +307,11 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .additional-info .nr-tables {
-    border: 1px solid #ffffff94;
+    border: 1px solid #96969694;
     border-radius: 4px;
     margin-right: 25px;
+    background: rgb(23,23,23);
+    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
 }
 
 .additional-info .nr-tables .nr-tables-inner {
@@ -307,6 +327,17 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     color: #fff;
 }
 
-.log.list-group-item:hover {
+.brand.nav-item {
+    position: absolute;
+    right: 13px;
+    background: none !important;
+    color: #1f1f1f;
+}
 
+.brand.nav-item a.nav-link:hover {
+    background: none !important;
+}
+
+.brand.nav-item a.nav-link {
+    border: none;
 }

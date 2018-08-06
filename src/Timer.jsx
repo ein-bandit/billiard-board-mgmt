@@ -74,7 +74,7 @@ export default class Timer extends React.Component {
                     </div>
                 </div>
 
-                <div className={'branding'}>Kaufmann & Utsch Timing &copy;</div>
+                <div className={'branding'}>&copy;&nbsp;Kaufmann & Utsch Timing Solutions</div>
             </div>
         );
     }

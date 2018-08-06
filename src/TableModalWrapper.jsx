@@ -44,7 +44,7 @@ export default class TableModalWrapper extends React.Component {
                     <div className="tb-head shadow-sm">
                         <div className="row">
                             <div className="col-8">
-                                <h1>Tischabrechnung: Tisch <span
+                                <h1>Abrechnung: Tisch <span
                                     className="tb-nr shadow-sm">{this.state.table.id + 1}</span></h1>
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
