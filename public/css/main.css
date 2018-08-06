@@ -8,7 +8,8 @@
 
 body {
     background: #f4f4f4;
-    color: #505050
+    color: #505050;
+    zoom: 0.975;
 }
 
 h1 {
@@ -332,6 +333,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     right: 13px;
     background: none !important;
     color: #1f1f1f;
+    padding-right: 0;
 }
 
 .brand.nav-item a.nav-link:hover {
