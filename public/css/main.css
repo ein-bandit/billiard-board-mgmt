@@ -2,6 +2,9 @@
 .ReactModal__Overlay {
     z-index: 2;
 }
+.hidden {
+    display: none;
+}
 
 body {
     background: #f4f4f4;
@@ -9,9 +12,17 @@ body {
 }
 
 h1 {
-    font-size: 2rem;
+    font-size: 165%;
     margin-bottom: 0;
     margin-top: 5px;
+}
+
+h2 {
+    font-size: 140%;
+}
+
+h4 {
+    font-size: 130%;
 }
 
 .inline {
@@ -30,7 +41,7 @@ h1 {
     padding-right: 0;
 }
 
-.tables.clock-and-transactions {
+.clock-and-transactions {
     display: flex;
     align-items: center;
 }
@@ -89,7 +100,6 @@ h1 {
 }
 
 .tb .tb-modal-buttons .tb-modal-btn {
-    border: 2px solid;
     font-weight: bold;
 }
 
@@ -137,7 +147,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .tb .tb-content {
-    padding: 10px 15px 25px
+    padding: 5px 15px 10px
 }
 
 .tb .tb-content li {
@@ -162,7 +172,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .logs .log .log-recycle-btn {
-    display: none;
+    opacity: 0;
 }
 
 .logs .log.log-recycle .log-recycle-btn {
@@ -171,6 +181,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     border-radius: 4px;
     padding: 4px 6px;
     cursor: pointer;
+    opacity: 1;
 }
 
 .logs .log.log-recycle .log-recycle-btn:hover {
@@ -179,7 +190,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .logs .log .log-nr {
-    background: #242424;
+    background: #5d5d5d;
     color: #fff;
     padding: 2px 15px;
     margin-top: 22px;
@@ -204,13 +215,39 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     margin-bottom: 40px;
 }
 
-.timer {
-    margin-left: 25px;
-    margin-right: 25px;
+.clock-logs-switch {
+
+}
+
+.clock-logs-switch ul.nav-tabs {
+
+}
+.clock-logs-switch ul li a.nav-link {
+    color: black;
+    border-color: rgba(0,0,0,0.5);
+    margin-right: 2px;
+}
+
+
+.clock-logs-switch ul li a.nav-link:hover {
+    border-color: black;
+}
+
+.clock-logs-switch ul li a.nav-link.active {
+    background: #1f1f1f;
+    color: white;
+    border-color: #1f1f1f;
+}
+
+.timer-and-transaction-wrapper {
     height: 220px;
-    background: black;
+    background: #1f1f1f;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
+    width: 100%;
+}
+
+.timer {
     color: white;
     position: relative;
 }
@@ -262,5 +299,14 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .transactions {
-    margin-top: 25px;
+    zoom: 0.5;
+}
+
+.log.list-group-item {
+    background: none;
+    color: #fff;
+}
+
+.log.list-group-item:hover {
+
 }

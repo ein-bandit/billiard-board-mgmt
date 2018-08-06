@@ -25,7 +25,8 @@ export default class TableManager extends React.Component {
             highlightedTable: null,
             passedTransactions: [],
             modalIsOpen: false,
-            tableActive: []
+            tableActive: [],
+            activeTab: 'clock'
         };
 
         this.timer = null;
@@ -193,6 +194,19 @@ export default class TableManager extends React.Component {
         })
     }
 
+    ChangeTab(tab) {
+        this.setState({
+            activeTab: tab
+        });
+    }
+
+    AvoidClick(evt, name) {
+        console.log(evt);
+        this.ChangeTab(name);
+        evt.stopPropagation();
+        evt.preventDefault();
+    }
+
     render() {
         const templ1 = [];
         for (let i = 0; i < 5; i++) {
@@ -240,40 +254,57 @@ export default class TableManager extends React.Component {
         return (
             <div className={'table-manager'}>
                 <div className={'row'}>
-                <TableModalWrapper ref={(instance) => {
-                    this.tableModalWrapper = instance;
-                }} price={this.props.price} resumeCallback={(table) => {
-                    this.ReactivateTable(table)
-                }}/>
+                    <TableModalWrapper ref={(instance) => {
+                        this.tableModalWrapper = instance;
+                    }} price={this.props.price} resumeCallback={(table) => {
+                        this.ReactivateTable(table)
+                    }}/>
 
 
-                {templ1}
+                    {templ1}
 
-                <div className={'col-6 clock-and-transactions'}>
-                    <Timer interval={this.props.interval} ref={(instance) => {
-                        this.timer = instance
-                    }} update={newTime => {
-                        this.UpdateChildren(newTime);
-                    }} tables={this.props.tables} usedTables={this.state.tableActive.length}/>
-
-                </div>
-
-                {templ2}
-                </div>
-                <div className={'row'}>
-                    <div className={'transactions'}>
-                        <ul className="logs list-group list-group-flush">
-                            {this.state.passedTransactions.map((trans) => {
-                                return <TableHistoryItem key={trans.transId} table={trans}
-                                                         nr={tableObjects[trans.id].nr}
-                                                         price={this.props.price}
-                                                         recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
-                                                         reactivateCallback={table => this.ReactivateOpenModal(table)}/>
-                            })
-                            }</ul>
+                    <div className={'col-6 clock-and-transactions'}>
+                        <div className={'col-12'}>
+                            <div className={'clock-logs-switch'}>
+                                <ul className="nav nav-tabs">
+                                    <li className="nav-item">
+                                        <a className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
+                                           href="#" onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
+                                    </li>
+                                    <li className="nav-item">
+                                        <a className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
+                                           href="#" onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className={'timer-and-transaction-wrapper'}>
+                                <div className={'timer-wrapper ' + (this.state.activeTab === 'logs' ? 'hidden' : '')}>
+                                    <Timer interval={this.props.interval} ref={(instance) => {
+                                        this.timer = instance
+                                    }} update={newTime => {
+                                        this.UpdateChildren(newTime);
+                                    }} tables={this.props.tables} usedTables={this.state.tableActive.length}/>
+                                </div>
+                                <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
+                                    <ul className="logs list-group list-group-flush">
+                                        <li className={'log list-group-item shadow-sm empty-transactions ' + (this.state.passedTransactions.length === 0 ? '' : 'hidden')}>
+                                            <h1>Keine Transaktionen vorhanden</h1>
+                                        </li>
+                                        {this.state.passedTransactions.map((trans) => {
+                                            return <TableHistoryItem key={trans.transId} table={trans}
+                                                                     nr={tableObjects[trans.id].nr}
+                                                                     price={this.props.price}
+                                                                     recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
+                                                                     reactivateCallback={table => this.ReactivateOpenModal(table)}/>
+                                        })
+                                        }</ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
+                    {templ2}
+                </div>
             </div>
         );
     }
