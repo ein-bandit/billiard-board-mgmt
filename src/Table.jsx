@@ -26,15 +26,15 @@ export default class Table extends React.Component {
         var active = !this.state.active;
         this.setState({
             active: active,
-            startDate: active === true ? new Date() : null
+            startDate: active === true ? Date.now() : null
         });
         this.props.startCallback(this.state);
     }
 
-    UpdateTime(interval) {
+    UpdateTime() {
         if (this.state.active) {
             this.setState({
-                timeActive: this.state.timeActive + interval
+                timeActive: (Date.now() - this.state.startDate) / 1000
             });
             this.props.startCallback(this.state);
         }
@@ -119,7 +119,7 @@ export default class Table extends React.Component {
                             <div className="row">
                                 <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
                                 <div className="col-8 text-right">
-                                    <h2>{(this.props.price * this.state.timeActive).toFixed(2)}</h2></div>
+                                    <h2>{(this.props.price * this.state.timeActive).toFixed(2).replace('.',',')}</h2></div>
                             </div>
                         </li>
                     </ul>

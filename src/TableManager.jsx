@@ -9,7 +9,6 @@ import _ from 'lodash';
 
 let tableObjects = [];
 
-const SYNC_TIME = 10;
 const SAVED_TRANSACTIONS = 4;
 const CURRENT_TABLES = {
     tables: [],
@@ -30,6 +29,7 @@ export default class TableManager extends React.Component {
             activeTab: 'clock'
         };
 
+        this.syncTime = this.props.syncInterval;
         this.timer = null;
         this.tableModalWrapper = null;
 
@@ -103,7 +103,7 @@ export default class TableManager extends React.Component {
     }
 
     UpdateTables() {
-        console.log("saving",CURRENT_TABLES.tables);
+        //console.log("saving",CURRENT_TABLES.tables);
         CURRENT_TABLES.transactions = this.state.passedTransactions;
 
         let tempTables = JSON.stringify(CURRENT_TABLES);
@@ -168,7 +168,7 @@ export default class TableManager extends React.Component {
             return null;
         });
 
-        if (timeElapsed % SYNC_TIME === 0) {
+        if (timeElapsed % this.syncTime === 0) {
             this.UpdateTables();
         }
     }

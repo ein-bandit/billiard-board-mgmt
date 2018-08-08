@@ -87,7 +87,7 @@ export default class TableModalWrapper extends React.Component {
                             <div className="row">
                                 <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
                                 <div className="col-8 text-right">
-                                    <h2>{(this.props.price * this.state.table.timeActive).toFixed(2)}</h2></div>
+                                    <h2>{(this.props.price * this.state.table.timeActive).toFixed(2).replace('.',',')}</h2></div>
                             </div>
                         </li>
                     </ul>

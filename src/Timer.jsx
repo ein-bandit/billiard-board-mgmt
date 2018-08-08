@@ -9,8 +9,9 @@ export default class Timer extends React.Component {
         this.state = {
             startingTime: 0,
             timeElapsed: 0,
-            currentTime: new Date(),
+            currentTime: Date.now(),
         };
+        this.intervalID = null;
         this.currentInterval = 0;
         this.usedTables = this.props.usedTables;
     }
@@ -28,18 +29,16 @@ export default class Timer extends React.Component {
         this.intervalID = setInterval(() => this.timingFunction(), 1000);
     }
 
-    timingFunction(newTime) {
+    timingFunction() {
         if (this.currentInterval++ === this.props.interval - 1) {
             this.currentInterval = 0;
             this.setState({
                 timeElapsed: Math.floor((Date.now() - this.state.startingTime) / 1000),
-                currentTime: new Date()
+                currentTime: Date.now()
             });
             this.props.update(this.state.timeElapsed);
         }
     }
-
-    //remove intervalId on destroy.
 
     render() {
         const runningTime = [];
