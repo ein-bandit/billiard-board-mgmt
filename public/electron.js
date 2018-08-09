@@ -7,13 +7,26 @@ const BrowserWindow = electron.BrowserWindow;
 const path = require('path');
 const url = require('url');
 
+const fs = require('fs');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 function createWindow() {
-    // Create the browser window.
-    mainWindow = new BrowserWindow({width: 1024, height: 658, resizable: false});
+
+    let loader = 'load-config.js';
+    if (process.env.ELECTRON_INDEX) {
+        loader = 'public/' + loader;
+    } else {
+        loader = path.join(__dirname, loader);
+    }
+
+    mainWindow = new BrowserWindow({
+        width: 1024, height: 658, resizable: false, webPreferences: {
+            preload: loader
+        }
+    });
 
     // and load the index.html of the app.
     const startUrl = process.env.ELECTRON_START_URL || url.format({
@@ -22,6 +35,7 @@ function createWindow() {
         slashes: true
     });
     mainWindow.loadURL(startUrl);
+    //mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function () {
@@ -35,7 +49,20 @@ function createWindow() {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
+app.on('ready', function () {
+    let configPath = path.join(process.env.PORTABLE_EXECUTABLE_DIR || app.getAppPath(), 'config.json');
+
+    if (fs.existsSync(configPath)) {
+        fs.readFile(configPath, 'utf8', function (err, data) {
+            // data is the contents of the text file we just read
+            global.bmConfig = JSON.parse(data);
+            createWindow();
+        });
+    } else {
+        createWindow();
+    }
+
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {

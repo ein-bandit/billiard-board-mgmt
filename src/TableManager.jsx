@@ -212,7 +212,7 @@ export default class TableManager extends React.Component {
 
     render() {
         const templ1 = [];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < Math.min(5, tableObjects.length); i++) {
 
             let idx = i;
             let obj = tableObjects[i];
@@ -233,27 +233,28 @@ export default class TableManager extends React.Component {
         }
 
         const templ2 = [];
-        for (let i = 5; i < tableObjects.length; i++) {
+        if (tableObjects.length > 5) {
+            for (let i = 5; i < tableObjects.length; i++) {
 
-            let idx = i;
-            let obj = tableObjects[i];
-            templ2.push((
-                <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
-                       ref={instance => {
-                           obj.ref = instance;
-                       }}
-                       highlighted={obj.id === this.state.highlightedTable}
-                       price={this.props.price}
-                       startCallback={table => this.UpdateTable(table)}
-                       stopCallback={table => this.StopTable(table)}
-                       highlightCallback={tableId => {
-                           this.UpdateHighlight(tableId)
-                       }}/>
+                let idx = i;
+                let obj = tableObjects[i];
+                templ2.push((
+                    <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
+                           ref={instance => {
+                               obj.ref = instance;
+                           }}
+                           highlighted={obj.id === this.state.highlightedTable}
+                           price={this.props.price}
+                           startCallback={table => this.UpdateTable(table)}
+                           stopCallback={table => this.StopTable(table)}
+                           highlightCallback={tableId => {
+                               this.UpdateHighlight(tableId)
+                           }}/>
 
-            ));
+                ));
 
+            }
         }
-
         return (
             <div className={'table-manager'}>
                 <div className={'row'}>
