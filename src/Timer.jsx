@@ -1,6 +1,7 @@
 import React from 'react';
 import {GetTimeStringFromSeconds} from './Helpers';
 import {GetTimeStringFromDate} from './Helpers';
+import lodash from 'lodash';
 
 export default class Timer extends React.Component {
 
@@ -10,6 +11,7 @@ export default class Timer extends React.Component {
             startingTime: 0,
             timeElapsed: 0,
             currentTime: Date.now(),
+            sum: 0
         };
         this.intervalID = null;
         this.currentInterval = 0;
@@ -22,6 +24,21 @@ export default class Timer extends React.Component {
 
     UpdateUsedTables(tables) {
         this.usedTables = tables;
+    }
+
+    UpdateSum(transactions) {
+        let sum = 0;
+        let compDate = new Date();
+        compDate.setHours(compDate.getHours() - this.props.priceSumByHours);
+        lodash.forEach(transactions, (trans) => {
+            if (trans.endDate > compDate) {
+                sum += trans.timeActive * this.props.price
+            }
+        });
+
+        this.setState({
+            sum: sum
+        });
     }
 
     startTiming() {
@@ -67,9 +84,15 @@ export default class Timer extends React.Component {
                     {globalDigits}
                 </div>
                 <div className={"additional-info"}>
-                    <div className={"nr-tables"}><div className={'nr-tables-inner'}> {this.usedTables} / {this.props.tables}</div></div>
+                    <div className={"nr-tables"}>
+                        <div className={'nr-tables-inner'}> {this.usedTables} / {this.props.tables}</div>
+                    </div>
                     <div className={"step-timer flip-clock"}>
                         {runningTime}
+                    </div>
+                    <div className={'nr-tables'}>
+                        <div className={'nr-tables-inner'}><i
+                            className={'fas fa-euro-sign'}/><div className={'sum'}> {(Math.round(this.state.sum * 100) / 100).toFixed(2).replace('.',',')}</div></div>
                     </div>
                 </div>
 

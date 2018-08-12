@@ -9,7 +9,7 @@ import _ from 'lodash';
 
 let tableObjects = [];
 
-const SAVED_TRANSACTIONS = 4;
+const SAVED_TRANSACTIONS = 25;
 const CURRENT_TABLES = {
     tables: [],
     transactions: []
@@ -63,6 +63,7 @@ export default class TableManager extends React.Component {
                 this.setState({
                     passedTransactions: copiedTransactions
                 });
+                this.timer.UpdateSum(this.state.passedTransactions);
             }
         }
     }
@@ -156,6 +157,8 @@ export default class TableManager extends React.Component {
             passedTransactions: passedTransactions.reverse()
         });
 
+        this.timer.UpdateSum(this.state.passedTransactions);
+
         this.tableModalWrapper.StartModal(clone);
 
     }
@@ -181,15 +184,21 @@ export default class TableManager extends React.Component {
         if (tableObjects[table.id].ref.isActive()) {
             return;
         }
+
         this.SetActive(table.id, true);
         CURRENT_TABLES.tables[table.id] = table;
         tableObjects[table.id].ref.Reactivate(table);
+        let newTrans =_.filter(this.state.passedTransactions, function(tab) {
+            return tab.id !== table.id;
+        });
+        console.log(newTrans, this.state.passedTransactions);
 
-        this.state.passedTransactions.splice(table.id, 1);
+
         this.setState({
             highlightedTable: null,
-            passedTransactions: this.state.passedTransactions
+            passedTransactions: newTrans
         });
+        this.timer.UpdateSum(this.state.passedTransactions);
     }
 
     UpdateHighlight(tableId) {
@@ -292,7 +301,9 @@ export default class TableManager extends React.Component {
                                         this.timer = instance
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
-                                    }} tables={this.props.tables} usedTables={this.state.tableActive.length}/>
+                                    }} tables={this.props.tables} usedTables={this.state.tableActive.length}
+                                           priceSumByHours={this.props.priceSumByHours} transactions={this.state.passedTransactions}
+                                    price={this.props.price}/>
                                 </div>
                                 <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
                                     <ul className="logs list-group list-group-flush">
@@ -301,7 +312,6 @@ export default class TableManager extends React.Component {
                                         </li>
                                         {this.state.passedTransactions.map((trans) => {
                                             return <TableHistoryItem key={trans.transId} table={trans}
-                                                                     nr={tableObjects[trans.id].nr}
                                                                      price={this.props.price}
                                                                      recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
                                                                      reactivateCallback={table => this.ReactivateOpenModal(table)}/>

@@ -7,6 +7,7 @@ export default class Table extends React.Component {
         super(props);
         this.state = {
             id: this.props.id,
+            nr: this.props.nr,
             active: false,
             timeActive: 0,
             startDate: null,
@@ -119,7 +120,7 @@ export default class Table extends React.Component {
                             <div className="row">
                                 <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
                                 <div className="col-8 text-right">
-                                    <h2>{(this.props.price * this.state.timeActive).toFixed(2).replace('.',',')}</h2></div>
+                                    <h2>{(Math.round(this.props.price * this.state.timeActive*100)/100).toFixed(2).replace('.',',')}</h2></div>
                             </div>
                         </li>
                     </ul>

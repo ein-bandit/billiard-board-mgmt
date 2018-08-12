@@ -2,6 +2,7 @@
 .ReactModal__Overlay {
     z-index: 2;
 }
+
 .hidden {
     display: none;
 }
@@ -231,16 +232,17 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .clock-logs-switch ul.nav-tabs {
     border-bottom: none;
 }
+
 .clock-logs-switch ul li a.nav-link {
     color: black;
-    border-color: rgba(0,0,0,0.5);
+    border-color: rgba(0, 0, 0, 0.5);
     margin-right: 2px;
 }
 
 .clock-logs-switch ul li a.nav-link:hover {
     border-color: black;
-    background: rgb(244,244,244);
-    background: linear-gradient(180deg, rgba(244,244,244,1) 0%, rgba(222,222,222,1) 71%);
+    background: rgb(244, 244, 244);
+    background: linear-gradient(180deg, rgba(244, 244, 244, 1) 0%, rgba(222, 222, 222, 1) 71%);
 }
 
 .clock-logs-switch ul li a.nav-link.active {
@@ -252,8 +254,8 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .timer-and-transaction-wrapper {
     height: 155px;
     overflow: hidden;
-    background: rgb(51,51,51);
-    background: linear-gradient(0deg, rgba(51,51,51,1) 0%, rgba(31,31,31,1) 71%);
+    background: rgb(51, 51, 51);
+    background: linear-gradient(0deg, rgba(51, 51, 51, 1) 0%, rgba(31, 31, 31, 1) 71%);
     border: 1px solid transparent;
     border-radius: 0 0 7px 7px;
     width: 100%;
@@ -272,15 +274,15 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 
 .timer .global-timer .flip-clock-digit {
     width: 45px;
-    background: rgb(23,23,23);
-    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
+    background: rgb(23, 23, 23);
+    background: linear-gradient(0deg, rgba(23, 23, 23, 1) 33%, rgba(50, 50, 50, 1) 63%);
 }
 
 .timer .step-timer .flip-clock-digit {
     width: 18px;
     height: 28px;
-    background: rgb(23,23,23);
-    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
+    background: rgb(23, 23, 23);
+    background: linear-gradient(0deg, rgba(23, 23, 23, 1) 33%, rgba(50, 50, 50, 1) 63%);
 }
 
 .timer .branding {
@@ -309,13 +311,27 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .additional-info .nr-tables {
     border: 1px solid #96969694;
     border-radius: 4px;
+    margin-left: 25px;
     margin-right: 25px;
-    background: rgb(23,23,23);
-    background: linear-gradient(0deg, rgba(23,23,23,1) 33%, rgba(50,50,50,1) 63%);
+    background: rgb(23, 23, 23);
+    background: linear-gradient(0deg, rgba(23, 23, 23, 1) 33%, rgba(50, 50, 50, 1) 63%);
 }
 
 .additional-info .nr-tables .nr-tables-inner {
     padding: 10px;
+    display: flex;
+    align-items: center;
+    min-width: 80px;
+}
+
+.additional-info .nr-tables .nr-tables-inner .sum {
+    text-align:right;
+    width: 100%;
+    margin-left: 10px;
+}
+.additional-info .nr-tables .nr-tables-inner i {
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .transactions {
@@ -344,5 +360,5 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 a.nav-link.active:focus {
-   outline: 0;
+    outline: 0;
 }
