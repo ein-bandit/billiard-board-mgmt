@@ -98,11 +98,11 @@ export default class TableModalWrapper extends React.Component {
                     <div className={'tb-modal-buttons'}>
                         <button className={'tb-modal-btn tb-modal-btn-resume btn btn-default'} onClick={(event) => {
                             this.closeModal(event, true)
-                        }}>{this.state.isRecycle === true ? 'Wiederherstellen' : 'Fortsetzen'}
+                        }}>{this.state.isRecycle === true ? 'Wiederherstellen (1)' : 'Fortsetzen (1)'}
                         </button>
                         <button className={'tb-modal-btn tb-modal-btn-close btn btn-default'} onClick={(event) => {
                             this.closeModal(event, false)
-                        }}>{this.state.isRecycle === true ? 'Abbrechen' : 'Beenden'}
+                        }}>{this.state.isRecycle === true ? 'Abbrechen (2)' : 'Beenden (2)'}
                         </button>
                     </div>
                 </div>

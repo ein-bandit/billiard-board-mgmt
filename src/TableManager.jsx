@@ -24,7 +24,6 @@ export default class TableManager extends React.Component {
         this.state = {
             highlightedTable: null,
             passedTransactions: [],
-            modalIsOpen: false,
             tableActive: [],
             activeTab: 'clock'
         };
@@ -78,27 +77,34 @@ export default class TableManager extends React.Component {
 
     ToggleChildByKeypress(e) {
         var intKey = (window.Event) ? e.which : e.keyCode;
-        //hande cases 1-9
-        //console.log(intKey);
-        if (intKey > 47 && intKey < 58) {
-            var tableNo = 1;
-            if (intKey === 48) {
-                tableNo = 10;
-            } else {
-                tableNo = intKey - 48; //plus one for real table number (not index)
+
+        if (this.tableModalWrapper.state.modalIsOpen) {
+            if (intKey === 49 || intKey === 50) {
+                this.tableModalWrapper.closeModal(e, intKey === 49);
             }
+        } else {
+            //hande cases 1-9
+            if (intKey > 47 && intKey < 58) {
+                var tableNo = 1;
+                if (intKey === 48) {
+                    tableNo = 10;
+                } else {
+                    tableNo = intKey - 48; //plus one for real table number (not index)
+                }
 
-            this.SetActive(tableNo - 1, true);
-            this.setState({
-                highlightedTable: tableNo - 1
-            });
+                this.SetActive(tableNo - 1, true);
+                this.setState({
+                    highlightedTable: tableNo - 1
+                });
 
-        } else if (intKey === 13 || intKey === 32) {
-            if (this.state.highlightedTable !== null) {
-                tableObjects[this.state.highlightedTable].ref.HandleEnter();
+            } else if (intKey === 13 || intKey === 32) {
+                if (this.state.highlightedTable !== null) {
+                    tableObjects[this.state.highlightedTable].ref.HandleEnter();
+                }
+
             }
-
         }
+
         e.preventDefault();
         e.stopPropagation();
     }
@@ -203,7 +209,6 @@ export default class TableManager extends React.Component {
             return tab.id !== table.id;
         });
         //console.log(newTrans, this.state.passedTransactions);
-
 
         this.setState({
             highlightedTable: null,
