@@ -85,16 +85,19 @@ export default class TableManager extends React.Component {
         } else {
             //hande cases 1-9
             if (intKey > 47 && intKey < 58) {
-                var tableNo = 1;
+                let tableNo = 1;
                 if (intKey === 48) {
                     tableNo = 10;
                 } else {
                     tableNo = intKey - 48; //plus one for real table number (not index)
                 }
 
-                this.SetActive(tableNo - 1, true);
+                let idx = this.props.tableNumbers.indexOf(tableNo);
+                //console.log(idx);
+
+                this.SetActive(idx, true);
                 this.setState({
-                    highlightedTable: tableNo - 1
+                    highlightedTable: idx
                 });
 
             } else if (intKey === 13 || intKey === 32) {
@@ -126,7 +129,7 @@ export default class TableManager extends React.Component {
 
     StartTable(table) {
         this.SetActive(table.id, table.active);
-        var clone = cloneDeep(table);
+        let clone = cloneDeep(table);
         clone.ref = null;
         CURRENT_TABLES.tables[table.id] = clone;
 
@@ -138,7 +141,7 @@ export default class TableManager extends React.Component {
     }
 
     SetActive(id, active, initial) {
-        var tableActive = this.state.tableActive;
+        let tableActive = this.state.tableActive;
         tableActive[id] = active;
         this.setState({
             tableActive: tableActive
