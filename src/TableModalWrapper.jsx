@@ -27,7 +27,9 @@ export default class TableModalWrapper extends React.Component {
         });
     }
 
-    closeModal(resume) {
+    closeModal(evt, resume) {
+        if (evt.type === 'keydown' && evt.keyCode === 27) return;
+
         this.setState({modalIsOpen: false});
         if (resume) {
             this.props.resumeCallback(this.state.table);
@@ -41,6 +43,7 @@ export default class TableModalWrapper extends React.Component {
                 onRequestClose={this.closeModal}
                 contentLabel="Table Stop Modal"
                 className={"col-6 tb tb-status-pause tb-single"}
+                shouldCloseOnOverlayClick={false}
             >
                 <div className="tb-wrap">
                     <div className="tb-head shadow-sm">
@@ -93,12 +96,12 @@ export default class TableModalWrapper extends React.Component {
                     </ul>
 
                     <div className={'tb-modal-buttons'}>
-                        <button className={'tb-modal-btn tb-modal-btn-resume btn btn-default'} onClick={() => {
-                            this.closeModal(true)
+                        <button className={'tb-modal-btn tb-modal-btn-resume btn btn-default'} onClick={(event) => {
+                            this.closeModal(event, true)
                         }}>{this.state.isRecycle === true ? 'Wiederherstellen' : 'Fortsetzen'}
                         </button>
-                        <button className={'tb-modal-btn tb-modal-btn-close btn btn-default'} onClick={() => {
-                            this.closeModal()
+                        <button className={'tb-modal-btn tb-modal-btn-close btn btn-default'} onClick={(event) => {
+                            this.closeModal(event, false)
                         }}>{this.state.isRecycle === true ? 'Abbrechen' : 'Beenden'}
                         </button>
                     </div>

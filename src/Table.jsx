@@ -37,7 +37,7 @@ export default class Table extends React.Component {
             this.setState({
                 timeActive: (Date.now() - this.state.startDate) / 1000
             });
-            this.props.startCallback(this.state);
+            this.props.updateCallback(this.state);
         }
     }
 

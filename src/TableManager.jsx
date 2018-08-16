@@ -104,7 +104,10 @@ export default class TableManager extends React.Component {
     }
 
     UpdateTables() {
-        //console.log("saving",CURRENT_TABLES.tables);
+        this.SaveToStorage();
+    }
+
+    SaveToStorage() {
         CURRENT_TABLES.transactions = this.state.passedTransactions;
 
         let tempTables = JSON.stringify(CURRENT_TABLES);
@@ -115,14 +118,20 @@ export default class TableManager extends React.Component {
     }
 
 
-    UpdateTable(table) {
+    StartTable(table) {
         this.SetActive(table.id, table.active);
         var clone = cloneDeep(table);
         clone.ref = null;
         CURRENT_TABLES.tables[table.id] = clone;
+
+        this.SaveToStorage();
     }
 
-    SetActive(id, active) {
+    UpdateCallback(table) {
+        CURRENT_TABLES.tables[table.id] = cloneDeep(table);
+    }
+
+    SetActive(id, active, initial) {
         var tableActive = this.state.tableActive;
         tableActive[id] = active;
         this.setState({
@@ -133,10 +142,8 @@ export default class TableManager extends React.Component {
 
     StopTable(table) {
         this.SetActive(table.id, false);
-        this.setState({
-            highlightedTable: null
-        });
-        _.remove(CURRENT_TABLES.tables, table);
+
+        _.remove(CURRENT_TABLES.tables, {id:table.id});
 
         // es-lint disabled
         var clone = cloneDeep(table);
@@ -154,10 +161,14 @@ export default class TableManager extends React.Component {
         }
 
         this.setState({
-            passedTransactions: passedTransactions.reverse()
+            passedTransactions: passedTransactions.reverse(),
+            highlightedTable: null
         });
 
+        this.SaveToStorage();
+
         this.timer.UpdateSum(this.state.passedTransactions);
+
 
         this.tableModalWrapper.StartModal(clone);
 
@@ -188,10 +199,10 @@ export default class TableManager extends React.Component {
         this.SetActive(table.id, true);
         CURRENT_TABLES.tables[table.id] = table;
         tableObjects[table.id].ref.Reactivate(table);
-        let newTrans =_.filter(this.state.passedTransactions, function(tab) {
+        let newTrans = _.filter(this.state.passedTransactions, function (tab) {
             return tab.id !== table.id;
         });
-        console.log(newTrans, this.state.passedTransactions);
+        //console.log(newTrans, this.state.passedTransactions);
 
 
         this.setState({
@@ -199,6 +210,8 @@ export default class TableManager extends React.Component {
             passedTransactions: newTrans
         });
         this.timer.UpdateSum(this.state.passedTransactions);
+
+        this.SaveToStorage();
     }
 
     UpdateHighlight(tableId) {
@@ -232,11 +245,12 @@ export default class TableManager extends React.Component {
                        }}
                        highlighted={obj.id === this.state.highlightedTable}
                        price={this.props.price}
-                       startCallback={table => this.UpdateTable(table)}
+                       startCallback={table => this.StartTable(table)}
                        stopCallback={table => this.StopTable(table)}
                        highlightCallback={tableId => {
                            this.UpdateHighlight(tableId)
-                       }}/>
+                       }}
+                       updateCallback={table => this.UpdateCallback(table)}/>
             ));
 
         }
@@ -254,11 +268,12 @@ export default class TableManager extends React.Component {
                            }}
                            highlighted={obj.id === this.state.highlightedTable}
                            price={this.props.price}
-                           startCallback={table => this.UpdateTable(table)}
+                           startCallback={table => this.StartTable(table)}
                            stopCallback={table => this.StopTable(table)}
                            highlightCallback={tableId => {
                                this.UpdateHighlight(tableId)
-                           }}/>
+                           }}
+                           updateCallback={table => this.UpdateCallback(table)}/>
 
                 ));
 
@@ -302,8 +317,9 @@ export default class TableManager extends React.Component {
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
                                     }} tables={this.props.tables} usedTables={this.state.tableActive.length}
-                                           priceSumByHours={this.props.priceSumByHours} transactions={this.state.passedTransactions}
-                                    price={this.props.price}/>
+                                           priceSumByHours={this.props.priceSumByHours}
+                                           transactions={this.state.passedTransactions}
+                                           price={this.props.price}/>
                                 </div>
                                 <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
                                     <ul className="logs list-group list-group-flush">
