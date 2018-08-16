@@ -325,6 +325,10 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     min-width: 80px;
 }
 
+.additional-info .nr-tables .nr-tables-inner.sum-holder {
+    cursor: pointer;
+}
+
 .additional-info .nr-tables .nr-tables-inner .sum {
     text-align:right;
     width: 100%;
