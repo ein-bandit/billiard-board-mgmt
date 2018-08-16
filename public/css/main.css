@@ -321,6 +321,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     padding: 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     min-width: 80px;
 }
 
