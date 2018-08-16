@@ -85,7 +85,7 @@ export default class Timer extends React.Component {
                 </div>
                 <div className={"additional-info"}>
                     <div className={"nr-tables"}>
-                        <div className={'nr-tables-inner'}> {this.usedTables} / {this.props.tables}</div>
+                        <div className={'nr-tables-inner'}> {lodash.filter(this.usedTables, (t) => {return t;}).length} / {this.props.tables}</div>
                     </div>
                     <div className={"step-timer flip-clock"}>
                         {runningTime}

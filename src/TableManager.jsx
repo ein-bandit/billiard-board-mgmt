@@ -146,7 +146,7 @@ export default class TableManager extends React.Component {
         this.setState({
             tableActive: tableActive
         });
-        this.timer.UpdateUsedTables(this.state.tableActive.length);
+        this.timer.UpdateUsedTables(this.state.tableActive);
     }
 
     StopTable(table) {
@@ -324,7 +324,7 @@ export default class TableManager extends React.Component {
                                         this.timer = instance
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
-                                    }} tables={this.props.tables} usedTables={this.state.tableActive.length}
+                                    }} tables={this.props.tables} usedTables={this.state.tableActive}
                                            priceSumByHours={this.props.priceSumByHours}
                                            transactions={this.state.passedTransactions}
                                            price={this.props.price}/>
