@@ -8,6 +8,7 @@ Modal.setAppElement('#root');
 
 export default class TableModalWrapper extends React.Component {
 
+    //types: tables, sums
     constructor(props) {
         super(props);
         this.state = {
@@ -37,9 +38,18 @@ export default class TableModalWrapper extends React.Component {
         }
     }
 
-    resetCallback() {
+    closeByKey(evt, resume) {
+        if (this.state.type === 'tables') {
+            this.closeModal(evt, this.state.data.table, resume);
+        } else if(this.state.type==='sums'){
+            resume ? this.closeModal(evt) : this.resetCallback(evt);
+        }
+    }
+
+    resetCallback(evt) {
         console.log("modal wrapper reset callback");
         this.props.resetTransactionsCallback();
+        this.closeModal(evt)
     }
 
     render() {

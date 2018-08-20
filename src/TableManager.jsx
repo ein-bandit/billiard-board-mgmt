@@ -62,7 +62,7 @@ export default class TableManager extends React.Component {
                 this.setState({
                     passedTransactions: copiedTransactions
                 });
-                this.timer.UpdateTotal(this.state.passedTransactions);
+                this.timer.UpdateTotal(copiedTransactions);
             }
         }
     }
@@ -88,7 +88,7 @@ export default class TableManager extends React.Component {
 
         if (this.tableModalWrapper.state.modalIsOpen) {
             if (intKey === 49 || intKey === 50) {
-                this.tableModalWrapper.closeModal(e, intKey === 49);
+                this.tableModalWrapper.closeByKey(e, intKey === 49);
             }
         } else {
             //hande cases 1-9
