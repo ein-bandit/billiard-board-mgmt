@@ -138,6 +138,10 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     background-color: #c5ffbf;
 }
 
+.tb.tb-status-final .tb-head {
+    background-color: #f1f1f1
+}
+
 .tb {
     cursor: pointer;
 }
@@ -381,6 +385,17 @@ a.nav-link.active:focus {
 .summary-group .summary-number {
     text-align: right;
     float: right;
+}
+
+.summary-group .list-group-item {
+    background: inherit;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+}
+.summary-group .list-group-item.active {
+    color: black;
+    padding-left: 35px;
 }
 
 .summary-group .col-4 {
