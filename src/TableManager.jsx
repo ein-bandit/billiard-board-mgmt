@@ -10,12 +10,12 @@ import _ from 'lodash';
 let tableObjects = [];
 
 const SAVED_TRANSACTIONS = 25;
-const CURRENT_TABLES = {
+export let CURRENT_TABLES = {
     tables: [],
     transactions: []
 };
 
-const LOCALSTORAGE_KEY = 'BilliardManager3001_current-tables';
+export const LOCALSTORAGE_KEY = 'BilliardManager3001_current-tables';
 
 export default class TableManager extends React.Component {
 
@@ -62,7 +62,7 @@ export default class TableManager extends React.Component {
                 this.setState({
                     passedTransactions: copiedTransactions
                 });
-                this.timer.UpdateSum(this.state.passedTransactions);
+                this.timer.UpdateTotal(this.state.passedTransactions);
             }
         }
     }
@@ -73,6 +73,14 @@ export default class TableManager extends React.Component {
         window.addEventListener('keypress', (evt) => {
             this.ToggleChildByKeypress(evt)
         });
+    }
+
+    ResetTransactions() {
+        this.setState({
+            passedTransactions: []
+        });
+        this.timer.UpdateTotal([]);
+        this.SaveToStorage();
     }
 
     ToggleChildByKeypress(e) {
@@ -150,9 +158,10 @@ export default class TableManager extends React.Component {
     }
 
     StopTable(table) {
+        console.log("stopping table", table);
         this.SetActive(table.id, false);
 
-        _.remove(CURRENT_TABLES.tables, {id:table.id});
+        _.remove(CURRENT_TABLES.tables, {id: table.id});
 
         // es-lint disabled
         var clone = cloneDeep(table);
@@ -176,10 +185,9 @@ export default class TableManager extends React.Component {
 
         this.SaveToStorage();
 
-        this.timer.UpdateSum(this.state.passedTransactions);
+        this.timer.UpdateTotal(this.state.passedTransactions);
 
-
-        this.tableModalWrapper.StartModal(clone);
+        this.tableModalWrapper.StartModal('tables', {table: clone, isRecycle: false});
 
     }
 
@@ -197,7 +205,11 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateOpenModal(table) {
-        this.tableModalWrapper.StartModal(table, true);
+        this.tableModalWrapper.StartModal('tables', {table: table, isRecycle: true});
+    }
+
+    ShowSums() {
+        this.tableModalWrapper.StartModal('sums', {sums: this.state.passedTransactions});
     }
 
     ReactivateTable(table) {
@@ -217,7 +229,7 @@ export default class TableManager extends React.Component {
             highlightedTable: null,
             passedTransactions: newTrans
         });
-        this.timer.UpdateSum(this.state.passedTransactions);
+        this.timer.UpdateTotal(this.state.passedTransactions);
 
         this.SaveToStorage();
     }
@@ -294,6 +306,8 @@ export default class TableManager extends React.Component {
                         this.tableModalWrapper = instance;
                     }} price={this.props.price} resumeCallback={(table) => {
                         this.ReactivateTable(table)
+                    }} resetTransactionsCallback={() => {
+                        this.ResetTransactions()
                     }}/>
 
 
@@ -327,7 +341,7 @@ export default class TableManager extends React.Component {
                                     }} tables={this.props.tables} usedTables={this.state.tableActive}
                                            priceSumByHours={this.props.priceSumByHours}
                                            transactions={this.state.passedTransactions}
-                                           price={this.props.price}/>
+                                           price={this.props.price} showSumsCallback={() => this.ShowSums()}/>
                                 </div>
                                 <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
                                     <ul className="logs list-group list-group-flush">

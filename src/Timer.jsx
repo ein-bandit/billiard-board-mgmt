@@ -11,7 +11,7 @@ export default class Timer extends React.Component {
             startingTime: 0,
             timeElapsed: 0,
             currentTime: Date.now(),
-            sum: []
+            total: 0
         };
         this.intervalID = null;
         this.currentInterval = 0;
@@ -26,23 +26,22 @@ export default class Timer extends React.Component {
         this.usedTables = tables;
     }
 
-    UpdateSum(transactions) {
-        let sum = this.state.sum;
-        let compDate = new Date();
-        compDate.setHours(compDate.getHours() - this.props.priceSumByHours);
-        lodash.forEach(transactions, (trans) => {
-            if (trans.endDate > compDate) {
-                let sumExists = lodash.has(sum, {nr: trans.nr});
-                if (!sumExists) {
-                    sum.push({nr: trans.nr, sum: trans.timeActive * this.props.price});
-                } else {
-                    sum[lodash.findIndex(sum, {nr: trans.nr})].sum += trans.timeActive * this.props.price;
-                }
-            }
+    ShowAllSums() {
+        console.log("click to open sums");
+        if (this.state.total === 0) return;
+
+        this.props.showSumsCallback();
+    }
+
+    UpdateTotal(passedTransactions) {
+        let total = 0;
+        let price = this.props.price;
+        lodash.forEach(passedTransactions, function(trans) {
+            total += trans.timeActive * price;
         });
 
         this.setState({
-            sum: sum
+            total: total
         });
     }
 
@@ -98,10 +97,10 @@ export default class Timer extends React.Component {
                         {runningTime}
                     </div>
                     <div className={'nr-tables'}>
-                        <div className={'nr-tables-inner sum-holder'} onClick={this.ShowAllSums}><i
+                        <div className={'nr-tables-inner sum-holder'} onClick={() => {this.ShowAllSums()}}><i
                             className={'fas fa-euro-sign'}/>
                             <div
-                                className={'sum'}> {(Math.round(calcSum(this.state.sum) * 100) / 100).toFixed(2).replace('.', ',')}</div>
+                                className={'sum'}> {(Math.round(this.state.total * 100) / 100).toFixed(2).replace('.', ',')}</div>
                         </div>
                     </div>
                 </div>
@@ -110,14 +109,4 @@ export default class Timer extends React.Component {
             </div>
         );
     }
-
-
-}
-
-function calcSum(sums) {
-    let sum = 0;
-    for (let i = 0; i < sums.length; i++) {
-        sum += sums[i].sum;
-    }
-    return sum;
 }

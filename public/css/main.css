@@ -89,6 +89,11 @@ h4 {
     opacity: 1;
 }
 
+.tb.tb-status-final .tb-wrap {
+    border-color: darkgray;
+    opacity: 1;
+}
+
 .tb.tb-status-pause .tb-wrap {
     border-color: #ff840d;
     opacity: 1;
