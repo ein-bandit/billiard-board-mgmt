@@ -221,7 +221,7 @@ export default class TableManager extends React.Component {
         CURRENT_TABLES.tables[table.id] = table;
         tableObjects[table.id].ref.Reactivate(table);
         let newTrans = _.filter(this.state.passedTransactions, function (tab) {
-            return tab.id !== table.id;
+            return tab.endDate !== table.endDate;
         });
         //console.log(newTrans, this.state.passedTransactions);
 
