@@ -83,7 +83,7 @@ export default class TableManager extends React.Component {
     }
 
     ToggleChildByKeypress(e) {
-        var intKey = (window.Event) ? e.which : e.keyCode;
+        let intKey = (window.Event) ? e.which : e.keyCode;
 
         if (this.tableModalWrapper.state.modalIsOpen) {
             if (intKey === 49 || intKey === 50) {
@@ -110,7 +110,8 @@ export default class TableManager extends React.Component {
                 if (this.state.highlightedTable !== null) {
                     tableObjects[this.state.highlightedTable].ref.HandleEnter();
                 }
-
+            } else if(intKey === 99 || intKey === 67) {
+                this.timer.ShowAllSums();
             }
         }
 
