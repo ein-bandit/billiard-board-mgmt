@@ -6,7 +6,6 @@ export default class TableModal extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log("in table modal constr", props);
         this.state = {
             table: props.table,
             isRecycle: props.isRecycle

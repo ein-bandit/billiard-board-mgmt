@@ -27,7 +27,6 @@ export default class Timer extends React.Component {
     }
 
     ShowAllSums() {
-        console.log("click to open sums");
         if (this.state.total === 0) return;
 
         this.props.showSumsCallback();

@@ -9,7 +9,6 @@ import _ from 'lodash';
 
 let tableObjects = [];
 
-const SAVED_TRANSACTIONS = 25;
 export let CURRENT_TABLES = {
     tables: [],
     transactions: []
@@ -101,7 +100,6 @@ export default class TableManager extends React.Component {
                 }
 
                 let idx = this.props.tableNumbers.indexOf(tableNo);
-                //console.log(idx);
 
                 this.SetActive(idx, true);
                 this.setState({
@@ -158,25 +156,17 @@ export default class TableManager extends React.Component {
     }
 
     StopTable(table) {
-        console.log("stopping table", table);
         this.SetActive(table.id, false);
 
         _.remove(CURRENT_TABLES.tables, {id: table.id});
 
         // es-lint disabled
-        var clone = cloneDeep(table);
+        let clone = cloneDeep(table);
         clone.transId = calculateTransId();
 
         //only safe a view last transactions. reverse array, add item as natural ordered, reverse again.
-        var passedTransactions = this.state.passedTransactions.reverse();
-        if (passedTransactions.length < SAVED_TRANSACTIONS) {
-            passedTransactions.push(clone);
-        } else {
-            for (var i = 1; i < passedTransactions.length; i++) {
-                passedTransactions[i - 1] = passedTransactions[i];
-            }
-            passedTransactions[SAVED_TRANSACTIONS - 1] = clone;
-        }
+        let passedTransactions = this.state.passedTransactions.reverse();
+        passedTransactions.push(clone);
 
         this.setState({
             passedTransactions: passedTransactions.reverse(),
@@ -223,7 +213,6 @@ export default class TableManager extends React.Component {
         let newTrans = _.filter(this.state.passedTransactions, function (tab) {
             return tab.endDate !== table.endDate;
         });
-        //console.log(newTrans, this.state.passedTransactions);
 
         this.setState({
             highlightedTable: null,

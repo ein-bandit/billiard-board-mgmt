@@ -5,12 +5,10 @@ export default class SumsModal extends React.Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.sums);
-        //split transactions by table num.
         let total = 0;
         let tables = [];
 
-
+        //split transactions by table num.
         let price = this.props.price;
         this.props.sums.forEach(function (s, idx) {
             let pos = lodash.findIndex(tables, {nr: s.nr});
@@ -22,8 +20,6 @@ export default class SumsModal extends React.Component {
             }
             total += s.timeActive * price;
         });
-
-        console.log(tables);
 
         this.state = {
             table: props.table,
@@ -53,8 +49,8 @@ export default class SumsModal extends React.Component {
                 <ul className="list-group summary-group">
                     {this.state.tables.map(function (s, idx) {
                         return (<li key={idx} className="list-group-item">
-                            <span className="col-4">Tisch {s.nr}</span>
-                            <span className={'col-8 summary-number'}><span>{s.entries.join(' + ')}</span>
+                            <span className="col-3">Tisch {s.nr}</span>
+                            <span className={'col-9 summary-number'}><span>{s.entries.join(' + ')}</span>
                                 <span>{(Math.round(s.sum * 100) / 100).toFixed(2).replace('.',',')}</span></span></li>);
                     })}
                     <li className="list-group-item active">Gesamtsumme:<span className="col-8 summary-number">{(Math.round(this.state.total * 100) / 100).toFixed(2).replace('.',',')}</span></li>

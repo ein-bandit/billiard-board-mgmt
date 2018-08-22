@@ -111,6 +111,7 @@ h4 {
 
 .tb .tb-modal-buttons .tb-modal-btn {
     font-weight: bold;
+    border: 1px solid rgba(0,0,0,0.4);
 }
 
 button.tb-modal-btn.tb-modal-btn-resume.btn.btn-default:hover {
@@ -178,11 +179,11 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .logs .log {
-    opacity: 0.5;
+    opacity: 1;
 }
 
 .logs .log:hover {
-    opacity: 1;
+    background-color: black;
 }
 
 .logs li.log.list-group-item {
@@ -355,6 +356,8 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 
 .transactions {
     zoom: 0.5;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .log.list-group-item {
@@ -398,7 +401,7 @@ a.nav-link.active:focus {
     padding-left: 35px;
 }
 
-.summary-group .col-4 {
+.summary-group .col-3 {
     font-weight: bold;
 }
 

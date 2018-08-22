@@ -26,7 +26,6 @@ export default class TableModalWrapper extends React.Component {
             type: type,
             data: data
         });
-        console.log(type, data);
     }
 
     closeModal(evt, table, resume) {
@@ -47,7 +46,6 @@ export default class TableModalWrapper extends React.Component {
     }
 
     resetCallback(evt) {
-        console.log("modal wrapper reset callback");
         this.props.resetTransactionsCallback();
         this.closeModal(evt)
     }
