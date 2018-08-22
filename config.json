@@ -4,6 +4,5 @@
   "timeIntervalSync": 10,
   "pricePerHour": 14,
   "reactivateEnabled": true,
-  "tableNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  "priceSumByHours": 14
+  "tableNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 }

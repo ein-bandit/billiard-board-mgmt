@@ -19,8 +19,7 @@ const App = () => {
     return (<div style={styles}>
         <TableManager tables={settings.numberOfTables} interval={settings.timeIntervalToUpdate}
                       syncInterval={settings.timeIntervalSync} price={settings.pricePerHour / 60 / 60}
-                      reactivateEnabled={settings.reactivateEnabled} tableNumbers={settings.tableNumbers}
-                      priceSumByHours={settings.priceSumByHours}/>
+                      reactivateEnabled={settings.reactivateEnabled} tableNumbers={settings.tableNumbers}/>
     </div>)
 };
 

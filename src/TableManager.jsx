@@ -328,7 +328,6 @@ export default class TableManager extends React.Component {
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
                                     }} tables={this.props.tables} usedTables={this.state.tableActive}
-                                           priceSumByHours={this.props.priceSumByHours}
                                            transactions={this.state.passedTransactions}
                                            price={this.props.price} showSumsCallback={() => this.ShowSums()}/>
                                 </div>
