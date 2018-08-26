@@ -5,6 +5,6 @@ export default {
         "timeIntervalSync": 10,
         "pricePerHour": 8.5,
         "reactivateEnabled": true,
-        "tableNumbers": [9, 10, 5, 1, 8, 2, 7]
+        "tableNumbers": [3, 4, 5, 6, 2, 7, 1]
     }
 }

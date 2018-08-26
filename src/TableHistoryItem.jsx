@@ -21,11 +21,11 @@ export default class TableHistoryItem extends React.Component {
                 <h3 className={'inline mr-5'}>{GetTimeStringFromDate(this.state.table.endDate)}</h3>
                 <h3 className={'inline mx-3'}>Tisch <span className={'log-nr shadow'}>{this.state.table.nr}</span></h3>
                 <h3 className={'inline mx-3'}><i
-                    className={'fas fa-user-clock'}/>&nbsp;{GetTimeStringFromSeconds(this.state.table.timeActive)}</h3>
+                    className={'fa fa-user'}/>&nbsp;{GetTimeStringFromSeconds(this.state.table.timeActive)}</h3>
                 <h3 className={'inline mx-3'}><i
-                    className={'fas fa-euro-sign'}/>&nbsp;{(Math.round(this.props.price * this.state.table.timeActive * 100 ) / 100).toFixed(2).replace('.',',')}</h3>
+                    className={'fa fa-eur'}/>&nbsp;{(Math.round(this.props.price * this.state.table.timeActive * 100 ) / 100).toFixed(2).replace('.',',')}</h3>
                 <h3 className={'inline ml-3 log-recycle-btn'} onClick={() => this.Reactivate()}><i
-                    className={'fas fa-recycle'}/></h3>
+                    className={'fa fa-recycle'}/></h3>
             </li>
         );
     }

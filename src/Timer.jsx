@@ -97,7 +97,7 @@ export default class Timer extends React.Component {
                     </div>
                     <div className={'nr-tables'}>
                         <div className={'nr-tables-inner sum-holder'} onClick={() => {this.ShowAllSums()}}><i
-                            className={'fas fa-euro-sign'}/>
+                            className={'fa fa-eur'}/>
                             <div
                                 className={'sum'}> {(Math.round(this.state.total * 100) / 100).toFixed(2).replace('.', ',')}</div>
                         </div>

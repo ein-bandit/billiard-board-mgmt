@@ -98,12 +98,12 @@ export default class Table extends React.Component {
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play" onClick={() => this.StopTable()}>
-                                    <h2><i className="far fa-play-circle"/></h2>
+                                    <h2><i className="fa fa-play-circle"/></h2>
                                 </span>
                                 <span className="tb-button bt-pause">
-                                    <h2><i className="far fa-pause-circle"/></h2>
+                                    <h2><i className="fa fa-pause-circle"/></h2>
                                 </span>
-                                <span className="tb-button bt-stop" onClick={() => this.ToggleActive()}><h2><i className="far fa-circle"/></h2></span>
+                                <span className="tb-button bt-stop" onClick={() => this.ToggleActive()}><h2><i className="fa fa-circle-o"/></h2></span>
                             </div>
                         </div>
                     </div>
@@ -111,14 +111,14 @@ export default class Table extends React.Component {
                     <ul className="tb-content list-group list-group-flush">
                         <li className="list-group-item border-0">
                             <div className="row">
-                                <div className="col-4"><h4><i className="fas fa-clock"></i></h4></div>
+                                <div className="col-4"><h4><i className="fa fa-clock-o"></i></h4></div>
                                 <div className="col-8 text-right">
                                     <h2>{GetTimeStringFromSeconds(this.state.timeActive)}</h2></div>
                             </div>
                         </li>
                         <li className="list-group-item">
                             <div className="row">
-                                <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
+                                <div className="col-4"><h4><i className="fa fa-eur"></i></h4></div>
                                 <div className="col-8 text-right">
                                     <h2>{(Math.round(this.props.price * this.state.timeActive*100)/100).toFixed(2).replace('.',',')}</h2></div>
                             </div>

@@ -27,13 +27,13 @@ export default class TableModal extends React.Component {
                         </div>
                         <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play">
-                                    <h2><i className="far fa-play-circle"></i></h2>
+                                    <h2><i className="fa fa-play-circle"></i></h2>
                                 </span>
                             <span className="tb-button bt-pause">
-                                    <h2><i className="far fa-pause-circle"></i></h2>
+                                    <h2><i className="fa fa-pause-circle"></i></h2>
                                 </span>
                             <span className="tb-button bt-stop">
-                                        <h2><i className="far fa-circle"></i></h2>
+                                        <h2><i className="fa fa-circle-o"></i></h2>
                                     </span>
                         </div>
                     </div>
@@ -42,26 +42,26 @@ export default class TableModal extends React.Component {
                 <ul className="tb-content list-group list-group-flush">
                     <li className="list-group-item border-0">
                         <div className="row">
-                            <div className="col-4"><h4><i className="fas fa-clock"></i> Start</h4></div>
+                            <div className="col-4"><h4><i className="fa fa-clock-o"></i> Start</h4></div>
                             <div className="col-8 text-right">
                                 <h2>{GetTimeStringFromDate(this.state.table.startDate)}</h2></div>
                         </div>
                         <div className={'row'}>
-                            <div className="col-4"><h4><i className="fas fa-clock"></i> Ende</h4></div>
+                            <div className="col-4"><h4><i className="fa fa-clock-o"></i> Ende</h4></div>
                             <div className="col-8 text-right">
                                 <h2>{GetTimeStringFromDate(this.state.table.endDate)}</h2></div>
                         </div>
                     </li>
                     <li className="list-group-item border-0">
                         <div className="row">
-                            <div className="col-4"><h4><i className="fas fa-user-clock"></i></h4></div>
+                            <div className="col-4"><h4><i className="fa fa-user"></i></h4></div>
                             <div className="col-8 text-right">
                                 <h2>{GetTimeStringFromSeconds(this.state.table.timeActive)}</h2></div>
                         </div>
                     </li>
                     <li className="list-group-item">
                         <div className="row">
-                            <div className="col-4"><h4><i className="fas fa-euro-sign"></i></h4></div>
+                            <div className="col-4"><h4><i className="fa fa-eur"></i></h4></div>
                             <div className="col-8 text-right">
                                 <h2>{(this.props.price * this.state.table.timeActive).toFixed(2).replace('.', ',')}</h2>
                             </div>
