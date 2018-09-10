@@ -23,7 +23,7 @@ export default class TableModal extends React.Component {
                     <div className="row">
                         <div className="col-8">
                             <h1>Abrechnung: Tisch <span
-                                className="tb-nr shadow-sm">{this.state.table.id + 1}</span></h1>
+                                className="tb-nr shadow-sm">{this.state.table.nr}</span></h1>
                         </div>
                         <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play">
