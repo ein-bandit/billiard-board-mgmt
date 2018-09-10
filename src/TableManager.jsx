@@ -219,7 +219,9 @@ export default class TableManager extends React.Component {
             highlightedTable: null,
             passedTransactions: newTrans
         });
-        this.timer.UpdateTotal(this.state.passedTransactions);
+
+        //pass temp data cause state is not refreshed before update total finishes.
+        this.timer.UpdateTotal(newTrans);
 
         this.SaveToStorage();
     }
