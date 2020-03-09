@@ -102,20 +102,23 @@ export function GetTimeActive(startDateMillis) {
             parseInt(config.reducedPriceTimeEnd.split(":")[1], 10),
             parseInt(config.reducedPriceTimeEnd.split(":")[2], 10));
 
-        if (startDate < reducedStart) {
-            //if start is before reduced time -> reduced up to now or end
-            if (now < reducedEnd) {
-                reduced = now - reducedStart;
-            } else {
-                reduced = reducedEnd - reducedStart;
-            }
+        //only calc reduced if we already are in happy hour(s).
+        if (now > reducedStart) {
+            if (startDate < reducedStart) {
+                //if start is before reduced time -> reduced up to now or end
+                if (now < reducedEnd) {
+                    reduced = now - reducedStart;
+                } else {
+                    reduced = reducedEnd - reducedStart;
+                }
 
-        } else if (startDate < reducedEnd) {
+            } else if (startDate < reducedEnd) {
 
-            if (now < reducedEnd) {
-                reduced = now - startDate;
-            } else {
-                reduced = reducedEnd - startDate;
+                if (now < reducedEnd) {
+                    reduced = now - startDate;
+                } else {
+                    reduced = reducedEnd - startDate;
+                }
             }
         }
 
