@@ -90,7 +90,7 @@ export default class Timer extends React.Component {
                     <div className={"nr-tables"}>
                         <div className={'nr-tables-inner'}> {lodash.filter(this.usedTables, (t) => {
                             return t;
-                        }).length} / {config.numberOfTables}</div>
+                        }).length} / {config.tableNumbers.length}</div>
                     </div>
                     <div className={"step-timer flip-clock"}>
                         {runningTime}

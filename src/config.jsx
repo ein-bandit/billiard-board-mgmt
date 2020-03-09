@@ -1,6 +1,5 @@
 export default {
 
-    "numberOfTables": 10,
     "timeIntervalToUpdate": 1,
     "timeIntervalSync": 10,
 
@@ -8,10 +7,10 @@ export default {
     "reducedPricePerHour": 6,
 
     "reducedPriceDays": ["Monday"],
-    "reducedPriceTimeStart": "20:50:00",
-    "reducedPriceTimeEnd": "21:00:00",
+    "reducedPriceTimeStart": "21:30:00",
+    "reducedPriceTimeEnd": "22:00:00",
 
     "reactivateEnabled": true,
-    "tableNumbers": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    "tableNumbers": [1, 2, null, null, 3, null, 4]
 
 }

@@ -32,8 +32,12 @@ export default class TableManager extends React.Component {
         this.timer = null;
         this.tableModalWrapper = null;
 
-        for (let i = 0; i < config.numberOfTables; i++) {
-            tableObjects.push({ ref: null, id: i, nr: config.tableNumbers[i] });
+        for (let i = 0; i < config.tableNumbers.length; i++) {
+            if (config.tableNumbers[i] === null) {
+                tableObjects.push(null);
+            } else {
+                tableObjects.push({ ref: null, id: i, nr: config.tableNumbers[i] });
+            }
         }
     }
 
@@ -101,11 +105,12 @@ export default class TableManager extends React.Component {
                 }
 
                 let idx = config.tableNumbers.indexOf(tableNo);
-
-                this.SetActive(idx, true);
-                this.setState({
-                    highlightedTable: idx
-                });
+                if (idx !== -1) {
+                    this.SetActive(idx, true);
+                    this.setState({
+                        highlightedTable: idx
+                    });
+                }
 
             } else if (intKey === 13 || intKey === 32) {
                 if (this.state.highlightedTable !== null) {
@@ -251,29 +256,13 @@ export default class TableManager extends React.Component {
 
             let idx = i;
             let obj = tableObjects[i];
-            templ1.push((
-                <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
-                    ref={instance => {
-                        obj.ref = instance;
-                    }}
-                    highlighted={obj.id === this.state.highlightedTable}
-                    startCallback={table => this.StartTable(table)}
-                    stopCallback={table => this.StopTable(table)}
-                    highlightCallback={tableId => {
-                        this.UpdateHighlight(tableId)
-                    }}
-                    updateCallback={table => this.UpdateCallback(table)} />
-            ));
 
-        }
-
-        const templ2 = [];
-        if (tableObjects.length > 5) {
-            for (let i = 5; i < tableObjects.length; i++) {
-
-                let idx = i;
-                let obj = tableObjects[i];
-                templ2.push((
+            if (obj === null) {
+                templ1.push((
+                    <div className="tb col-3 tb-status-stop" key={idx}></div>
+                ));
+            } else {
+                templ1.push((
                     <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
                         ref={instance => {
                             obj.ref = instance;
@@ -285,8 +274,36 @@ export default class TableManager extends React.Component {
                             this.UpdateHighlight(tableId)
                         }}
                         updateCallback={table => this.UpdateCallback(table)} />
-
                 ));
+            }
+        }
+
+        const templ2 = [];
+        if (tableObjects.length > 5) {
+            for (let i = 5; i < tableObjects.length; i++) {
+
+                let idx = i;
+                let obj = tableObjects[i];
+                if (obj === null) {
+                    templ2.push((
+                        <div className="tb col-3 tb-status-stop" key={idx}></div>
+                    ));
+                } else {
+                    templ2.push((
+                        <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
+                            ref={instance => {
+                                obj.ref = instance;
+                            }}
+                            highlighted={obj.id === this.state.highlightedTable}
+                            startCallback={table => this.StartTable(table)}
+                            stopCallback={table => this.StopTable(table)}
+                            highlightCallback={tableId => {
+                                this.UpdateHighlight(tableId)
+                            }}
+                            updateCallback={table => this.UpdateCallback(table)} />
+
+                    ));
+                }
 
             }
         }
@@ -329,7 +346,7 @@ export default class TableManager extends React.Component {
                                         this.timer = instance
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
-                                    }} tables={config.numberOfTables} usedTables={this.state.tableActive}
+                                    }} tables={config.tableNumbers.length} usedTables={this.state.tableActive}
                                         transactions={this.state.passedTransactions}
                                         showSumsCallback={() => this.ShowSums()} />
                                 </div>
