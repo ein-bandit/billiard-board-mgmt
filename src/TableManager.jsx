@@ -6,6 +6,7 @@ import TableModalWrapper from './TableModalWrapper'
 import cloneDeep from 'lodash/cloneDeep';
 import _ from 'lodash';
 
+import config from './config';
 
 let tableObjects = [];
 
@@ -27,12 +28,12 @@ export default class TableManager extends React.Component {
             activeTab: 'clock'
         };
 
-        this.syncTime = this.props.syncInterval;
+        this.syncTime = config.timeIntervalSync;
         this.timer = null;
         this.tableModalWrapper = null;
 
-        for (let i = 0; i < this.props.tables; i++) {
-            tableObjects.push({ref: null, id: i, nr: this.props.tableNumbers[i]});
+        for (let i = 0; i < config.numberOfTables; i++) {
+            tableObjects.push({ ref: null, id: i, nr: config.tableNumbers[i] });
         }
     }
 
@@ -99,7 +100,7 @@ export default class TableManager extends React.Component {
                     tableNo = intKey - 48; //plus one for real table number (not index)
                 }
 
-                let idx = this.props.tableNumbers.indexOf(tableNo);
+                let idx = config.tableNumbers.indexOf(tableNo);
 
                 this.SetActive(idx, true);
                 this.setState({
@@ -110,7 +111,7 @@ export default class TableManager extends React.Component {
                 if (this.state.highlightedTable !== null) {
                     tableObjects[this.state.highlightedTable].ref.HandleEnter();
                 }
-            } else if(intKey === 99 || intKey === 67) {
+            } else if (intKey === 99 || intKey === 67) {
                 this.timer.ShowAllSums();
             }
         }
@@ -159,7 +160,7 @@ export default class TableManager extends React.Component {
     StopTable(table) {
         this.SetActive(table.id, false);
 
-        _.remove(CURRENT_TABLES.tables, {id: table.id});
+        _.remove(CURRENT_TABLES.tables, { id: table.id });
 
         // es-lint disabled
         let clone = cloneDeep(table);
@@ -178,14 +179,14 @@ export default class TableManager extends React.Component {
 
         this.timer.UpdateTotal(this.state.passedTransactions);
 
-        this.tableModalWrapper.StartModal('tables', {table: clone, isRecycle: false});
+        this.tableModalWrapper.StartModal('tables', { table: clone, isRecycle: false });
 
     }
 
     UpdateChildren(timeElapsed) {
         tableObjects.map(obj => {
             if (obj !== null) {
-                return obj.ref.UpdateTime(this.props.interval);
+                return obj.ref.UpdateTime(config.timeIntervalToUpdate);
             }
             return null;
         });
@@ -196,11 +197,11 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateOpenModal(table) {
-        this.tableModalWrapper.StartModal('tables', {table: table, isRecycle: true});
+        this.tableModalWrapper.StartModal('tables', { table: table, isRecycle: true });
     }
 
     ShowSums() {
-        this.tableModalWrapper.StartModal('sums', {sums: this.state.passedTransactions});
+        this.tableModalWrapper.StartModal('sums', { sums: this.state.passedTransactions });
     }
 
     ReactivateTable(table) {
@@ -252,17 +253,16 @@ export default class TableManager extends React.Component {
             let obj = tableObjects[i];
             templ1.push((
                 <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
-                       ref={instance => {
-                           obj.ref = instance;
-                       }}
-                       highlighted={obj.id === this.state.highlightedTable}
-                       price={this.props.price}
-                       startCallback={table => this.StartTable(table)}
-                       stopCallback={table => this.StopTable(table)}
-                       highlightCallback={tableId => {
-                           this.UpdateHighlight(tableId)
-                       }}
-                       updateCallback={table => this.UpdateCallback(table)}/>
+                    ref={instance => {
+                        obj.ref = instance;
+                    }}
+                    highlighted={obj.id === this.state.highlightedTable}
+                    startCallback={table => this.StartTable(table)}
+                    stopCallback={table => this.StopTable(table)}
+                    highlightCallback={tableId => {
+                        this.UpdateHighlight(tableId)
+                    }}
+                    updateCallback={table => this.UpdateCallback(table)} />
             ));
 
         }
@@ -275,17 +275,16 @@ export default class TableManager extends React.Component {
                 let obj = tableObjects[i];
                 templ2.push((
                     <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
-                           ref={instance => {
-                               obj.ref = instance;
-                           }}
-                           highlighted={obj.id === this.state.highlightedTable}
-                           price={this.props.price}
-                           startCallback={table => this.StartTable(table)}
-                           stopCallback={table => this.StopTable(table)}
-                           highlightCallback={tableId => {
-                               this.UpdateHighlight(tableId)
-                           }}
-                           updateCallback={table => this.UpdateCallback(table)}/>
+                        ref={instance => {
+                            obj.ref = instance;
+                        }}
+                        highlighted={obj.id === this.state.highlightedTable}
+                        startCallback={table => this.StartTable(table)}
+                        stopCallback={table => this.StopTable(table)}
+                        highlightCallback={tableId => {
+                            this.UpdateHighlight(tableId)
+                        }}
+                        updateCallback={table => this.UpdateCallback(table)} />
 
                 ));
 
@@ -296,11 +295,11 @@ export default class TableManager extends React.Component {
                 <div className={'row'}>
                     <TableModalWrapper ref={(instance) => {
                         this.tableModalWrapper = instance;
-                    }} price={this.props.price} resumeCallback={(table) => {
+                    }} resumeCallback={(table) => {
                         this.ReactivateTable(table)
                     }} resetTransactionsCallback={() => {
                         this.ResetTransactions()
-                    }}/>
+                    }} />
 
 
                     {templ1}
@@ -311,13 +310,13 @@ export default class TableManager extends React.Component {
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
                                         <a href=""
-                                           className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
-                                           onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
+                                            className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
+                                            onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
                                     </li>
                                     <li className="nav-item">
                                         <a href=""
-                                           className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
-                                           onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
+                                            className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
+                                            onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
                                     </li>
                                     <li className="nav-item brand">
                                         <a className={'nav-link'}>Billiard-Manager 3001</a>
@@ -326,13 +325,13 @@ export default class TableManager extends React.Component {
                             </div>
                             <div className={'timer-and-transaction-wrapper'}>
                                 <div className={'timer-wrapper ' + (this.state.activeTab === 'logs' ? 'hidden' : '')}>
-                                    <Timer interval={this.props.interval} ref={(instance) => {
+                                    <Timer ref={(instance) => {
                                         this.timer = instance
                                     }} update={newTime => {
                                         this.UpdateChildren(newTime);
-                                    }} tables={this.props.tables} usedTables={this.state.tableActive}
-                                           transactions={this.state.passedTransactions}
-                                           price={this.props.price} showSumsCallback={() => this.ShowSums()}/>
+                                    }} tables={config.numberOfTables} usedTables={this.state.tableActive}
+                                        transactions={this.state.passedTransactions}
+                                        showSumsCallback={() => this.ShowSums()} />
                                 </div>
                                 <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
                                     <ul className="logs list-group list-group-flush">
@@ -341,9 +340,8 @@ export default class TableManager extends React.Component {
                                         </li>
                                         {this.state.passedTransactions.map((trans) => {
                                             return <TableHistoryItem key={trans.transId} table={trans}
-                                                                     price={this.props.price}
-                                                                     recycleAvailable={(this.props.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
-                                                                     reactivateCallback={table => this.ReactivateOpenModal(table)}/>
+                                                recycleAvailable={(config.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
+                                                reactivateCallback={table => this.ReactivateOpenModal(table)} />
                                         })
                                         }</ul>
                                 </div>

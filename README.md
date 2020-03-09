@@ -32,7 +32,7 @@ $ npm run electron
 
 # Konfiguration
 
-Die aktuell verwendete Konfiguration liegt in src/default-config.js.
+Die aktuell verwendete Konfiguration liegt in src/config.jsx.
 
 ## Konzept & Bedienung
 

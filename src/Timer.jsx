@@ -1,7 +1,8 @@
 import React from 'react';
-import {GetTimeStringFromSeconds} from './Helpers';
-import {GetTimeStringFromDate} from './Helpers';
+import { GetPrice, GetTimeStringFromSeconds, GetTimeStringFromDate } from './Helpers';
 import lodash from 'lodash';
+
+import config from './config';
 
 export default class Timer extends React.Component {
 
@@ -34,9 +35,8 @@ export default class Timer extends React.Component {
 
     UpdateTotal(passedTransactions) {
         let total = 0;
-        let price = this.props.price;
-        lodash.forEach(passedTransactions, function(trans) {
-            total += trans.timeActive * price;
+        lodash.forEach(passedTransactions, function (trans) {
+            total += GetPrice(trans.timeActive);
         });
 
         this.setState({
@@ -45,12 +45,12 @@ export default class Timer extends React.Component {
     }
 
     startTiming() {
-        this.setState({startingTime: Date.now()});
+        this.setState({ startingTime: Date.now() });
         this.intervalID = setInterval(() => this.timingFunction(), 1000);
     }
 
     timingFunction() {
-        if (this.currentInterval++ === this.props.interval - 1) {
+        if (this.currentInterval++ === config.timeIntervalToUpdate - 1) {
             this.currentInterval = 0;
             this.setState({
                 timeElapsed: Math.floor((Date.now() - this.state.startingTime) / 1000),
@@ -90,14 +90,14 @@ export default class Timer extends React.Component {
                     <div className={"nr-tables"}>
                         <div className={'nr-tables-inner'}> {lodash.filter(this.usedTables, (t) => {
                             return t;
-                        }).length} / {this.props.tables}</div>
+                        }).length} / {config.numberOfTables}</div>
                     </div>
                     <div className={"step-timer flip-clock"}>
                         {runningTime}
                     </div>
                     <div className={'nr-tables'}>
-                        <div className={'nr-tables-inner sum-holder'} onClick={() => {this.ShowAllSums()}}><i
-                            className={'fa fa-eur'}/>
+                        <div className={'nr-tables-inner sum-holder'} onClick={() => { this.ShowAllSums() }}><i
+                            className={'fa fa-eur'} />
                             <div
                                 className={'sum'}> {(Math.round(this.state.total * 100) / 100).toFixed(2).replace('.', ',')}</div>
                         </div>

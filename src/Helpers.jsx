@@ -1,3 +1,5 @@
+import config from './config';
+
 export function GetTimeStringFromSeconds(totalSeconds) {
     var sec_num = parseInt(totalSeconds, 10); // don't forget the second param
     var hours = Math.floor(sec_num / 3600);
@@ -31,4 +33,12 @@ export function GetTimeStringFromDate(date) {
     var s = checkTime(tempDate.getSeconds());
 
     return h + ":" + m + ":" + s;
+}
+
+export function GetPrice(time) {
+    return (config.pricePerHour / 60 / 60) * time;
+}
+
+export function GetFormattedPrice(time) {
+    return (Math.round(GetPrice(time) * 100) / 100).toFixed(2).replace('.', ',');
 }

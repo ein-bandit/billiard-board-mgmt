@@ -31,7 +31,7 @@ export default class TableModalWrapper extends React.Component {
     closeModal(evt, table, resume) {
         if (evt.type === 'keydown' && evt.keyCode === 27) return;
 
-        this.setState({modalIsOpen: false});
+        this.setState({ modalIsOpen: false });
         if (resume) {
             this.props.resumeCallback(table);
         }
@@ -40,7 +40,7 @@ export default class TableModalWrapper extends React.Component {
     closeByKey(evt, resume) {
         if (this.state.type === 'tables') {
             this.closeModal(evt, this.state.data.table, resume);
-        } else if(this.state.type==='sums'){
+        } else if (this.state.type === 'sums') {
             resume ? this.closeModal(evt) : this.resetCallback(evt);
         }
     }
@@ -55,9 +55,9 @@ export default class TableModalWrapper extends React.Component {
         let innerModal;
 
         if (this.state.type === 'tables') {
-            innerModal = (<TableModal table={this.state.data.table} isRecycle={this.state.data.isRecycle} price={this.props.price} closeCallback={this.closeModal}></TableModal>);
-        } else if(this.state.type === 'sums') {
-            innerModal = (<SumsModal sums={this.state.data.sums} price={this.props.price} resetCallback={(evt) => {this.props.resetTransactionsCallback(); this.closeModal(evt)}} closeCallback={this.closeModal}></SumsModal>)
+            innerModal = (<TableModal table={this.state.data.table} isRecycle={this.state.data.isRecycle} closeCallback={this.closeModal}></TableModal>);
+        } else if (this.state.type === 'sums') {
+            innerModal = (<SumsModal sums={this.state.data.sums} resetCallback={(evt) => { this.props.resetTransactionsCallback(); this.closeModal(evt) }} closeCallback={this.closeModal}></SumsModal>)
         }
 
         let clazzes = this.state.type === 'tables' ? 'tb tb-status-pause tb-single' : 'tb tb-status-final tb-single';

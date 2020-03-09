@@ -1,6 +1,5 @@
 import React from 'react';
-import {GetTimeStringFromSeconds} from './Helpers';
-import {GetTimeStringFromDate} from './Helpers';
+import { GetFormattedPrice, GetTimeStringFromDate, GetTimeStringFromSeconds } from './Helpers';
 
 export default class TableModal extends React.Component {
 
@@ -26,15 +25,15 @@ export default class TableModal extends React.Component {
                                 className="tb-nr shadow-sm">{this.state.table.nr}</span></h1>
                         </div>
                         <div className="col-4 text-right pr-4 pt-1">
-                                <span className="tb-button bt-play">
-                                    <h2><i className="fa fa-play-circle"></i></h2>
-                                </span>
+                            <span className="tb-button bt-play">
+                                <h2><i className="fa fa-play-circle"></i></h2>
+                            </span>
                             <span className="tb-button bt-pause">
-                                    <h2><i className="fa fa-pause-circle"></i></h2>
-                                </span>
+                                <h2><i className="fa fa-pause-circle"></i></h2>
+                            </span>
                             <span className="tb-button bt-stop">
-                                        <h2><i className="fa fa-circle-o"></i></h2>
-                                    </span>
+                                <h2><i className="fa fa-circle-o"></i></h2>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -63,7 +62,7 @@ export default class TableModal extends React.Component {
                         <div className="row">
                             <div className="col-4"><h4><i className="fa fa-eur"></i></h4></div>
                             <div className="col-8 text-right">
-                                <h2>{(this.props.price * this.state.table.timeActive).toFixed(2).replace('.', ',')}</h2>
+                                <h2>{GetFormattedPrice(this.state.table.timeActive)}</h2>
                             </div>
                         </div>
                     </li>

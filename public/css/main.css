@@ -1,4 +1,3 @@
-
 .ReactModal__Overlay {
     z-index: 2;
 }
@@ -111,7 +110,7 @@ h4 {
 
 .tb .tb-modal-buttons .tb-modal-btn {
     font-weight: bold;
-    border: 1px solid rgba(0,0,0,0.4);
+    border: 1px solid rgba(0, 0, 0, 0.4);
 }
 
 button.tb-modal-btn.tb-modal-btn-resume.btn.btn-default:hover {
@@ -239,9 +238,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     margin-bottom: 40px;
 }
 
-.clock-logs-switch {
-
-}
+.clock-logs-switch {}
 
 .clock-logs-switch ul.nav-tabs {
     border-bottom: none;
@@ -278,6 +275,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .timer {
     color: white;
     position: relative;
+    max-width: 735px;
 }
 
 .timer .global-timer {
@@ -396,6 +394,7 @@ a.nav-link.active:focus {
     border-right: 0;
     border-bottom: 0;
 }
+
 .summary-group .list-group-item.active {
     color: black;
     padding-left: 35px;
@@ -408,6 +407,7 @@ a.nav-link.active:focus {
 .summary-group .summary-number span:first-child {
     padding-right: 10px;
 }
+
 .summary-group .summary-number span:last-child {
     font-weight: bold;
 }
