@@ -4,3 +4,4 @@ build/
 electron-build/
 dist/
 npm-debug.log*
+*.patch
