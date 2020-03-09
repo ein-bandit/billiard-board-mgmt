@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetFormattedPrice, GetTimeStringFromSeconds } from './Helpers';
+import { GetTimeActive, GetFormattedPrice, GetTimeString } from './Helpers';
 
 export default class Table extends React.Component {
 
@@ -9,7 +9,7 @@ export default class Table extends React.Component {
             id: this.props.id,
             nr: this.props.nr,
             active: false,
-            timeActive: 0,
+            timeActive: { active: 0, reduced: 0 },
             startDate: null,
             endDate: null
         };
@@ -35,7 +35,7 @@ export default class Table extends React.Component {
     UpdateTime() {
         if (this.state.active) {
             this.setState({
-                timeActive: (Date.now() - this.state.startDate) / 1000
+                timeActive: GetTimeActive(this.state.startDate)
             });
             this.props.updateCallback(this.state);
         }
@@ -64,7 +64,10 @@ export default class Table extends React.Component {
     }
 
     StopTable() {
-        if (this.state.timeActive === 0 || this.state.active === false) return;
+        if (this.state.active === false ||
+            (this.state.timeActive.active === 0 && this.state.timeActive.reduced === 0)) {
+            return;
+        }
         //do some local stop stuff.
         this.setState({ endDate: new Date() });
         this.props.stopCallback(this.state);
@@ -74,7 +77,7 @@ export default class Table extends React.Component {
             id: this.props.id,
             nr: this.props.nr,
             active: false,
-            timeActive: 0,
+            timeActive: { active: 0, reduced: 0 },
             startDate: null,
             endDate: null
         })
@@ -113,7 +116,7 @@ export default class Table extends React.Component {
                             <div className="row">
                                 <div className="col-4"><h4><i className="fa fa-clock-o"></i></h4></div>
                                 <div className="col-8 text-right">
-                                    <h2>{GetTimeStringFromSeconds(this.state.timeActive)}</h2></div>
+                                    <h2>{GetTimeString(this.state.timeActive)}</h2></div>
                             </div>
                         </li>
                         <li className="list-group-item">

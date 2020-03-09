@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetFormattedPrice, GetTimeStringFromDate, GetTimeStringFromSeconds } from './Helpers';
+import { GetTimeStringFromDate, GetTimeStringSplitted, GetFormattedPriceSplitted } from './Helpers';
 
 export default class TableModal extends React.Component {
 
@@ -55,14 +55,14 @@ export default class TableModal extends React.Component {
                         <div className="row">
                             <div className="col-4"><h4><i className="fa fa-user"></i></h4></div>
                             <div className="col-8 text-right">
-                                <h2>{GetTimeStringFromSeconds(this.state.table.timeActive)}</h2></div>
+                                <h2>{GetTimeStringSplitted(this.state.table.timeActive)}</h2></div>
                         </div>
                     </li>
                     <li className="list-group-item">
                         <div className="row">
-                            <div className="col-4"><h4><i className="fa fa-eur"></i></h4></div>
+                            <div className="col-4"><h4><i className="fa fa-eur"></i><span className="eur-descr">(Basis + Reduziert)</span></h4></div>
                             <div className="col-8 text-right">
-                                <h2>{GetFormattedPrice(this.state.table.timeActive)}</h2>
+                                <h2>{GetFormattedPriceSplitted(this.state.table.timeActive)}</h2>
                             </div>
                         </div>
                     </li>

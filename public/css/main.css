@@ -363,6 +363,12 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     color: #fff;
 }
 
+.list-group-item .eur-descr {
+    font-size: 12px;
+    vertical-align: middle;
+    padding-left: 5px;
+}
+
 .brand.nav-item {
     position: absolute;
     right: 13px;
