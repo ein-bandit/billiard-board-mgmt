@@ -8,6 +8,7 @@ export default class Table extends React.Component {
         this.state = {
             id: this.props.id,
             nr: this.props.nr,
+            type: this.props.type,
             active: false,
             timeActive: { active: 0, reduced: 0 },
             startDate: null,
@@ -76,6 +77,7 @@ export default class Table extends React.Component {
         this.setState({
             id: this.props.id,
             nr: this.props.nr,
+            type: this.props.type,
             active: false,
             timeActive: { active: 0, reduced: 0 },
             startDate: null,
@@ -97,7 +99,7 @@ export default class Table extends React.Component {
                     <div className="tb-head shadow-sm">
                         <div className="row">
                             <div className="col-8">
-                                <h1>Tisch <span className="tb-nr shadow-sm">{this.props.nr}</span></h1>
+                                <h1>{this.state.type === 'billiard' ? 'Billard' : 'Dart'} <span className="tb-nr shadow-sm">{this.props.nr}</span></h1>
                             </div>
                             <div className="col-4 text-right pr-4 pt-1">
                                 <span className="tb-button bt-play" onClick={() => this.StopTable()}>
@@ -123,7 +125,7 @@ export default class Table extends React.Component {
                             <div className="row">
                                 <div className="col-4"><h4><i className="fa fa-eur"></i></h4></div>
                                 <div className="col-8 text-right">
-                                    <h2>{GetFormattedPrice(this.state.timeActive)}</h2></div>
+                                    <h2>{GetFormattedPrice(this.state.timeActive, this.state.type)}</h2></div>
                             </div>
                         </li>
                     </ul>

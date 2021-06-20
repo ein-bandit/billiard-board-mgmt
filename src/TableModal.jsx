@@ -62,7 +62,7 @@ export default class TableModal extends React.Component {
                         <div className="row">
                             <div className="col-4"><h4><i className="fa fa-eur"></i><span className="eur-descr">(Basis + Reduziert)</span></h4></div>
                             <div className="col-8 text-right">
-                                <h2>{GetFormattedPriceSplitted(this.state.table.timeActive)}</h2>
+                                <h2>{GetFormattedPriceSplitted(this.state.table.timeActive, this.state.table.type)}</h2>
                             </div>
                         </div>
                     </li>

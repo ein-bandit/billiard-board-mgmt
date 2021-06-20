@@ -8,6 +8,8 @@ import _ from 'lodash';
 
 import config from './config';
 
+console.log("using effective configuration", config);
+
 let tableObjects = [];
 
 export let CURRENT_TABLES = {
@@ -36,7 +38,9 @@ export default class TableManager extends React.Component {
             if (config.tableNumbers[i] === null) {
                 tableObjects.push(null);
             } else {
-                tableObjects.push({ ref: null, id: i, nr: config.tableNumbers[i] });
+                const type = config.tableNumbers[i][0] === 'B' ? 'billiard': 'dart';
+                const nr = config.tableNumbers[i][1];
+                tableObjects.push({ ref: null, id: i, nr, type });
             }
         }
     }
@@ -104,9 +108,8 @@ export default class TableManager extends React.Component {
                     tableNo = intKey - 48; //plus one for real table number (not index)
                 }
 
-                let idx = config.tableNumbers.indexOf(tableNo);
+                let idx = config.tableNumbers.map(t => t === null ? null: Number.parseInt(t[1], 10)).indexOf(tableNo);
                 if (idx !== -1) {
-                    this.SetActive(idx, true);
                     this.setState({
                         highlightedTable: idx
                     });
@@ -263,7 +266,7 @@ export default class TableManager extends React.Component {
                 ));
             } else {
                 templ1.push((
-                    <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
+                    <Table key={idx} id={obj.id} nr={tableObjects[i].nr} type={tableObjects[i].type}
                         ref={instance => {
                             obj.ref = instance;
                         }}
@@ -290,7 +293,7 @@ export default class TableManager extends React.Component {
                     ));
                 } else {
                     templ2.push((
-                        <Table key={idx} id={obj.id} nr={tableObjects[i].nr}
+                        <Table key={idx} id={obj.id} nr={tableObjects[i].nr} type={tableObjects[i].type}
                             ref={instance => {
                                 obj.ref = instance;
                             }}

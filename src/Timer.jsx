@@ -36,7 +36,7 @@ export default class Timer extends React.Component {
     UpdateTotal(passedTransactions) {
         let total = 0;
         lodash.forEach(passedTransactions, function (trans) {
-            total += GetPrice(trans.timeActive);
+            total += GetPrice(trans.timeActive, trans.type);
         });
 
         this.setState({
@@ -88,9 +88,7 @@ export default class Timer extends React.Component {
                 </div>
                 <div className={"additional-info"}>
                     <div className={"nr-tables"}>
-                        <div className={'nr-tables-inner'}> {lodash.filter(this.usedTables, (t) => {
-                            return t;
-                        }).length} / {config.tableNumbers.length}</div>
+                        <div className={'nr-tables-inner'}> {this.usedTables.filter(t => t === true).length} / {config.tableNumbers.filter(t => t !== null).length}</div>
                     </div>
                     <div className={"step-timer flip-clock"}>
                         {runningTime}

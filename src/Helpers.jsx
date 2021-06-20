@@ -50,28 +50,31 @@ export function GetTimeStringFromDate(date) {
  * Takes a timeActive object which includes active and reduced prices.
  * @param {*} timeActive 
  */
-export function GetPrice(timeActive) {
-    return GetPriceActive(timeActive.active) + GetPriceReduced(timeActive.reduced);
+export function GetPrice(timeActive, type) {
+    if (type === undefined) throw new Error("No type for table. Could not get price");
+    return GetPriceActive(timeActive.active, type) + GetPriceReduced(timeActive.reduced, type);
 }
 
-function GetPriceActive(time) {
+function GetPriceActive(time, type) {
     if (time === 0) return 0;
-    return (config.pricePerHour / 60 / 60 / 1000) * time;
+    const pricePerHour = type === "billiard" ? config.pricePerHour : config.pricePerHourDart;
+    return (pricePerHour / 60 / 60 / 1000) * time;
 }
 
-function GetPriceReduced(time) {
+function GetPriceReduced(time, type) {
     if (time === 0) return 0;
-    return (config.reducedPricePerHour / 60 / 60 / 1000) * time;
+    const reducedPricePerHour = type === "billiard" ? config.reducedPricePerHour : config.reducedPricePerHourDart;
+    return (reducedPricePerHour / 60 / 60 / 1000) * time;
 }
 
-export function GetFormattedPrice(time) {
-    return (Math.round(GetPrice(time) * 100) / 100).toFixed(2).replace('.', ',')
+export function GetFormattedPrice(time, type) {
+    return (Math.round(GetPrice(time, type) * 100) / 100).toFixed(2).replace('.', ',')
 }
 
-export function GetFormattedPriceSplitted(time) {
+export function GetFormattedPriceSplitted(time, type) {
     //GetPrice * 100 / 100 may return NaN -> return 0 as fallback.
-    let activePrice = (Math.round((GetPriceActive(time.active) * 100)) / 100 || 0);
-    let reducedPrice = (Math.round((GetPriceReduced(time.reduced) * 100)) / 100 || 0);
+    let activePrice = (Math.round((GetPriceActive(time.active, type) * 100)) / 100 || 0);
+    let reducedPrice = (Math.round((GetPriceReduced(time.reduced, type) * 100)) / 100 || 0);
 
     let activePriceString = activePrice.toFixed(2).replace('.', ',');
     let reducedPriceString = reducedPrice.toFixed(2).replace('.', ',');
