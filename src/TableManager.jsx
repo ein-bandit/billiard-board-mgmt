@@ -10,6 +10,7 @@ import config from './config';
 
 console.log("using effective configuration", config);
 
+
 let tableObjects = [];
 
 export let CURRENT_TABLES = {
@@ -17,7 +18,15 @@ export let CURRENT_TABLES = {
     transactions: []
 };
 
+const LOCALSTORAGE_VERSION_KEY = 'BilliardManager3001_version';
 export const LOCALSTORAGE_KEY = 'BilliardManager3001_current-tables';
+
+const localVersion = localStorage.getItem(LOCALSTORAGE_VERSION_KEY);
+if (!localVersion || localVersion !== config.version) {
+    console.log(`version is not the same! ${localVersion} in LS, ${config.version} needed. resetting localstorage.`);
+    localStorage.clear();
+    localStorage.setItem(LOCALSTORAGE_VERSION_KEY, config.version);
+}
 
 export default class TableManager extends React.Component {
 
