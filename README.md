@@ -1,5 +1,4 @@
-Billiard Board Management
-======
+# Billiard Board Management
 
 Tool für Zeitnahme und zum Abrechnen von Billiard Tischen.
 
@@ -7,24 +6,31 @@ Kann als React Webapp im Browser oder über den integrierten Electron Builder al
 
 ## Verwendung und Installation
 
-Node v7.6.0 installieren und über
+Node 16.10.0 installieren und über
+(original node version: v7.6.0)
+
 ```
 $ npm install
 ```
+
 die dependencies installieren.
 
 Um die App im Browser zu testen
+
 ```
 $ npm start
 ```
+
 damit sollte auch automatisch localhost:3000 im Browser geöffnet werden.
 
 Zusätzlich kann dann die App im Electron Container gestartet werden
+
 ```
 $ npm electron-dev
 ```
 
 Um Electron ohne lokalen Server zu starten, muss erst ein build erstellt werden.
+
 ```
 $ npm run build
 $ npm run electron
@@ -67,8 +73,9 @@ Electron Build kann relativ groß werden (ca. 130MB)
 Dieses Projekt spiegelt meine ersten Erfahrungen mit ReactJS und Electron wieder. Optimierungsbedarf ist in einigen Bereichen vorhanden.
 
 Geplante Verbesserungen:
-- Event-System anstatt Referenzen verwenden.
-- Modal Dialog refactorn und vereinfachen.
-- Konfigurationsdatei config.json für lokale Entwicklung und Electron verwenden. (Die Konfigurationsdatei soll auch ausserhalb des Electron Production Builds abgelegt werden können)
-- Timer mittig platzieren und Tischen drum herum aufteilen. (Aufteilung/Reihenfolge soll aber über Konfiguration überschrieben werden können)
-- App-Konfiguration global verfügbar machen. (Kein durchschleusen von Konfigurationen)
+
+-   Event-System anstatt Referenzen verwenden.
+-   Modal Dialog refactorn und vereinfachen.
+-   Konfigurationsdatei config.json für lokale Entwicklung und Electron verwenden. (Die Konfigurationsdatei soll auch ausserhalb des Electron Production Builds abgelegt werden können)
+-   Timer mittig platzieren und Tischen drum herum aufteilen. (Aufteilung/Reihenfolge soll aber über Konfiguration überschrieben werden können)
+-   App-Konfiguration global verfügbar machen. (Kein durchschleusen von Konfigurationen)
