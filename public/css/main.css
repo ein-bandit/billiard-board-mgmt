@@ -277,6 +277,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     color: white;
     position: relative;
     max-width: 735px;
+    margin: 0 auto;
 }
 
 .timer .global-timer {
