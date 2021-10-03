@@ -5,3 +5,4 @@ electron-build/
 dist/
 npm-debug.log*
 *.patch
+.vscode/**
