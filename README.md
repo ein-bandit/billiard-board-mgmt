@@ -70,12 +70,18 @@ Electron Build kann relativ groß werden (ca. 130MB)
 
 # Weitere Anmerkungen
 
-Dieses Projekt spiegelt meine ersten Erfahrungen mit ReactJS und Electron wieder. Optimierungsbedarf ist in einigen Bereichen vorhanden.
+Aktuell in Entwicklung ist v2:
 
-Geplante Verbesserungen:
+- Electron-Wrapper entfernen und auf SAP für web-only ändern
+- Upgrade auf React 17 und function components
+- bessere 
+----
+Legacy Notes
+>V1 des Projekt es spiegelte meine ersten Erfahrungen mit ReactJS und Electron wieder. Optimierungsbedarf ist in einigen Bereichen vorhanden.
 
--   Event-System anstatt Referenzen verwenden.
--   Modal Dialog refactorn und vereinfachen.
--   Konfigurationsdatei config.json für lokale Entwicklung und Electron verwenden. (Die Konfigurationsdatei soll auch ausserhalb des Electron Production Builds abgelegt werden können)
--   Timer mittig platzieren und Tischen drum herum aufteilen. (Aufteilung/Reihenfolge soll aber über Konfiguration überschrieben werden können)
--   App-Konfiguration global verfügbar machen. (Kein durchschleusen von Konfigurationen)
+>>Geplante Verbesserungen:
+>>-   Event-System anstatt Referenzen verwenden.
+>>-   Modal Dialog refactorn und vereinfachen.
+>>-   Konfigurationsdatei config.json für lokale Entwicklung und Electron verwenden. (Die Konfigurationsdatei soll auch ausserhalb des Electron Production Builds abgelegt werden können)
+>>-   Timer mittig platzieren und Tischen drum herum aufteilen. (Aufteilung/Reihenfolge soll aber über Konfiguration überschrieben werden können)
+>>- App-Konfiguration global verfügbar machen. (Kein durchschleusen von Konfigurationen)
