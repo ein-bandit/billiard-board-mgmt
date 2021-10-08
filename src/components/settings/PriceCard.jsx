@@ -7,17 +7,15 @@ const PriceCard = ({ type, prices, setPrices }) => {
         { title: 'Reduzierter Preis', message: 'Reduzierter Preis gilt in den unten angegebenen Zeitspannen' },
     ];
     return (
-        <div class="card">
-            <div class="card-header">{type}</div>
-            <div class="card-body">
+        <div className="card">
+            <div className="card-header">{type}</div>
+            <div className="card-body">
                 <div className="row">
                     {data.map((priceText, index) => {
                         return (
                             <div className="col-12" key={index}>
                                 <div className="form-group row">
-                                    <label for="defaultPrice" className="col-sm-6 col-form-label">
-                                        {priceText.title}
-                                    </label>
+                                    <label className="col-sm-6 col-form-label">{priceText.title}</label>
                                     <div className="col-sm-6">
                                         <NumberFormat
                                             decimalSeparator=","

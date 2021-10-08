@@ -18,7 +18,7 @@
         }
     },
 
-    "reducedPriceDays": ["Saturday", "Sunday"],
+    "reducedPriceDays": ["Samstag", "Sonntag"],
     "reducedPriceTimeStart": "12:00:00",
     "reducedPriceTimeEnd": "18:00:00",
 
