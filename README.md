@@ -2,12 +2,11 @@
 
 Tool für Zeitnahme und zum Abrechnen von Billiard Tischen.
 
-Kann als React Webapp im Browser oder über den integrierten Electron Builder als Desktop Applikation genutzt werden.
+SPA CSR React App, Bootstrap, Font Awesome
 
 ## Verwendung und Installation
 
 Node 16.10.0 installieren und über
-(original node version: v7.6.0)
 
 ```
 $ npm install
@@ -21,20 +20,7 @@ Um die App im Browser zu testen
 $ npm start
 ```
 
-damit sollte auch automatisch localhost:3000 im Browser geöffnet werden.
-
-Zusätzlich kann dann die App im Electron Container gestartet werden
-
-```
-$ npm electron-dev
-```
-
-Um Electron ohne lokalen Server zu starten, muss erst ein build erstellt werden.
-
-```
-$ npm run build
-$ npm run electron
-```
+Damit sollte auch automatisch localhost:3000 im Browser geöffnet werden.
 
 # Konfiguration
 
@@ -64,9 +50,7 @@ Die Abrechnung kann über Klicken auf die Gesamtsumme aufgerufen werden.
 
 ## Hinweise
 
-Um die App auf Windows Desktop Systemen mit Electron zu betreiben ist mindestens Windows 7 erforderlich.
-
-Electron Build kann relativ groß werden (ca. 130MB)
+In v1 wurde ein Electron-Wrapper verwendet um die App als Desktop Applikation auszuliefern.
 
 # Weitere Anmerkungen
 
