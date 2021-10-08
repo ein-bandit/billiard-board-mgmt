@@ -24,7 +24,7 @@ Damit sollte auch automatisch localhost:3000 im Browser geöffnet werden.
 
 # Konfiguration
 
-Die aktuell verwendete Konfiguration liegt in src/config.jsx.
+Die Standard-Konfiguration liegt in src/config.json.
 
 ## Konzept & Bedienung
 
