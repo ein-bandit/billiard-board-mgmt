@@ -338,17 +338,17 @@ export default class TableManager extends React.Component {
                             <div className={'clock-logs-switch'}>
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
-                                        <a href=""
+                                        <button
                                             className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
-                                            onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</a>
+                                            onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</button>
                                     </li>
                                     <li className="nav-item">
-                                        <a href=""
+                                        <button
                                             className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
-                                            onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</a>
+                                            onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</button>
                                     </li>
                                     <li className="nav-item brand">
-                                        <a className={'nav-link'}>Billiard-Manager 3001</a>
+                                        <button className={'nav-link'}>Billiard-Manager 3001</button>
                                     </li>
                                 </ul>
                             </div>

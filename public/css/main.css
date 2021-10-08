@@ -223,7 +223,8 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .flip-clock {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
 }
 
 .flip-clock .flip-clock-digit {
@@ -245,19 +246,19 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     border-bottom: none;
 }
 
-.clock-logs-switch ul li a.nav-link {
+.clock-logs-switch ul li button.nav-link {
     color: black;
     border-color: rgba(0, 0, 0, 0.5);
     margin-right: 2px;
 }
 
-.clock-logs-switch ul li a.nav-link:hover {
+.clock-logs-switch ul li button.nav-link:hover {
     border-color: black;
     background: rgb(244, 244, 244);
     background: linear-gradient(180deg, rgba(244, 244, 244, 1) 0%, rgba(222, 222, 222, 1) 71%);
 }
 
-.clock-logs-switch ul li a.nav-link.active {
+.clock-logs-switch ul li button.nav-link.active {
     background: #1f1f1f;
     color: white;
     border-color: #1f1f1f;
@@ -313,7 +314,9 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 
 .additional-info,
 .global-timer-wrapper {
-    display: inline-flex;
+    display: flex;
+    justify-content: center;
+
     font-size: 24px;
     line-height: 26px;
 }
@@ -388,15 +391,15 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     padding-right: 0;
 }
 
-.brand.nav-item a.nav-link:hover {
+.brand.nav-item button.nav-link:hover {
     background: none !important;
 }
 
-.brand.nav-item a.nav-link {
+.brand.nav-item button.nav-link {
     border: none;
 }
 
-a.nav-link.active:focus {
+button.nav-link.active:focus {
     outline: 0;
 }
 
