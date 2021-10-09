@@ -1,14 +1,12 @@
 import React from 'react';
 
 const _WEEKDAYS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
-const ReducedPriceSettings = ({ days, times, update }) => {
-    console.log(days, times);
+const ReducedPriceSettings = ({ reducedSettings, setReducedSettings }) => {
     const [weekdays, setWeekdays] = React.useState(
-        _WEEKDAYS.map((w) => {
-            console.log(w, days.includes(w));
+        _WEEKDAYS.map((weekday) => {
             return {
-                name: w,
-                checked: days.includes(w),
+                name: weekday,
+                checked: reducedSettings.reducedPriceDays.includes(weekday),
             };
         })
     );
@@ -27,7 +25,7 @@ const ReducedPriceSettings = ({ days, times, update }) => {
                                 const arr = [...weekdays];
                                 arr[index].checked = e.target.checked;
                                 setWeekdays(arr);
-                                update({ reducedPricedDays: arr });
+                                setReducedSettings({ ...reducedSettings, reducedPriceDays: arr.filter((w) => w.checked).map((w) => w.name) });
                             }}
                         />
                         <label className="form-check-label">{weekday.name}</label>

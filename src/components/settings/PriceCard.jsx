@@ -28,7 +28,7 @@ const PriceCard = ({ type, prices, setPrices }) => {
                                             onValueChange={(values) => {
                                                 console.log(values);
                                                 const key = index === 0 ? 'price' : 'reduced';
-                                                setPrices(type, { ...prices, [key]: values.floatValue });
+                                                setPrices({ ...prices, [key]: values.floatValue });
                                             }}
                                         />
                                     </div>
