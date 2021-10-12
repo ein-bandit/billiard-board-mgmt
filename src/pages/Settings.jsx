@@ -1,6 +1,7 @@
 import React from 'react';
 import Prices from '../components/settings/Prices';
 import ReducedPriceSettings from '../components/settings/ReducedPriceSettings';
+import TableNumbers from '../components/settings/TableNumbers';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
 
@@ -33,6 +34,16 @@ const Settings = () => {
                         updateSettings={(reducedPriceSettings) => {
                             console.log('updating rps', reducedPriceSettings);
                             setSettings({ ...settings, reducedPriceSettings });
+                        }}
+                    />
+                </div>
+                <h2 className="ml-2 mt-4">Tischnummern</h2>
+                <hr />
+                <div className="row">
+                    <TableNumbers
+                        tableNumbers={settings.tableNumbers}
+                        updateTableNumbers={(tableNumbers) => {
+                            setSettings({ ...settings, tableNumbers });
                         }}
                     />
                 </div>
