@@ -24,7 +24,7 @@
 
     "reducedPriceSettings": [
         { "day": "Samstag", "times": ["12:00", "18:00"] },
-        { "day": "Sonntag", "times": ["12:00:00", "18:00:00"] }
+        { "day": "Sonntag", "times": ["12:00", "18:00"] }
     ],
 
     "reactivateEnabled": true,

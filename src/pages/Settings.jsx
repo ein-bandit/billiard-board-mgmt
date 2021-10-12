@@ -4,11 +4,8 @@ import ReducedPriceSettings from '../components/settings/ReducedPriceSettings';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
 
-//DEBUG: ensure local storage is filled
-localStorage.setItem(SettingsKey, JSON.stringify(config));
-
 const Settings = () => {
-    const storage = JSON.parse(localStorage.getItem(SettingsKey));
+    const storage = JSON.parse(localStorage.getItem(SettingsKey)) ?? config;
     const [settings, setSettings] = React.useState(storage);
     const submit = (e) => {
         console.log('save settings to local storage');
