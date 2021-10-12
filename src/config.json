@@ -22,6 +22,11 @@
     "reducedPriceTimeStart": "12:00:00",
     "reducedPriceTimeEnd": "18:00:00",
 
+    "reducedPriceSettings": [
+        { "day": "Samstag", "times": ["12:00", "18:00"] },
+        { "day": "Sonntag", "times": ["12:00:00", "18:00:00"] }
+    ],
+
     "reactivateEnabled": true,
     "tableNumbers": ["B4", "B5", null, null, "B3", "D7", "B2", null, null, "D8", "B1", null, null, "D9"],
 

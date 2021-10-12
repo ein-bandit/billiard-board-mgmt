@@ -1,37 +1,70 @@
 import React from 'react';
+import TimeInput from './TimeInput';
 
 const _WEEKDAYS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
-const ReducedPriceSettings = ({ reducedSettings, setReducedSettings }) => {
-    const [weekdays, setWeekdays] = React.useState(
-        _WEEKDAYS.map((weekday) => {
-            return {
-                name: weekday,
-                checked: reducedSettings.reducedPriceDays.includes(weekday),
-            };
-        })
-    );
+
+const ReducedPriceSettings = ({ reducedSettings, updateSettings }) => {
     return (
-        <div className="row mx-auto">
-            {weekdays.map((weekday, index) => {
-                return (
-                    <div className="form-check form-check-inline" key={index}>
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id={`weekday-${index}`}
-                            checked={weekday.checked}
-                            onChange={(e) => {
-                                console.log('chosen', weekday, weekday.checked);
-                                const arr = [...weekdays];
-                                arr[index].checked = e.target.checked;
-                                setWeekdays(arr);
-                                setReducedSettings({ ...reducedSettings, reducedPriceDays: arr.filter((w) => w.checked).map((w) => w.name) });
+        <div className="row">
+            <ul className="list-group" style={{ paddingRight: '15px', paddingLeft: '15px' }}>
+                {reducedSettings.map((setting, index) => {
+                    return (
+                        <li className="list-group-item" key={index}>
+                            <div className="d-flex">
+                                <div className="d-flex align-items-center">
+                                    <button type="button" className="btn btn-outline-secondary">
+                                        <i className="fa fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div className="col d-flex align-items-center" key={index}>
+                                    <select
+                                        value={setting.day}
+                                        onChange={(e) => {
+                                            const copy = { ...setting, day: e.target.value };
+                                            const settingsCopy = [...reducedSettings];
+                                            settingsCopy[index] = copy;
+                                            updateSettings(settingsCopy);
+                                        }}
+                                    >
+                                        {_WEEKDAYS.map((w, i) => {
+                                            return <option key={i}>{w}</option>;
+                                        })}
+                                    </select>
+                                </div>
+                                {setting.times.map((time, timeIndex) => {
+                                    return (
+                                        <TimeInput
+                                            key={timeIndex}
+                                            time={time}
+                                            updateTime={(update) => {
+                                                const copy = { ...setting };
+                                                copy.times[timeIndex] = update;
+                                                console.log(copy);
+                                                const settingsCopy = [...reducedSettings];
+                                                settingsCopy[index] = copy;
+                                                updateSettings(settingsCopy);
+                                            }}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </li>
+                    );
+                })}
+                <li className="list-group-item">
+                    <div className="d-flex align-items-center">
+                        <button
+                            type="button"
+                            className="btn btn-outline-secondary"
+                            onClick={() => {
+                                updateSettings([...reducedSettings].concat([{ day: _WEEKDAYS[0], times: ['00:00', '00:00'] }]));
                             }}
-                        />
-                        <label className="form-check-label">{weekday.name}</label>
+                        >
+                            <i className="fa fa-plus"></i>
+                        </button>
                     </div>
-                );
-            })}
+                </li>
+            </ul>
         </div>
     );
 };

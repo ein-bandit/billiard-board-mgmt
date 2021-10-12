@@ -4,14 +4,6 @@ import ReducedPriceSettings from '../components/settings/ReducedPriceSettings';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
 
-const getRS = (settings) => {
-    return {
-        reducedPriceDays: settings.reducedPriceDays,
-        reducedPriceTimeStart: settings.reducedPriceTimeStart,
-        reducedPriceTimeEnd: settings.reducedPriceTimeEnd,
-    };
-};
-
 //DEBUG: ensure local storage is filled
 localStorage.setItem(SettingsKey, JSON.stringify(config));
 
@@ -40,9 +32,10 @@ const Settings = () => {
                 <hr />
                 <div className="row">
                     <ReducedPriceSettings
-                        reducedSettings={getRS(settings)}
-                        setReducedSettings={(reducedSettings) => {
-                            setSettings({ ...settings, ...reducedSettings });
+                        reducedSettings={settings.reducedPriceSettings}
+                        updateSettings={(reducedPriceSettings) => {
+                            console.log('updating rps', reducedPriceSettings);
+                            setSettings({ ...settings, reducedPriceSettings });
                         }}
                     />
                 </div>
