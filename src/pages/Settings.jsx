@@ -2,6 +2,7 @@ import React from 'react';
 import Prices from '../components/settings/Prices';
 import ReducedPriceSettings from '../components/settings/ReducedPriceSettings';
 import TableNumbers from '../components/settings/TableNumbers';
+import TimerIntervals from '../components/settings/TimerIntervals';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
 
@@ -13,9 +14,22 @@ const Settings = () => {
         e.preventDefault();
         localStorage.setItem(SettingsKey, JSON.stringify(settings));
     };
+
+    const SettingsSubmit = ({ classes }) => {
+        return (
+            <div className={`row m-0 ${classes}`}>
+                <button type="submit" className="btn btn-primary p-1 pl-2 pr-2" onClick={submit}>
+                    Speichern und Zurück
+                </button>
+            </div>
+        );
+    };
+
     return (
         <div className="container">
-            <form onSubmit={submit}>
+            <form className="position-relative" onSubmit={submit}>
+                <SettingsSubmit classes="w-100 d-flex justify-content-end position-absolute" />
+
                 <h2 className="ml-2">Preise</h2>
                 <hr />
                 <div className="row m-0">
@@ -47,11 +61,19 @@ const Settings = () => {
                         }}
                     />
                 </div>
-                <div className="row">
-                    <button type="submit" className="btn btn-primary" onClick={submit}>
-                        Speichern und Zurück
-                    </button>
+                <hr />
+                <h2 className="ml-2 mt-4">Debug</h2>
+                <hr />
+                <div className="row m-0">
+                    <TimerIntervals
+                        intervals={{ timeIntervalToUpdate: settings.timeIntervalToUpdate, timeIntervalSync: settings.timeIntervalSync }}
+                        updateIntervals={(intervals) => {
+                            setSettings({ ...settings, ...intervals });
+                        }}
+                    />
                 </div>
+                <hr />
+                <SettingsSubmit />
             </form>
         </div>
     );
