@@ -18,7 +18,7 @@ const Settings = () => {
             <form onSubmit={submit}>
                 <h2 className="ml-2">Preise</h2>
                 <hr />
-                <div className="row">
+                <div className="row m-0">
                     <Prices
                         prices={settings.prices}
                         setPrices={(prices) => {
@@ -28,7 +28,7 @@ const Settings = () => {
                 </div>
                 <h2 className="ml-2 mt-4">Reduzierte Preise</h2>
                 <hr />
-                <div className="row">
+                <div className="row m-0">
                     <ReducedPriceSettings
                         reducedSettings={settings.reducedPriceSettings}
                         updateSettings={(reducedPriceSettings) => {
