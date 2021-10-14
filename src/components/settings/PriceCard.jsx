@@ -1,6 +1,7 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
 
+const names = { billiard: 'Billard', dart: 'Dart' };
 const PriceCard = ({ type, prices, setPrices }) => {
     const data = [
         { title: 'Standard Preis', message: '' },
@@ -8,7 +9,7 @@ const PriceCard = ({ type, prices, setPrices }) => {
     ];
     return (
         <div className="card">
-            <div className="card-header">{type}</div>
+            <div className="card-header">{names[type]}</div>
             <div className="card-body">
                 <div className="row">
                     {data.map((priceText, index) => {
