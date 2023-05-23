@@ -10,9 +10,6 @@ import config from './config';
 
 console.log("using effective configuration", config);
 
-
-let tableObjects = [];
-
 export let CURRENT_TABLES = {
     tables: [],
     transactions: []
@@ -39,17 +36,19 @@ export default class TableManager extends React.Component {
             activeTab: 'clock'
         };
 
+        this.tableObjects = [];
+
         this.syncTime = config.timeIntervalSync;
         this.timer = null;
         this.tableModalWrapper = null;
 
         for (let i = 0; i < config.tableNumbers.length; i++) {
             if (config.tableNumbers[i] === null) {
-                tableObjects.push(null);
+                this.tableObjects.push(null);
             } else {
                 const type = config.tableNumbers[i][0] === 'B' ? 'billiard': 'dart';
                 const nr = config.tableNumbers[i][1];
-                tableObjects.push({ ref: null, id: i, nr, type });
+                this.tableObjects.push({ ref: null, id: i, nr, type });
             }
         }
     }
@@ -65,7 +64,7 @@ export default class TableManager extends React.Component {
 
             for (var j = 0; j < tables.length; j++) {
                 if (tables[j] !== null) {
-                    tableObjects[tables[j].id].ref.CopyFromJson(tables[j]);
+                    this.tableObjects[tables[j].id].ref.CopyFromJson(tables[j]);
                     this.SetActive(tables[j].id, true);
                 }
             }
@@ -126,7 +125,7 @@ export default class TableManager extends React.Component {
 
             } else if (intKey === 13 || intKey === 32) {
                 if (this.state.highlightedTable !== null) {
-                    tableObjects[this.state.highlightedTable].ref.HandleEnter();
+                    this.tableObjects[this.state.highlightedTable].ref.HandleEnter();
                 }
             } else if (intKey === 99 || intKey === 67) {
                 this.timer.ShowAllSums();
@@ -201,7 +200,7 @@ export default class TableManager extends React.Component {
     }
 
     UpdateChildren(timeElapsed) {
-        tableObjects.map(obj => {
+        this.tableObjects.map(obj => {
             if (obj !== null) {
                 return obj.ref.UpdateTime(config.timeIntervalToUpdate);
             }
@@ -222,13 +221,13 @@ export default class TableManager extends React.Component {
     }
 
     ReactivateTable(table) {
-        if (tableObjects[table.id].ref.isActive()) {
+        if (this.tableObjects[table.id].ref.isActive()) {
             return;
         }
 
         this.SetActive(table.id, true);
         CURRENT_TABLES.tables[table.id] = table;
-        tableObjects[table.id].ref.Reactivate(table);
+        this.tableObjects[table.id].ref.Reactivate(table);
         let newTrans = _.filter(this.state.passedTransactions, function (tab) {
             return tab.endDate !== table.endDate;
         });
@@ -264,10 +263,10 @@ export default class TableManager extends React.Component {
 
     render() {
         const templ1 = [];
-        for (let i = 0; i < Math.min(5, tableObjects.length); i++) {
+        for (let i = 0; i < Math.min(5, this.tableObjects.length); i++) {
 
             let idx = i;
-            let obj = tableObjects[i];
+            let obj = this.tableObjects[i];
 
             if (obj === null) {
                 templ1.push((
@@ -275,7 +274,7 @@ export default class TableManager extends React.Component {
                 ));
             } else {
                 templ1.push((
-                    <Table key={idx} id={obj.id} nr={tableObjects[i].nr} type={tableObjects[i].type}
+                    <Table key={idx} id={obj.id} nr={this.tableObjects[i].nr} type={this.tableObjects[i].type}
                         ref={instance => {
                             obj.ref = instance;
                         }}
@@ -291,18 +290,18 @@ export default class TableManager extends React.Component {
         }
 
         const templ2 = [];
-        if (tableObjects.length > 5) {
-            for (let i = 5; i < tableObjects.length; i++) {
+        if (this.tableObjects.length > 5) {
+            for (let i = 5; i < this.tableObjects.length; i++) {
 
                 let idx = i;
-                let obj = tableObjects[i];
+                let obj = this.tableObjects[i];
                 if (obj === null) {
                     templ2.push((
                         <div className="tb col-3 tb-status-stop" key={idx}></div>
                     ));
                 } else {
                     templ2.push((
-                        <Table key={idx} id={obj.id} nr={tableObjects[i].nr} type={tableObjects[i].type}
+                        <Table key={idx} id={obj.id} nr={this.tableObjects[i].nr} type={this.tableObjects[i].type}
                             ref={instance => {
                                 obj.ref = instance;
                             }}
