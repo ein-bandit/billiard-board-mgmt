@@ -12,7 +12,15 @@ const ReducedPriceSettings = ({ reducedSettings, updateSettings }) => {
                         <li className="list-group-item" key={index}>
                             <div className="d-flex">
                                 <div className="d-flex align-items-center">
-                                    <button type="button" className="btn btn-outline-secondary">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary"
+                                        onClick={() => {
+                                            const copy = [...reducedSettings];
+                                            copy.splice(index, 1);
+                                            updateSettings(copy);
+                                        }}
+                                    >
                                         <i className="fa fa-trash"></i>
                                     </button>
                                 </div>
