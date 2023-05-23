@@ -15,7 +15,7 @@ const TimerIntervals = ({ intervals: { timeIntervalToUpdate, timeIntervalSync },
             {activated && (
                 <>
                     <div className="form-group col-6">
-                        <label>Interval to Update</label>
+                        <label>Interval to Update (Standard 1)</label>
                         <input
                             type="number"
                             min="1"
@@ -28,7 +28,7 @@ const TimerIntervals = ({ intervals: { timeIntervalToUpdate, timeIntervalSync },
                         <small className="form-text text-muted">Aktualisiert alle X Sekunden die Zeit in der Anzeige</small>
                     </div>
                     <div className="form-group col-6">
-                        <label>Interval to Sync</label>
+                        <label>Interval to Sync (Standard 10)</label>
                         <input
                             type="number"
                             min="1"
