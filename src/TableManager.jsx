@@ -5,6 +5,7 @@ import TableHistoryItem from './TableHistoryItem';
 import TableModalWrapper from './TableModalWrapper';
 import cloneDeep from 'lodash/cloneDeep';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 
 import config from './config';
 import { SettingsKey } from './storage.keys';
@@ -352,7 +353,9 @@ export default class TableManager extends React.Component {
                                         </button>
                                     </li>
                                     <li className="nav-item brand">
-                                        <button className={'nav-link'}>Billiard-Manager 3001</button>
+                                        <Link to="/settings">
+                                            <button className={'nav-link'}>Einstellungen</button>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
