@@ -4,16 +4,23 @@ export const getCurrentTables = () => {
     return JSON.parse(localStorage.getItem(TableData) || []);
 };
 
+// is called whenever sync interval is reached
 export const saveCurrentTables = (tables) => {
     localStorage.setItem(TableData, JSON.stringify(tables));
 };
 
+let LOCAL_SETTINGS = null;
+
 export const saveSettings = (settings) => {
     localStorage.setItem(SettingsKey, JSON.stringify(settings));
+    LOCAL_SETTINGS = settings;
 };
 
 export const getSettings = () => {
-    return JSON.parse(localStorage.getItem(SettingsKey));
+    if (LOCAL_SETTINGS === null) {
+        LOCAL_SETTINGS = JSON.parse(localStorage.getItem(SettingsKey));
+    }
+    return LOCAL_SETTINGS;
 };
 
 export const getReducedPriceDays = () => {
@@ -25,10 +32,7 @@ export const getReducedPriceDayNames = () => {
 };
 
 export const getReducedPriceDay = (day) => {
-    console.log('searching', day);
-    const x = getReducedPriceDays().find((rps) => rps.day === day);
-    console.log('found', x);
-    return x;
+    return getReducedPriceDays().find((rps) => rps.day === day);
 };
 
 export const getPrices = (type) => {
