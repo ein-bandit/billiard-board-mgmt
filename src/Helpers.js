@@ -1,5 +1,6 @@
 import config from './config';
 import _ from 'lodash';
+import { WEEKDAYS } from './globals';
 
 export function GetTimeString(time) {
     let allTime = (time.active + time.reduced) / 1000;
@@ -90,7 +91,7 @@ export function GetTimeActive(startDateMillis) {
     let reduced = 0;
     let now = Date.now();
     let startDate = new Date(startDateMillis)
-    let day = weekdays[startDate.getDay()];
+    let day = WEEKDAYS[startDate.getDay()];
     //is reduced price applicable by day?
     if (_.includes(config.reducedPriceDays, day)) {
         //console.log("it is a reduced day, we may need to calc reduced time");
@@ -143,7 +144,7 @@ weekdays[6] = "Saturday";
 
 export function IsReducedPrice() {
     let now = Date.now();
-    let day = weekdays[now.getDay()];
+    let day = WEEKDAYS[now.getDay()];
     //console.log(now, day, time);
 
     let start = new Date(now.getFullYear(), now.getMonth(), now.getDate(),

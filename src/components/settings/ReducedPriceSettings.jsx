@@ -1,7 +1,6 @@
 import React from 'react';
 import TimeInput from './TimeInput';
-
-const _WEEKDAYS = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+import { WEEKDAYS } from '../../globals';
 
 const ReducedPriceSettings = ({ reducedSettings, updateSettings }) => {
     return (
@@ -34,7 +33,7 @@ const ReducedPriceSettings = ({ reducedSettings, updateSettings }) => {
                                             updateSettings(settingsCopy);
                                         }}
                                     >
-                                        {_WEEKDAYS.map((w, i) => {
+                                        {WEEKDAYS.map((w, i) => {
                                             return <option key={i}>{w}</option>;
                                         })}
                                     </select>
@@ -65,7 +64,7 @@ const ReducedPriceSettings = ({ reducedSettings, updateSettings }) => {
                             type="button"
                             className="btn btn-outline-secondary"
                             onClick={() => {
-                                updateSettings([...reducedSettings].concat([{ day: _WEEKDAYS[0], times: ['00:00', '00:00'] }]));
+                                updateSettings([...reducedSettings].concat([{ day: WEEKDAYS[0], times: ['00:00', '00:00'] }]));
                             }}
                         >
                             <i className="fa fa-plus"></i>
