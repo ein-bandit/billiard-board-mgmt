@@ -19,7 +19,12 @@ export default class Timer extends React.Component {
     }
 
     componentDidMount() {
-        this.startTiming()
+        this.startTiming();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
+        this.intervalID = null;
     }
 
     UpdateUsedTables(tables) {

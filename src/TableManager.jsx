@@ -45,6 +45,8 @@ export default class TableManager extends React.Component {
         this.timer = null;
         this.tableModalWrapper = null;
 
+        this.ToggleChildByKeypress = this.ToggleChildByKeypress.bind(this);
+
         for (let i = 0; i < settings.tableNumbers.length; i++) {
             if (settings.tableNumbers[i] === null) {
                 this.tableObjects.push(null);
@@ -88,9 +90,11 @@ export default class TableManager extends React.Component {
     componentDidMount() {
         this.PrepareTables();
 
-        window.addEventListener('keypress', (evt) => {
-            this.ToggleChildByKeypress(evt);
-        });
+        window.addEventListener('keypress', this.ToggleChildByKeypress, false);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keypress', this.ToggleChildByKeypress, false);
     }
 
     ResetTransactions() {
