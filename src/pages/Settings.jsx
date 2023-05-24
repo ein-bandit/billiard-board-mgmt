@@ -3,20 +3,22 @@ import Prices from '../components/settings/Prices';
 import ReducedPriceSettings from '../components/settings/ReducedPriceSettings';
 import TableNumbers from '../components/settings/TableNumbers';
 import TimerIntervals from '../components/settings/TimerIntervals';
-import config from '../config';
 import { SettingsKey } from '../storage.keys';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import { Link } from 'react-router-dom';
+import defaultSettings from '../defaultSettings';
+
+import { saveSettings } from '../storage';
 
 const Settings = () => {
-    const storage = JSON.parse(localStorage.getItem(SettingsKey)) ?? config;
+    const storage = JSON.parse(localStorage.getItem(SettingsKey)) ?? defaultSettings;
     const [settings, setSettings] = React.useState(storage);
 
     const history = useHistory();
     const submit = (e) => {
-        console.log('save settings to local storage');
         e.preventDefault();
-        localStorage.setItem(SettingsKey, JSON.stringify(settings));
+        console.log('save settings to local storage');
+        saveSettings(settings);
         history.push('/');
     };
 

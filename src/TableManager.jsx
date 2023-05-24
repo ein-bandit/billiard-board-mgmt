@@ -5,6 +5,7 @@ import TableHistoryItem from './TableHistoryItem';
 import TableModalWrapper from './TableModalWrapper';
 import cloneDeep from 'lodash/cloneDeep';
 import _ from 'lodash';
+import { getCurrentTables, getSettings, saveCurrentTables } from './storage';
 import { Link } from 'react-router-dom';
 
 export let CURRENT_TABLES = {
@@ -15,6 +16,8 @@ export let CURRENT_TABLES = {
 export default class TableManager extends React.Component {
     constructor(props) {
         super(props);
+        console.log('init table manager');
+        this.settings = getSettings();
         this.state = {
             highlightedTable: null,
             passedTransactions: [],
@@ -24,25 +27,25 @@ export default class TableManager extends React.Component {
 
         this.tableObjects = [];
 
-        this.syncTime = settings.timeIntervalSync;
+        this.syncTime = this.settings.timeIntervalSync;
         this.timer = null;
         this.tableModalWrapper = null;
 
         this.ToggleChildByKeypress = this.ToggleChildByKeypress.bind(this);
 
-        for (let i = 0; i < settings.tableNumbers.length; i++) {
-            if (settings.tableNumbers[i] === null) {
+        for (let i = 0; i < this.settings.tableNumbers.length; i++) {
+            if (this.settings.tableNumbers[i] === null) {
                 this.tableObjects.push(null);
             } else {
-                const type = settings.tableNumbers[i][0] === 'B' ? 'billiard' : 'dart';
-                const nr = settings.tableNumbers[i][1];
+                const type = this.settings.tableNumbers[i][0] === 'B' ? 'billiard' : 'dart';
+                const nr = this.settings.tableNumbers[i][1];
                 this.tableObjects.push({ ref: null, id: i, nr, type });
             }
         }
     }
 
     PrepareTables() {
-        var currentTables = window.localStorage.getItem(LOCALSTORAGE_KEY) || [];
+        var currentTables = getCurrentTables();
 
         if (currentTables.length > 0) {
             //parse local storage
@@ -105,7 +108,7 @@ export default class TableManager extends React.Component {
                     tableNo = intKey - 48; //plus one for real table number (not index)
                 }
 
-                let idx = settings.tableNumbers.map((t) => (t === null ? null : Number.parseInt(t[1], 10))).indexOf(tableNo);
+                let idx = this.settings.tableNumbers.map((t) => (t === null ? null : Number.parseInt(t[1], 10))).indexOf(tableNo);
                 if (idx !== -1) {
                     this.setState({
                         highlightedTable: idx,
@@ -132,7 +135,7 @@ export default class TableManager extends React.Component {
         CURRENT_TABLES.transactions = this.state.passedTransactions;
 
         let tempTables = JSON.stringify(CURRENT_TABLES);
-        window.localStorage.setItem(LOCALSTORAGE_KEY, tempTables);
+        saveCurrentTables(tempTables);
     }
 
     StartTable(table) {
@@ -185,7 +188,7 @@ export default class TableManager extends React.Component {
     UpdateChildren(timeElapsed) {
         this.tableObjects.map((obj) => {
             if (obj !== null) {
-                return obj.ref.UpdateTime(settings.timeIntervalToUpdate);
+                return obj.ref.UpdateTime(this.settings.timeIntervalToUpdate);
             }
             return null;
         });
@@ -350,7 +353,7 @@ export default class TableManager extends React.Component {
                                         update={(newTime) => {
                                             this.UpdateChildren(newTime);
                                         }}
-                                        tables={settings.tableNumbers.length}
+                                        tables={this.settings.tableNumbers.length}
                                         usedTables={this.state.tableActive}
                                         transactions={this.state.passedTransactions}
                                         showSumsCallback={() => this.ShowSums()}
@@ -366,7 +369,7 @@ export default class TableManager extends React.Component {
                                                 <TableHistoryItem
                                                     key={trans.transId}
                                                     table={trans}
-                                                    recycleAvailable={settings.reactivateEnabled && this.state.tableActive[trans.id] !== true}
+                                                    recycleAvailable={this.settings.reactivateEnabled && this.state.tableActive[trans.id] !== true}
                                                     reactivateCallback={(table) => this.ReactivateOpenModal(table)}
                                                 />
                                             );
