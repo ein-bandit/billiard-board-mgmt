@@ -5,14 +5,18 @@ import TableNumbers from '../components/settings/TableNumbers';
 import TimerIntervals from '../components/settings/TimerIntervals';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 const Settings = () => {
     const storage = JSON.parse(localStorage.getItem(SettingsKey)) ?? config;
     const [settings, setSettings] = React.useState(storage);
+
+    const history = useHistory();
     const submit = (e) => {
         console.log('save settings to local storage');
         e.preventDefault();
         localStorage.setItem(SettingsKey, JSON.stringify(settings));
+        history.push('/');
     };
 
     const SettingsSubmit = ({ classes }) => {
