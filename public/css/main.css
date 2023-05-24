@@ -143,6 +143,10 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .tb {
+    min-height: calc(25vh - 20px);
+}
+
+.tb:not(.tb-status-inactive) {
     cursor: pointer;
 }
 

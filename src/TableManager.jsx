@@ -264,7 +264,7 @@ export default class TableManager extends React.Component {
             let obj = this.tableObjects[i];
 
             if (obj === null) {
-                templ1.push(<div className="tb col-3 tb-status-stop" key={idx}></div>);
+                templ1.push(<div className="tb col-3 tb-status-stop tb-status-inactive" key={idx}></div>);
             } else {
                 templ1.push(
                     <Table
@@ -293,7 +293,7 @@ export default class TableManager extends React.Component {
                 let idx = i;
                 let obj = this.tableObjects[i];
                 if (obj === null) {
-                    templ2.push(<div className="tb col-3 tb-status-stop" key={idx}></div>);
+                    templ2.push(<div className="tb col-3 tb-status-stop tb-status-inactive" key={idx}></div>);
                 } else {
                     templ2.push(
                         <Table
