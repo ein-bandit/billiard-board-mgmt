@@ -6,6 +6,7 @@ import TimerIntervals from '../components/settings/TimerIntervals';
 import config from '../config';
 import { SettingsKey } from '../storage.keys';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Settings = () => {
     const storage = JSON.parse(localStorage.getItem(SettingsKey)) ?? config;
@@ -17,6 +18,17 @@ const Settings = () => {
         e.preventDefault();
         localStorage.setItem(SettingsKey, JSON.stringify(settings));
         history.push('/');
+    };
+
+    const ButtonRow = () => {
+        return (
+            <div className="mt-3 d-flex justify-content-end align-items-center">
+                <div className="pr-3">
+                    <Link to="/">zurück zur Übersicht</Link>
+                </div>
+                <SettingsSubmit />
+            </div>
+        );
     };
 
     const SettingsSubmit = ({ classes }) => {
@@ -32,7 +44,7 @@ const Settings = () => {
     return (
         <div className="container">
             <form className="position-relative" onSubmit={submit}>
-                <SettingsSubmit classes="w-100 d-flex justify-content-end position-absolute" />
+                <ButtonRow />
                 <h2 className="ml-2">Preise</h2>
                 <hr />
 
@@ -79,8 +91,9 @@ const Settings = () => {
                         }}
                     />
                 </div>
-                <hr />
-                <SettingsSubmit />
+                <div className="mb-3">
+                    <ButtonRow />
+                </div>
             </form>
         </div>
     );
