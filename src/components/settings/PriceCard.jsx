@@ -3,20 +3,18 @@ import NumberFormat from 'react-number-format';
 
 const names = { billiard: 'Billard', dart: 'Dart' };
 const PriceCard = ({ type, prices, setPrices }) => {
-    const data = [
-        { title: 'Standard Preis', message: '' },
-        { title: 'Reduzierter Preis', message: 'Reduzierter Preis gilt in den unten angegebenen Zeitspannen' },
-    ];
+    const rows = ['Standard Preis', 'Reduzierter Preis'];
+
     return (
         <div className="card">
             <div className="card-header">{names[type]}</div>
             <div className="card-body">
                 <div className="row">
-                    {data.map((priceText, index) => {
+                    {rows.map((priceText, index) => {
                         return (
                             <div className="col-12" key={index}>
                                 <div className="form-group row">
-                                    <label className="col-sm-6 col-form-label">{priceText.title}</label>
+                                    <label className="col-sm-6 col-form-label">{priceText}</label>
                                     <div className="col-sm-6">
                                         <NumberFormat
                                             decimalSeparator=","
@@ -33,11 +31,6 @@ const PriceCard = ({ type, prices, setPrices }) => {
                                             }}
                                         />
                                     </div>
-                                    {priceText.message && (
-                                        <small id="emailHelp" className="form-text text-muted ml-3">
-                                            {priceText.message}
-                                        </small>
-                                    )}
                                 </div>
                             </div>
                         );

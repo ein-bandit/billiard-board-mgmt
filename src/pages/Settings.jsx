@@ -33,10 +33,13 @@ const Settings = () => {
         <div className="container">
             <form className="position-relative" onSubmit={submit}>
                 <SettingsSubmit classes="w-100 d-flex justify-content-end position-absolute" />
-
                 <h2 className="ml-2">Preise</h2>
                 <hr />
+
                 <div className="row m-0">
+                    <p className="mb-3 ml-1" style={{ fontSize: '0.8rem' }}>
+                        Preisangaben in Euro pro Stunde. Reduzierter Preis gilt in den unten angegebenen Zeitspannen.
+                    </p>
                     <Prices
                         prices={settings.prices}
                         setPrices={(prices) => {
