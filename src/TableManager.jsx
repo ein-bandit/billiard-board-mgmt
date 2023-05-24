@@ -16,8 +16,9 @@ export let CURRENT_TABLES = {
 export default class TableManager extends React.Component {
     constructor(props) {
         super(props);
-        console.log('init table manager');
-        this.settings = getSettings();
+        const settings = getSettings();
+        console.log('initialize table manager. using config', settings);
+        this.settings = settings;
         this.state = {
             highlightedTable: null,
             passedTransactions: [],
