@@ -7,28 +7,10 @@ import cloneDeep from 'lodash/cloneDeep';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 
-import config from './config';
-import { SettingsKey } from './storage.keys';
-
-console.log('using effective configuration', config);
-
 export let CURRENT_TABLES = {
     tables: [],
     transactions: [],
 };
-
-const LOCALSTORAGE_VERSION_KEY = 'BilliardManager3001_version';
-export const LOCALSTORAGE_KEY = 'BilliardManager3001_current-tables';
-
-const localVersion = localStorage.getItem(LOCALSTORAGE_VERSION_KEY);
-if (!localVersion || localVersion !== config.version) {
-    console.log(`version is not the same! ${localVersion} in LS, ${config.version} needed. resetting localstorage.`);
-    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify({ tables: [], transactions: [] }));
-    localStorage.setItem(LOCALSTORAGE_VERSION_KEY, config.version);
-}
-
-const settings = JSON.parse(localStorage.getItem(SettingsKey));
-console.log('using effective settings', config);
 
 export default class TableManager extends React.Component {
     constructor(props) {

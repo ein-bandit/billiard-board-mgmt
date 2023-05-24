@@ -1,0 +1,25 @@
+{
+    "timeIntervalToUpdate": 1,
+    "timeIntervalSync": 10,
+
+    "prices": {
+        "billiard": {
+            "price": 4,
+            "reduced": 2
+        },
+        "dart": {
+            "price": 2,
+            "reduced": 1
+        }
+    },
+
+    "reducedPriceSettings": [
+        { "day": "Samstag", "times": ["12:00", "18:00"] },
+        { "day": "Sonntag", "times": ["12:00", "18:00"] }
+    ],
+
+    "reactivateEnabled": true,
+    "tableNumbers": ["B4", "B5", null, null, "B3", "D7", "B2", null, null, "D8", "B1", null, null, "D9"],
+
+    "version": "0.0.0"
+}
