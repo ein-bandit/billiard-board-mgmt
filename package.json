@@ -1,7 +1,7 @@
 {
-    "name": "bm3001",
+    "name": "km3000",
     "version": "2.0.0-alpha",
-    "description": "Billiard Manager 3001",
+    "description": "Kneipen Manager 3000",
     "private": true,
     "dependencies": {
         "@testing-library/jest-dom": "^5.14.1",

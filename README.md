@@ -1,6 +1,6 @@
-# Billiard Board Management
+# Kneipen Manager 3000
 
-Tool für Zeitnahme und zum Abrechnen von Billiard Tischen.
+Tool für Zeitnahme und zum Abrechnen von Billard Tischen und Dart Boards.
 
 SPA CSR React App, Bootstrap, Font Awesome
 
