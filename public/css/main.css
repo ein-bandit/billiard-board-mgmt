@@ -29,6 +29,10 @@ h4 {
     display: inline;
 }
 
+.table-manager {
+    padding: 0 20px;
+}
+
 .tables {
     padding: 20px;
 }
@@ -143,6 +147,10 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 }
 
 .tb {
+    min-height: calc(25vh - 20px);
+}
+
+.tb:not(.tb-status-inactive) {
     cursor: pointer;
 }
 
@@ -383,7 +391,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     padding-left: 5px;
 }
 
-.brand.nav-item {
+.nav-item.brand {
     position: absolute;
     right: 13px;
     background: none !important;
@@ -391,12 +399,17 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     padding-right: 0;
 }
 
-.brand.nav-item button.nav-link:hover {
+.nav-item.brand button.nav-link:hover {
     background: none !important;
 }
 
-.brand.nav-item button.nav-link {
-    border: none;
+.nav-item.brand button.nav-link {
+    border-color: transparent;
+    border-bottom-color: black !important;
+}
+
+.nav-item.brand a:hover {
+    text-decoration: none;
 }
 
 button.nav-link.active:focus {

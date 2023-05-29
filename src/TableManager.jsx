@@ -1,66 +1,57 @@
 import React from 'react';
 import Table from './Table';
 import Timer from './Timer';
-import TableHistoryItem from './TableHistoryItem'
-import TableModalWrapper from './TableModalWrapper'
+import TableHistoryItem from './TableHistoryItem';
+import TableModalWrapper from './TableModalWrapper';
 import cloneDeep from 'lodash/cloneDeep';
 import _ from 'lodash';
-
-import config from './config';
-
-console.log("using effective configuration", config);
+import { getCurrentTables, getSettings, saveCurrentTables } from './storage';
+import { Link } from 'react-router-dom';
 
 export let CURRENT_TABLES = {
     tables: [],
-    transactions: []
+    transactions: [],
 };
 
-const LOCALSTORAGE_VERSION_KEY = 'BilliardManager3001_version';
-export const LOCALSTORAGE_KEY = 'BilliardManager3001_current-tables';
-
-const localVersion = localStorage.getItem(LOCALSTORAGE_VERSION_KEY);
-if (!localVersion || localVersion !== config.version) {
-    console.log(`version is not the same! ${localVersion} in LS, ${config.version} needed. resetting localstorage.`);
-    localStorage.clear();
-    localStorage.setItem(LOCALSTORAGE_VERSION_KEY, config.version);
-}
-
 export default class TableManager extends React.Component {
-
     constructor(props) {
         super(props);
+        const settings = getSettings();
+        console.log('initialize table manager. using config', settings);
+        this.settings = settings;
         this.state = {
             highlightedTable: null,
             passedTransactions: [],
             tableActive: [],
-            activeTab: 'clock'
+            activeTab: 'clock',
         };
 
         this.tableObjects = [];
 
-        this.syncTime = config.timeIntervalSync;
+        this.syncTime = this.settings.timeIntervalSync;
         this.timer = null;
         this.tableModalWrapper = null;
 
-        for (let i = 0; i < config.tableNumbers.length; i++) {
-            if (config.tableNumbers[i] === null) {
+        this.ToggleChildByKeypress = this.ToggleChildByKeypress.bind(this);
+
+        for (let i = 0; i < this.settings.tableNumbers.length; i++) {
+            if (this.settings.tableNumbers[i] === null) {
                 this.tableObjects.push(null);
             } else {
-                const type = config.tableNumbers[i][0] === 'B' ? 'billiard': 'dart';
-                const nr = config.tableNumbers[i][1];
+                const type = this.settings.tableNumbers[i][0] === 'B' ? 'billiard' : 'dart';
+                const nr = this.settings.tableNumbers[i][1];
                 this.tableObjects.push({ ref: null, id: i, nr, type });
             }
         }
     }
 
     PrepareTables() {
-        var currentTables = window.localStorage.getItem(LOCALSTORAGE_KEY) || [];
+        var currentTables = getCurrentTables();
 
         if (currentTables.length > 0) {
             //parse local storage
             currentTables = JSON.parse(currentTables);
             var tables = currentTables.tables;
-
 
             for (var j = 0; j < tables.length; j++) {
                 if (tables[j] !== null) {
@@ -76,7 +67,7 @@ export default class TableManager extends React.Component {
                     return trans;
                 });
                 this.setState({
-                    passedTransactions: copiedTransactions
+                    passedTransactions: copiedTransactions,
                 });
                 this.timer.UpdateTotal(copiedTransactions);
             }
@@ -86,21 +77,23 @@ export default class TableManager extends React.Component {
     componentDidMount() {
         this.PrepareTables();
 
-        window.addEventListener('keypress', (evt) => {
-            this.ToggleChildByKeypress(evt)
-        });
+        window.addEventListener('keypress', this.ToggleChildByKeypress, false);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('keypress', this.ToggleChildByKeypress, false);
     }
 
     ResetTransactions() {
         this.setState({
-            passedTransactions: []
+            passedTransactions: [],
         });
         this.timer.UpdateTotal([]);
         this.SaveToStorage();
     }
 
     ToggleChildByKeypress(e) {
-        let intKey = (window.Event) ? e.which : e.keyCode;
+        let intKey = window.Event ? e.which : e.keyCode;
 
         if (this.tableModalWrapper.state.modalIsOpen) {
             if (intKey === 49 || intKey === 50) {
@@ -116,13 +109,12 @@ export default class TableManager extends React.Component {
                     tableNo = intKey - 48; //plus one for real table number (not index)
                 }
 
-                let idx = config.tableNumbers.map(t => t === null ? null: Number.parseInt(t[1], 10)).indexOf(tableNo);
+                let idx = this.settings.tableNumbers.map((t) => (t === null ? null : Number.parseInt(t[1], 10))).indexOf(tableNo);
                 if (idx !== -1) {
                     this.setState({
-                        highlightedTable: idx
+                        highlightedTable: idx,
                     });
                 }
-
             } else if (intKey === 13 || intKey === 32) {
                 if (this.state.highlightedTable !== null) {
                     this.tableObjects[this.state.highlightedTable].ref.HandleEnter();
@@ -144,12 +136,8 @@ export default class TableManager extends React.Component {
         CURRENT_TABLES.transactions = this.state.passedTransactions;
 
         let tempTables = JSON.stringify(CURRENT_TABLES);
-        window.localStorage.setItem(
-            LOCALSTORAGE_KEY,
-            tempTables
-        );
+        saveCurrentTables(tempTables);
     }
-
 
     StartTable(table) {
         this.SetActive(table.id, table.active);
@@ -168,7 +156,7 @@ export default class TableManager extends React.Component {
         let tableActive = this.state.tableActive;
         tableActive[id] = active;
         this.setState({
-            tableActive: tableActive
+            tableActive: tableActive,
         });
         this.timer.UpdateUsedTables(this.state.tableActive);
     }
@@ -188,7 +176,7 @@ export default class TableManager extends React.Component {
 
         this.setState({
             passedTransactions: passedTransactions.reverse(),
-            highlightedTable: null
+            highlightedTable: null,
         });
 
         this.SaveToStorage();
@@ -196,13 +184,12 @@ export default class TableManager extends React.Component {
         this.timer.UpdateTotal(this.state.passedTransactions);
 
         this.tableModalWrapper.StartModal('tables', { table: clone, isRecycle: false });
-
     }
 
     UpdateChildren(timeElapsed) {
-        this.tableObjects.map(obj => {
+        this.tableObjects.map((obj) => {
             if (obj !== null) {
-                return obj.ref.UpdateTime(config.timeIntervalToUpdate);
+                return obj.ref.UpdateTime(this.settings.timeIntervalToUpdate);
             }
             return null;
         });
@@ -234,7 +221,7 @@ export default class TableManager extends React.Component {
 
         this.setState({
             highlightedTable: null,
-            passedTransactions: newTrans
+            passedTransactions: newTrans,
         });
 
         //pass temp data cause state is not refreshed before update total finishes.
@@ -245,13 +232,13 @@ export default class TableManager extends React.Component {
 
     UpdateHighlight(tableId) {
         this.setState({
-            highlightedTable: tableId
-        })
+            highlightedTable: tableId,
+        });
     }
 
     ChangeTab(tab) {
         this.setState({
-            activeTab: tab
+            activeTab: tab,
         });
     }
 
@@ -264,71 +251,76 @@ export default class TableManager extends React.Component {
     render() {
         const templ1 = [];
         for (let i = 0; i < Math.min(5, this.tableObjects.length); i++) {
-
             let idx = i;
             let obj = this.tableObjects[i];
 
             if (obj === null) {
-                templ1.push((
-                    <div className="tb col-3 tb-status-stop" key={idx}></div>
-                ));
+                templ1.push(<div className="tb col-3 tb-status-stop tb-status-inactive" key={idx}></div>);
             } else {
-                templ1.push((
-                    <Table key={idx} id={obj.id} nr={this.tableObjects[i].nr} type={this.tableObjects[i].type}
-                        ref={instance => {
+                templ1.push(
+                    <Table
+                        key={idx}
+                        id={obj.id}
+                        nr={this.tableObjects[i].nr}
+                        type={this.tableObjects[i].type}
+                        ref={(instance) => {
                             obj.ref = instance;
                         }}
                         highlighted={obj.id === this.state.highlightedTable}
-                        startCallback={table => this.StartTable(table)}
-                        stopCallback={table => this.StopTable(table)}
-                        highlightCallback={tableId => {
-                            this.UpdateHighlight(tableId)
+                        startCallback={(table) => this.StartTable(table)}
+                        stopCallback={(table) => this.StopTable(table)}
+                        highlightCallback={(tableId) => {
+                            this.UpdateHighlight(tableId);
                         }}
-                        updateCallback={table => this.UpdateCallback(table)} />
-                ));
+                        updateCallback={(table) => this.UpdateCallback(table)}
+                    />
+                );
             }
         }
 
         const templ2 = [];
         if (this.tableObjects.length > 5) {
             for (let i = 5; i < this.tableObjects.length; i++) {
-
                 let idx = i;
                 let obj = this.tableObjects[i];
                 if (obj === null) {
-                    templ2.push((
-                        <div className="tb col-3 tb-status-stop" key={idx}></div>
-                    ));
+                    templ2.push(<div className="tb col-3 tb-status-stop tb-status-inactive" key={idx}></div>);
                 } else {
-                    templ2.push((
-                        <Table key={idx} id={obj.id} nr={this.tableObjects[i].nr} type={this.tableObjects[i].type}
-                            ref={instance => {
+                    templ2.push(
+                        <Table
+                            key={idx}
+                            id={obj.id}
+                            nr={this.tableObjects[i].nr}
+                            type={this.tableObjects[i].type}
+                            ref={(instance) => {
                                 obj.ref = instance;
                             }}
                             highlighted={obj.id === this.state.highlightedTable}
-                            startCallback={table => this.StartTable(table)}
-                            stopCallback={table => this.StopTable(table)}
-                            highlightCallback={tableId => {
-                                this.UpdateHighlight(tableId)
+                            startCallback={(table) => this.StartTable(table)}
+                            stopCallback={(table) => this.StopTable(table)}
+                            highlightCallback={(tableId) => {
+                                this.UpdateHighlight(tableId);
                             }}
-                            updateCallback={table => this.UpdateCallback(table)} />
-
-                    ));
+                            updateCallback={(table) => this.UpdateCallback(table)}
+                        />
+                    );
                 }
-
             }
         }
         return (
             <div className={'table-manager'}>
                 <div className={'row'}>
-                    <TableModalWrapper ref={(instance) => {
-                        this.tableModalWrapper = instance;
-                    }} resumeCallback={(table) => {
-                        this.ReactivateTable(table)
-                    }} resetTransactionsCallback={() => {
-                        this.ResetTransactions()
-                    }} />
-
+                    <TableModalWrapper
+                        ref={(instance) => {
+                            this.tableModalWrapper = instance;
+                        }}
+                        resumeCallback={(table) => {
+                            this.ReactivateTable(table);
+                        }}
+                        resetTransactionsCallback={() => {
+                            this.ResetTransactions();
+                        }}
+                    />
 
                     {templ1}
 
@@ -337,29 +329,36 @@ export default class TableManager extends React.Component {
                             <div className={'clock-logs-switch'}>
                                 <ul className="nav nav-tabs">
                                     <li className="nav-item">
-                                        <button
-                                            className={"nav-link " + (this.state.activeTab === 'clock' ? 'active' : '')}
-                                            onClick={(e) => this.AvoidClick(e, 'clock')}>Timer</button>
+                                        <button className={'nav-link ' + (this.state.activeTab === 'clock' ? 'active' : '')} onClick={(e) => this.AvoidClick(e, 'clock')}>
+                                            Timer
+                                        </button>
                                     </li>
                                     <li className="nav-item">
-                                        <button
-                                            className={"nav-link " + (this.state.activeTab === 'logs' ? 'active' : '')}
-                                            onClick={(e) => this.AvoidClick(e, 'logs')}>Transaktionen</button>
+                                        <button className={'nav-link ' + (this.state.activeTab === 'logs' ? 'active' : '')} onClick={(e) => this.AvoidClick(e, 'logs')}>
+                                            Transaktionen
+                                        </button>
                                     </li>
                                     <li className="nav-item brand">
-                                        <button className={'nav-link'}>Billiard-Manager 3001</button>
+                                        <Link to="/settings">
+                                            <button className={'nav-link'}>Einstellungen</button>
+                                        </Link>
                                     </li>
                                 </ul>
                             </div>
                             <div className={'timer-and-transaction-wrapper'}>
                                 <div className={'timer-wrapper ' + (this.state.activeTab === 'logs' ? 'hidden' : '')}>
-                                    <Timer ref={(instance) => {
-                                        this.timer = instance
-                                    }} update={newTime => {
-                                        this.UpdateChildren(newTime);
-                                    }} tables={config.tableNumbers.length} usedTables={this.state.tableActive}
+                                    <Timer
+                                        ref={(instance) => {
+                                            this.timer = instance;
+                                        }}
+                                        update={(newTime) => {
+                                            this.UpdateChildren(newTime);
+                                        }}
+                                        tables={this.settings.tableNumbers.length}
+                                        usedTables={this.state.tableActive}
                                         transactions={this.state.passedTransactions}
-                                        showSumsCallback={() => this.ShowSums()} />
+                                        showSumsCallback={() => this.ShowSums()}
+                                    />
                                 </div>
                                 <div className={'transactions ' + (this.state.activeTab === 'clock' ? 'hidden' : '')}>
                                     <ul className="logs list-group list-group-flush">
@@ -367,11 +366,16 @@ export default class TableManager extends React.Component {
                                             <h1>Keine Transaktionen vorhanden</h1>
                                         </li>
                                         {this.state.passedTransactions.map((trans) => {
-                                            return <TableHistoryItem key={trans.transId} table={trans}
-                                                recycleAvailable={(config.reactivateEnabled && this.state.tableActive[trans.id] !== true)}
-                                                reactivateCallback={table => this.ReactivateOpenModal(table)} />
-                                        })
-                                        }</ul>
+                                            return (
+                                                <TableHistoryItem
+                                                    key={trans.transId}
+                                                    table={trans}
+                                                    recycleAvailable={this.settings.reactivateEnabled && this.state.tableActive[trans.id] !== true}
+                                                    reactivateCallback={(table) => this.ReactivateOpenModal(table)}
+                                                />
+                                            );
+                                        })}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -386,6 +390,5 @@ export default class TableManager extends React.Component {
 
 function calculateTransId() {
     var closeDate = new Date();
-    return 'trans_' + closeDate.toLocaleDateString().replace('.', '-')
-        + '_' + closeDate.getHours() + ':' + closeDate.getMinutes() + ':' + closeDate.getSeconds()
+    return 'trans_' + closeDate.toLocaleDateString().replace('.', '-') + '_' + closeDate.getHours() + ':' + closeDate.getMinutes() + ':' + closeDate.getSeconds();
 }

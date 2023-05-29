@@ -6,7 +6,7 @@ SPA CSR React App, Bootstrap, Font Awesome
 
 ## Verwendung und Installation
 
-Node 16.10.0 installieren und über
+Node 16.x.x installieren und über
 
 ```
 $ npm install
@@ -24,7 +24,7 @@ Damit sollte auch automatisch localhost:3000 im Browser geöffnet werden.
 
 # Konfiguration
 
-Die Standard-Konfiguration liegt in src/config.json.
+Die Standard-Konfiguration liegt in src/defaultSettings.json.
 
 ## Konzept & Bedienung
 
@@ -51,21 +51,3 @@ Die Abrechnung kann über Klicken auf die Gesamtsumme aufgerufen werden.
 ## Hinweise
 
 In v1 wurde ein Electron-Wrapper verwendet um die App als Desktop Applikation auszuliefern.
-
-# Weitere Anmerkungen
-
-Aktuell in Entwicklung ist v2:
-
-- Electron-Wrapper entfernen und auf SAP für web-only ändern
-- Upgrade auf React 17 und function components
-- bessere 
-----
-Legacy Notes
->V1 des Projekt es spiegelte meine ersten Erfahrungen mit ReactJS und Electron wieder. Optimierungsbedarf ist in einigen Bereichen vorhanden.
-
->>Geplante Verbesserungen:
->>-   Event-System anstatt Referenzen verwenden.
->>-   Modal Dialog refactorn und vereinfachen.
->>-   Konfigurationsdatei config.json für lokale Entwicklung und Electron verwenden. (Die Konfigurationsdatei soll auch ausserhalb des Electron Production Builds abgelegt werden können)
->>-   Timer mittig platzieren und Tischen drum herum aufteilen. (Aufteilung/Reihenfolge soll aber über Konfiguration überschrieben werden können)
->>- App-Konfiguration global verfügbar machen. (Kein durchschleusen von Konfigurationen)
