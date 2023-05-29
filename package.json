@@ -1,6 +1,6 @@
 {
     "name": "km3000",
-    "version": "1.1.0",
+    "version": "1.1.1-canary",
     "description": "Kneipen Manager 3000",
     "private": true,
     "dependencies": {
