@@ -240,14 +240,13 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     border-radius: 4px;
     margin-left: 1px;
     margin-right: 1px;
+    display: flex;
+    justify-content: center;
 }
 
 .app-name {
     font-size: 42px;
     margin-bottom: 40px;
-}
-
-.clock-logs-switch {
 }
 
 .clock-logs-switch ul.nav-tabs {
@@ -315,7 +314,7 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
     border-top: 1px solid white;
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 10px;
+    margin-top: 6px;
     border-color: #565656;
     color: #565656;
 }
@@ -366,7 +365,6 @@ button.tb-modal-btn.tb-modal-btn-close.btn.btn-default:hover {
 .additional-info .nr-tables .nr-tables-inner .sum {
     text-align: right;
     width: 100%;
-    margin-left: 10px;
 }
 
 .additional-info .nr-tables .nr-tables-inner i {
