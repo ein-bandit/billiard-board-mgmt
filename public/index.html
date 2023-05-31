@@ -12,10 +12,58 @@
         <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/css/font-awesome.css" />
         <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/css/mdDateTimePicker.min.css" />
         <link rel="stylesheet" type="text/css" href="%PUBLIC_URL%/css/main.css" />
+
+        <style type="text/css">
+            #update-banner {
+                display: none;
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                background: #1f1f1f;
+                color: white;
+                padding: 10px;
+                padding-left: 50px;
+            }
+            #update-banner .subhead {
+                font-size: 0.7rem;
+            }
+            #update-banner.show {
+                display: block;
+            }
+            #close-banner {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translate(0, -50%);
+                cursor: pointer;
+                height: 100%;
+                width: 50px;
+                border-left: 1px solid lightgrey;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-decoration: none;
+                color: white;
+            }
+        </style>
+
         <title>Kneipen Manager 3000</title>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root"></div>
+        <div id="update-banner">
+            <a href="#" id="close-banner">X</a>
+            <div class="content">
+                <div class="headline">Es ist eine Akualisierung verfügbar</div>
+                <div class="subhead">Starten Sie die App neu um sie zu aktualisieren.</div>
+            </div>
+        </div>
+        <script>
+            document.getElementById('close-banner').addEventListener('click', (e) => {
+                e.preventDefault();
+                document.getElementById('update-banner').classList.remove('show');
+            });
+        </script>
     </body>
 </html>
