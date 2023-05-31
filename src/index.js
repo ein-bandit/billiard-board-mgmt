@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { SettingsKey, TableData, VersionKey } from './storage.keys';
 
 import version from './version.json';
@@ -37,3 +38,5 @@ ReactDOM.render(
     </React.StrictMode>,
     document.getElementById('root')
 );
+
+serviceWorkerRegistration.register();
